@@ -6,5 +6,4 @@ package-lock.json
 CLAUDE.md
 # >>> ploinky default-skills >>>
 .claude/skills/
-.agents/skills/
 # <<< ploinky default-skills <<<
