@@ -1,0 +1,17 @@
+{
+  "name": "ploinky-mcp",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Workspace MCP server exposing Ploinky status/logs, agent manifests, DS specs, and skill lookups.",
+  "main": "index.mjs",
+  "bin": {
+    "ploinky-mcp": "index.mjs"
+  },
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}

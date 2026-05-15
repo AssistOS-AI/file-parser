@@ -1,3 +1,25 @@
 {
-  "respectGitignore": false
+  "respectGitignore": true,
+  "permissions": {
+    "deny": [
+      "Read(**/node_modules/**)",
+      "Read(**/.ploinky/repos/**)",
+      "Read(**/copilot-agents/.ploinky/repos/**)",
+      "Read(**/.history/**)",
+      "Read(**/dist/**)",
+      "Read(**/build/**)",
+      "Read(**/test-artifacts/**)",
+      "Read(**/.ploinky/.secrets)",
+      "Read(**/*.log)",
+      "Read(**/coverage/**)",
+      "Bash(rm -rf /Users/danielsava/work/file-parser/**)",
+      "Bash(git push --force*)",
+      "Bash(git reset --hard*)"
+    ],
+    "allow": [
+      "Read(**/node_modules/achillesAgentLib/**)",
+      "Read(**/node_modules/achillesAgentLib)"
+    ]
+  },
+  "enabledMcpjsonServers": ["ploinky-mcp"]
 }

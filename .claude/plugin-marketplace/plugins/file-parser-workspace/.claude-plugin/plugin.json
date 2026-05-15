@@ -1,0 +1,22 @@
+{
+  "name": "file-parser-workspace",
+  "description": "Workspace plugin for ~/work/file-parser: Achilles skill-build skills (achilles_specs, antropic_skill_build, article_build, cskill_build, dgskill_build, gamp_specs, oskill_build, review_specs), runtime-invariants skill, commit-attribution guard hook, and three workspace subagents.",
+  "version": "0.1.0",
+  "author": {
+    "name": "file-parser workspace"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/commit_attribution_guard.mjs",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

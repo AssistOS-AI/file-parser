@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "ploinky-mcp": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["/Users/danielsava/work/file-parser/.claude/mcp-servers/ploinky-mcp/index.mjs"],
+      "env": {}
+    }
+  }
+}

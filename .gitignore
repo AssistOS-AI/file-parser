@@ -4,6 +4,10 @@ package-lock.json
 .ploinky
 .history
 CLAUDE.md
+.idea/
+.agents/
+.claude/worktrees/
+.claude/last-claude-review.txt
 # >>> ploinky default-skills >>>
 .claude/skills/
 # <<< ploinky default-skills <<<

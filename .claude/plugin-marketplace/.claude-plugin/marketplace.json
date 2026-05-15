@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "file-parser-workspace-local",
+  "description": "Local marketplace for the file-parser workspace plugin (skills, subagents, commit-guard hook).",
+  "owner": {
+    "name": "file-parser workspace"
+  },
+  "plugins": [
+    {
+      "name": "file-parser-workspace",
+      "description": "Workspace plugin: Achilles skill-build skills, runtime invariants, commit-attribution guard, and workspace subagents (ploinky-router-tracer, ds-spec-finder, achilles-skill-author).",
+      "version": "0.1.0",
+      "source": "./plugins/file-parser-workspace",
+      "category": "development"
+    }
+  ]
+}
