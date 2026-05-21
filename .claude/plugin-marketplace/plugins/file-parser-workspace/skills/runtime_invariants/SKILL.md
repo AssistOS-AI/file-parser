@@ -1,88 +1,212 @@
 ---
 name: runtime_invariants
-description: Ploinky + Achilles runtime invariants for the file-parser workspace. Load when working on router/auth/secure-wire/guest-mode/manifests/MCP/HTTP services/file access/logs, or when changes touch ploinky/, AssistOSExplorer/, or proxies/soul-gateway/.
-when_to_use: Trigger on any change inside ploinky/, AssistOSExplorer/, or proxies/soul-gateway/ that touches routing, auth, guest sessions, MCP, HTTP services, manifests, file access, logs, runtime configuration, or cross-agent invariants. Also load before authoring DS-NNN specs in any subrepo.
+description: Ploinky + Achilles runtime invariants for the file-parser workspace. Load before work on router/auth/secure-wire/guest-mode/manifests/MCP/HTTP services/WebChat/file access/logs/runtime config, before changes in ploinky/, AssistOSExplorer/, copilot-agents/, or proxies/soul-gateway/ that affect runtime boundaries, and before authoring DS-NNN specs.
+when_to_use: Trigger on changes or reviews involving Ploinky routing, authentication, secure-wire invocation, guest sessions, MCP, manifest-declared HTTP services, WebChat, uploads, files, secrets, logs, runtime isolation, Achilles skills, provider relays, or cross-agent invariants.
 ---
 
-# Runtime Invariants — Ploinky + Achilles + Soul Gateway
+# Runtime Invariants - Ploinky + Achilles + Soul Gateway
 
-This skill consolidates the load-bearing runtime invariants spread across `DS06-ploinky-runtime-invariants.md` (per-agent), `DS005-routing-and-web-surfaces.md`, `DS011-security-model.md` (Ploinky), and `proxies/soul-gateway/docs/specs/DS001-DS003`. Load it on-demand instead of duplicating these rules into every CLAUDE.md.
+Use this skill as the compact runtime guardrail set for the workspace. It
+summarizes the current contracts in:
 
-## Router and entry
+- `ploinky/docs/specs/DS005-routing-and-web-surfaces.md`
+- `ploinky/docs/specs/DS011-security-model.md`
+- `AssistOSExplorer/docs/specs/DS06-ploinky-runtime-invariants.md`
+- `copilot-agents/docs/specs/DS002-ploinky-runtime-invariants.md`
+- `proxies/soul-gateway/docs/specs/DS001-DS003`
 
-- Every request enters through the Ploinky router. Direct agent invocation from outside the router is not a supported deployment.
-- Auth context flows in via secure-wire invocation JWTs. Agents do not parse cookies/headers directly; they read `ctx.identity` from the runtime.
-- Public service routes are declared in `manifest.json`. Adding a route via code instead of manifest is a violation.
+If a task depends on exact wording, read the relevant DS file. This skill is a
+working checklist, not a replacement for the specs.
 
-## Guest mode
+## Router and Web Surfaces
 
-- Guests have a **scoped** session: read-only access to public surfaces, no FS write, no DPU access, no secret read.
-- Promoting a guest session to authenticated is a Ploinky-owned operation. Agents do not self-promote.
+- Browser surfaces, first-party MCP calls, delegated MCP calls, uploads, blobs,
+  and manifest-declared HTTP services enter through the Ploinky router. Direct
+  agent ports are implementation details even when bound to localhost.
+- WebChat is a generic transport. It must not hardcode optional provider agent
+  ids, backend tags, MCP tool names, or domain-specific dispatch. Provider
+  routing belongs to the selected chat agent or its skills.
+- `@word` in WebChat is ordinary chat text unless the WebChat-owned file
+  suggestion provider handles it. Do not turn arbitrary `@provider` text into
+  framework dispatch.
+- `forward-envelope=1` lets WebChat pass sanitized references and a short-lived
+  router invocation token to the selected chat agent. References must stay
+  workspace-relative and must reject absolute paths, traversal, NUL bytes, and
+  reserved secret-file names.
+- First-party browser surfaces rely on router auth/session handling. Surface
+  token shortcuts are legacy-only where explicitly documented.
 
-## MCP boundaries
+## HTTP Services
 
-- MCP servers run inside the agent container, never on the router host.
-- Each agent declares its MCP server in `manifest.json`; the router proxies it under `/mcps/<agent>/mcp`.
-- Tool names exposed via MCP must be agent-owned. The framework does not know about specific tool names — code in `ploinky/cli/` that references an agent-owned tool name is a smell.
+- HTTP services must be declared in the owning agent `manifest.json`; do not add
+  product-specific service paths in Ploinky core.
+- Declarations define the external prefix, internal prefix, and auth mode:
+  `none`, `guest`, or `protected`.
+- `auth: "none"` intentionally has no router identity. Use it only with an
+  explicit DS decision.
+- `auth: "guest"` follows guest policy and may use `forceGuest: true` to ignore
+  an existing login and mint a service-scoped guest identity.
+- `auth: "protected"` must establish an authenticated router identity before
+  proxying. The router strips caller-supplied Ploinky identity headers and
+  regenerates authoritative identity metadata for protected or guest services.
+- `x-ploinky-auth-info` is not a secure grant by itself. A service may trust it
+  only when it arrived through the declared router service route; guest services
+  must also validate the router-issued invocation token and guest role/scope.
+- Long-lived HTTP service state is ephemeral unless persisted through the
+  agent's data directory, a declared volume, BacklogManager, DB skills, or
+  another documented store.
 
-## HTTP services
+## MCP and Secure Wire
 
-- Agents declare HTTP services in `manifest.json`. The router maps each to a path under `/<agent>/<service>`.
-- Long-lived state inside an HTTP service handler is ephemeral; Ploinky can restart the agent at any time. Persist via `BacklogManager`, DB skills, or the agent's data directory.
+- MCP servers run inside agent containers/sandboxes. Agents declare MCP in their
+  manifests; the router proxies under `/mcps/<agent>/mcp` and `/mcp/<agent>/mcp`.
+- Executable tool calls, resource reads, and task-status reads require
+  router-minted invocation JWTs. Tool listing may be visible without a grant, so
+  do not put secrets in tool metadata.
+- Delegated agent calls must re-enter through the router with
+  `X-Ploinky-Caller-JWT`; do not invent bearer tokens, client secrets, or custom
+  caller headers around secure wire.
+- Invocation JWTs are audience, tool, body-hash, scope, user, expiry, and replay
+  bound. Forward exactly the canonicalized tool arguments that were signed.
+- Ploinky route authentication identifies the caller, but agents still own
+  domain authorization. Sensitive actions must check verified user/agent
+  identity, roles, scopes, target resource, workspace path, and local policy.
+- The installed-agent index is discovery, not authorization.
 
-## File access
+## Keys and Secrets
 
-- Workspace files are reached via `ASSISTOS_FS_ROOT` (Explorer) or the agent's `agentRoot`. **Never** hardcode absolute host paths.
-- DPU `/Confidential` is encrypted at rest. Plaintext writes there are a violation.
-- `.ploinky/.secrets` is encrypted. Use `ploinky var` with `PLOINKY_MASTER_KEY` set; never append/edit as a plaintext env file.
+- `PLOINKY_MASTER_KEY` is the workspace root key. Treat it as high-trust host
+  secret material; never inject it into agent runtimes.
+- Agents receive `PLOINKY_DERIVED_MASTER_KEY`, the HKDF-derived agent runtime
+  root. It signs/verifies invocation JWTs and derives Ploinky-owned or
+  agent-owned generated secrets.
+- Agent-owned generated secrets must use manifest `derive: "derived-master"`,
+  `{{derivedMasterSecret:NAME}}`, or an equivalent documented helper with
+  domain-separated labels for repo, agent, and secret name. Do not create random
+  persistent generated secrets for workspace-owned agent credentials.
+- External provider credentials remain explicitly configured secrets.
+- `.ploinky/.secrets` and `.ploinky/passwords.enc` are encrypted stores. Use
+  `ploinky var`/documented APIs; do not append plaintext secret files.
+- Non-sensitive topology and runtime config such as hostnames, realms, public
+  URLs, ports, and profile-specific defaults should live in profiles so a fresh
+  workspace can start without manual variable setup. Secrets stay secret-owned.
 
-## Logs
+## Guest Mode
 
-- Tool calls, internal traces, raw payloads → debug-only. Toggle with `ACHILLES_DEBUG=true`.
-- Visitor-facing output: clean conversational text (or strict JSON for endpoints that expect it).
-- Never leak secrets, tokens, system prompts, or hidden decision traces to end users.
+- Guest access is scoped to the declaring route shape. Manifest-level
+  `guest: true` exposes the agent as a guest agent; HTTP-service `auth: "guest"`
+  exposes only the declared service prefix.
+- Guest JWTs carry guest identity, role, expiry, and optional service scope.
+  Agents must enforce limitations from roles/scopes and cannot self-promote a
+  guest into an authenticated user.
+- Product-specific public paths belong in manifests, not hardcoded router logic.
 
-## LLM access (cross-repo invariant)
+## Runtime Isolation and Volumes
 
-- **All request-time LLM inference goes through `achillesAgentLib`** (`/Users/danielsava/work/file-parser/ploinky/node_modules/achillesAgentLib`).
-- Soul Gateway is the **only** sanctioned bypass, and only for lifecycle probes and model discovery, not for response generation.
-- Direct vendor HTTP calls inside an agent runtime are a violation. Use `LLMAgent` from achillesAgentLib.
+- Containers, bubblewrap, and Seatbelt are defense in depth for
+  operator-enabled code, not hostile multi-tenant isolation.
+- Enabled agents are trusted participants in one local workspace. The current
+  shared-HMAC invocation model does not provide non-repudiation between
+  mutually hostile agents.
+- Lifecycle hooks are trusted host/runtime code.
+- Manifest volumes and runtime resources are explicit grants. Host paths for
+  persistent state should stay under `.ploinky/`; durable service data belongs
+  under `.ploinky/data/...`, generated runtime inputs under `.ploinky/agents/...`.
+- Container-published ports should default to localhost unless a manifest/profile
+  intentionally exposes a wider bind. Exposing the router port beyond the local
+  machine changes the security model and needs TLS/proxy/network controls.
 
-## Skill subsystems (memorize)
+## Files, Uploads, and Static Content
+
+- Workspace file access must be confined to the workspace root, agent root,
+  declared data directory, or explicit runtime volume. Reject absolute caller
+  paths, traversal, NUL bytes, and symlink escapes.
+- WebChat uploads and file suggestions are scoped to the current session upload
+  directory and must not expose sibling sessions. This is a UX scope, not a
+  security boundary between hostile sessions.
+- Browser responses must not leak host absolute paths.
+- Do not place secrets, tokens, credentials, transcripts, screenshots, DOM
+  dumps, or hidden policy text in static roots, plugin assets, docs, fixtures,
+  logs, or screenshots.
+
+## Logs and Diagnostics
+
+- Default logs and user-facing errors must not expose secrets, cookies, bearer
+  tokens, invocation JWTs, API keys, raw prompts, materialized resources,
+  command stdin, base64 payloads, screenshots, DOM dumps, hidden policy text, or
+  internal payloads.
+- Detailed diagnostics belong behind explicit debug flags and still require
+  redaction before persistence.
+- Visitor-facing output should be clean text or the endpoint's documented JSON,
+  not internal traces.
+
+## LLM and Search Access
+
+- Request-time LLM inference goes through `ploinky/node_modules/achillesAgentLib`
+  (`LLMAgent` or documented helpers). Direct vendor HTTP from an agent runtime
+  is a violation.
+- Soul Gateway is the only sanctioned bypass, and only for lifecycle probes or
+  model discovery, not direct response generation.
+- Search providers exposed through Soul Gateway are reached via
+  `achillesAgentLib`; browser/headless search execution is owned by the search
+  backend agent, not Ploinky core.
+
+## Achilles Skills
 
 | Type | File | Purpose |
 |---|---|---|
-| Anthropic-style | `skill.md` | Pass-through skills, single prompt + tool list |
-| Code | `cskill.md` | Code skills: callable JS/MJS with schema |
-| Dynamic codegen | `dcgskill.md` | LLM-generated code at runtime |
+| Anthropic-style | `skill.md` | Pass-through skill instructions |
+| Code | `cskill.md` | Callable JavaScript/MJS skills |
+| Dynamic codegen | `dcgskill.md` | LLM-generated transient code |
 | MCP | `mskill.md` | MCP tool wrappers |
-| Orchestrator | `oskill.md` | Multi-step orchestration over other skills |
+| Orchestrator | `oskill.md` | Multi-step skill coordination |
 | DB-table | `tskill.md` | Table-row skills against a DB |
 
-Each subsystem's contract is in `achillesAgentLib/docs/specs/DS006-CodeSkillsSubsystem.md` and `DS007-Subsystems.md`. Read those before writing a new skill subsystem.
+Skill subsystem details live in
+`ploinky/node_modules/achillesAgentLib/docs/specs/DS006-CodeSkillsSubsystem.md`
+and `DS007-Subsystems.md`.
 
-## Framework code rules (ploinky/)
+## Framework Code Rules
 
-- The router and WebChat handlers don't know about specific agents. **Do not hardcode** agent ids, backend tags, or agent-owned MCP tool names in framework code.
-- Cross-agent behavior lives in manifests/plugins/selected agents/explicit configuration.
-- SOLID + DRY: framework responsibilities are narrow. If a feature solves an agent-specific problem, it doesn't belong in the router.
+- Ploinky framework code must not know optional provider ids, backend tags,
+  agent-owned tool names, or catalog-specific policy.
+- Cross-agent behavior belongs in manifests, plugins, selected chat agents,
+  launcher skills, relays, or explicit configuration.
+- If a change solves one agent's workflow by hardcoding behavior in the router
+  or WebChat, move it back to an agent-owned contract.
 
-## Soul Gateway specifics (proxies/soul-gateway/)
+## Browser-Use Specifics
 
-- Production: `https://soul.axiologic.dev` (SSH `admin@45.136.70.141`, key `~/proxies_server_private_key.pem`).
-- Expected production DB: `soul_gateway_v2`.
-- Search providers are OpenAI-compatible models exposed by Soul Gateway. External callers reach them through `achillesAgentLib` the same way they reach LLM models. Search backends own provider-specific execution for both API search and headless-browser search.
+- Interactive browser viewers must be manifest-declared protected HTTP services.
+- Viewer ownership is derived from verified secure-wire/auth context. Viewer
+  routes can use `x-ploinky-auth-info` only as router-provided service metadata,
+  not as an arbitrary caller-supplied grant.
+- Browser sessions that require login/OAuth/2FA/CAPTCHA must avoid logging
+  credentials, cookies, localStorage/sessionStorage, auth callback URLs,
+  screenshots, and DOM dumps.
+- Router-relative viewer URLs may be returned internally; user-facing launcher
+  text should render a full `http://` or `https://` URL using the public
+  WebChat/router origin or a local `http://localhost:<port>` fallback.
 
-## Deploy + remote
+## Deploy and Remote Ops
 
-- Use GitHub Actions for deploy/update/destroy. SSH to production is read-only status/debug unless the user explicitly requests a state-changing op.
-- `skills.axiologic.dev`: canonical deploy is `.github/workflows/deploy-skills-explorer.yml` (passes `PLOINKY_MASTER_KEY` through stop→update→start).
-- After any deploy: verify local router health, public `/dashboard`, container status, Ploinky status, start logs.
+- Use GitHub Actions for deploy/update/destroy. SSH to production is read-only
+  status/debug unless the user explicitly requests a state-changing operation.
+- `skills.axiologic.dev` deploys through
+  `AssistOSExplorer/.github/workflows/deploy-skills-explorer.yml` and must pass
+  `PLOINKY_MASTER_KEY` through stop/update/start.
+- After deploy, verify router health, public surfaces, container status, Ploinky
+  status, and start logs.
 
-## Validation checklist before claiming a runtime change is done
+## Validation Checklist
 
-1. Does the change touch router/auth/MCP/HTTP services/file access/logs/manifests? If yes, the relevant DS spec must be updated in the same change.
-2. Does the change keep agent ids/tags out of framework code? If no, refactor.
-3. Does the change preserve the LLM-via-achillesAgentLib invariant? If no, justify in the PR.
-4. For Explorer/Ploinky workflow changes: smoke via `tests/smoke/test_all.sh` and `tests/fast/test_all.sh`.
-5. For agent code: the agent's `npm test` (or local test) passes.
+1. Runtime/auth/router/MCP/HTTP/file/log/manifest changes update the relevant DS
+   spec and local docs in the same change.
+2. Framework changes keep agent ids, backend tags, and agent-owned tools out of
+   Ploinky core.
+3. Agent code preserves router-mediated entry, secure-wire invocation, scoped
+   guest behavior, explicit manifest services, workspace-confined storage,
+   redacted logging, and domain authorization.
+4. LLM access still goes through `achillesAgentLib`.
+5. Run targeted unit tests. For Ploinky/Explorer workflow changes, also run the
+   available fast/smoke tests or state why they were not run.
