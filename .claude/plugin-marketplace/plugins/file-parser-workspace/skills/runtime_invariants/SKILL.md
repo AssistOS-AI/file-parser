@@ -80,10 +80,18 @@ working checklist, not a replacement for the specs.
 - Agents receive `PLOINKY_DERIVED_MASTER_KEY`, the HKDF-derived agent runtime
   root. It signs/verifies invocation JWTs and derives Ploinky-owned or
   agent-owned generated secrets.
-- Agent-owned generated secrets must use manifest `derive: "derived-master"`,
-  `{{derivedMasterSecret:NAME}}`, or an equivalent documented helper with
-  domain-separated labels for repo, agent, and secret name. Do not create random
-  persistent generated secrets for workspace-owned agent credentials.
+- Agent-owned generated secrets should use manifest `generatedSecret: true` for
+  env entries or `{{generatedSecret:NAME}}` for runtime-resource templates. These
+  derive from the current repo/agent identity plus secret name and ignore
+  operator-supplied values.
+- Legacy `derive: "derived-master"` env entries and
+  `{{derivedMasterSecret:NAME}}` runtime-resource templates are compatibility
+  paths for explicit shared derivations that must pin a logical repo, agent, or
+  secret name different from the current agent. Treat cross-agent shared raw
+  credentials as legacy exceptions and prefer owner-mediated service operations
+  for new designs.
+- Do not create random persistent generated secrets for workspace-owned agent
+  credentials.
 - External provider credentials remain explicitly configured secrets.
 - `.ploinky/.secrets` and `.ploinky/passwords.enc` are encrypted stores. Use
   `ploinky var`/documented APIs; do not append plaintext secret files.
