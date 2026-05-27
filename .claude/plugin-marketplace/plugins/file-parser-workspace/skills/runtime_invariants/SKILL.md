@@ -84,12 +84,9 @@ working checklist, not a replacement for the specs.
   env entries or `{{generatedSecret:NAME}}` for runtime-resource templates. These
   derive from the current repo/agent identity plus secret name and ignore
   operator-supplied values.
-- Legacy `derive: "derived-master"` env entries and
-  `{{derivedMasterSecret:NAME}}` runtime-resource templates are compatibility
-  paths for explicit shared derivations that must pin a logical repo, agent, or
-  secret name different from the current agent. Treat cross-agent shared raw
-  credentials as legacy exceptions and prefer owner-mediated service operations
-  for new designs.
+- Cross-agent shared raw credentials should use manifest `sharedGeneratedSecret: true`
+  so every participating agent derives the same value by env name. Prefer owner-mediated service operations for new
+  designs.
 - Do not create random persistent generated secrets for workspace-owned agent
   credentials.
 - External provider credentials remain explicitly configured secrets.
