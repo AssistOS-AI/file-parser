@@ -2,7 +2,6 @@
   "respectGitignore": true,
   "permissions": {
     "deny": [
-      "Read(**/node_modules/**)",
       "Read(**/.ploinky/repos/**)",
       "Read(**/copilot-agents/.ploinky/repos/**)",
       "Read(**/.history/**)",
