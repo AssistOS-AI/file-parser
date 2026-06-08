@@ -15,7 +15,6 @@ Before writing anything, READ these (cite each with `file:line`):
 1. `/Users/danielsava/work/file-parser/ploinky/node_modules/achillesAgentLib/docs/specs/DS006-CodeSkillsSubsystem.md` — code-skill contract.
 2. `/Users/danielsava/work/file-parser/ploinky/node_modules/achillesAgentLib/docs/specs/DS007-Subsystems.md` — all subsystem contracts.
 3. At least one similar existing skill of the same type from the workspace plugin (`~/.claude/plugins/cache/.../file-parser-workspace/skills/...`) or from `achillesAgentLib/skills/`.
-4. The runtime_invariants skill (auto-loaded with this agent).
 
 If a pre-read is missing, ask the user; do not improvise.
 

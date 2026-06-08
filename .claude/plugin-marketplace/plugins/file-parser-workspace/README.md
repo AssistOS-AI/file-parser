@@ -1,6 +1,6 @@
 # file-parser-workspace
 
-Workspace plugin for `~/work/file-parser`. Consolidates the 8 Achilles skill-build skills (previously duplicated across `file-parser/.claude/skills/`, `AssistOSExplorer/.claude/skills/`, and `ploinky/.claude/skills/`), adds a `runtime_invariants` skill, three workspace subagents, and a `commit_attribution_guard` hook.
+Workspace plugin for `~/work/file-parser`. Consolidates the 8 Achilles skill-build skills (previously duplicated across `file-parser/.claude/skills/`, `AssistOSExplorer/.claude/skills/`, and `ploinky/.claude/skills/`), three workspace subagents, and a `commit_attribution_guard` hook.
 
 ## Skills
 
@@ -12,8 +12,6 @@ Workspace plugin for `~/work/file-parser`. Consolidates the 8 Achilles skill-bui
 - `gamp_specs` — General Architecture Method Pattern specs.
 - `oskill_build` — Build orchestrator skills (`oskill.md`).
 - `review_specs` — Review existing DS specs against contract conventions.
-- `runtime_invariants` — Ploinky + Achilles runtime invariants (load on-demand on router/auth/MCP/HTTP/manifest/file access/log changes).
-
 ## Subagents
 
 - `ploinky-router-tracer` — Trace a request from router → auth → secure-wire → agent.
