@@ -6,11 +6,20 @@ Use this prompt in a fresh Claude Code session from:
 /Users/danielsava/work/file-parser
 ```
 
+Related handoff:
+
+```text
+/Users/danielsava/work/file-parser/docs/handoffs/2026-06-08-webmeet-auth-review-handoff.md
+```
+
 ```text
 Please review two pushed commits that fixed WebMeet failing to load after a fresh Explorer deployment.
 
 Workspace root:
 /Users/danielsava/work/file-parser
+
+Detailed handoff document:
+/Users/danielsava/work/file-parser/docs/handoffs/2026-06-08-webmeet-auth-review-handoff.md
 
 First read the workspace instructions:
 /Users/danielsava/work/file-parser/CLAUDE.md
@@ -78,4 +87,3 @@ Direct MCP smoke against the reinstalled WebMeet container returned:
 
 Please provide review findings first, ordered by severity with file/line references. If there are no blocking issues, say that clearly and list residual risks or useful follow-up tests.
 ```
-
