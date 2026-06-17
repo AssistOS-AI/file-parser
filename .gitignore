@@ -10,19 +10,6 @@ CLAUDE.md
 .claude/last-claude-review.txt
 
 # Nested repositories in this multi-repo checkout.
-AchillesCopilotBasicSkills/
-AssistOSExplorer/
-basic/
-container-image-builds/
-copilot-agents/
-coralFlow/
-llm-runtime/
-local-llm-architectures/
-ploinky/
-proxies/
-webmeetInfra/
-website/
-
 # >>> ploinky default-skills >>>
 .claude
 .agents/
