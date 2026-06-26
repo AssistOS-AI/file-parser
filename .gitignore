@@ -7,6 +7,8 @@ CLAUDE.md
 .idea/
 .agents/
 .claude/worktrees/
+.worktrees/
+worktrees/
 .claude/last-claude-review.txt
 
 # Nested repositories in this multi-repo checkout.
