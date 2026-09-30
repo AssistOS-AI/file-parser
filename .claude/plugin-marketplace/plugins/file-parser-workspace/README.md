@@ -1,17 +1,16 @@
 # file-parser-workspace
 
-Workspace plugin for `~/work/file-parser`. Consolidates the 8 Achilles skill-build skills (previously duplicated across `file-parser/.claude/skills/`, `AssistOSExplorer/.claude/skills/`, and `ploinky/.claude/skills/`), three workspace subagents, and a `commit_attribution_guard` hook.
+Workspace plugin for `~/work/file-parser`. Provides 4 Achilles skill-build skills, three workspace subagents, and a `commit_attribution_guard` hook.
 
 ## Skills
 
-- `achilles_specs` — AchillesAgentLib integration, dependency resolution, runtime config, coding-style additions.
 - `antropic_skill_build` — Build Anthropic-style passthrough skills.
-- `article_build` — Rebuild research-article outputs from plans + assets + bibliography.
 - `cskill_build` — Build code skills (`cskill.md`).
 - `dgskill_build` — Build dynamic code generation skills (`dcgskill.md`).
-- `gamp_specs` — General Architecture Method Pattern specs.
 - `oskill_build` — Build orchestrator skills (`oskill.md`).
-- `review_specs` — Review existing DS specs against contract conventions.
+
+`achilles_specs`, `article_build`, `gamp_specs` and `review_specs` were removed on 2026-09-30. Their current versions come from [DocumentationSkills](https://github.com/AssistOS-AI/DocumentationSkills) as `achilles-specs`, `article-build`, `gamp-specs` and `review-specs`, installed once in the workspace hub `~/work/file-parser/.agents/skills/` and linked into every repository's `.agents/skills/` (and `.claude`).
+
 ## Subagents
 
 - `ploinky-router-tracer` — Trace a request from router → auth → secure-wire → agent.
