@@ -1,0 +1,136 @@
+{
+ "bin": "l1/llama-b11159",
+ "model": "gpt-oss-120b-MXFP4.gguf",
+ "load_mode": "dio",
+ "ctx": 131072,
+ "np": 4,
+ "cold": false,
+ "extra": "",
+ "load_seconds": 16.47,
+ "load_delta_GiB": {
+  "MemFree": -65.98,
+  "MemAvailable": -65.98,
+  "Cached": 1.17
+ },
+ "after_load_GiB": {
+  "MemFree": 34.67,
+  "MemAvailable": 42.94,
+  "Cached": 8.54
+ },
+ "load_rate_GBps": 3.85,
+ "greedy": {
+  "content": "\n\nThe first ten prime numbers are: 2, 3, 5, 7, 11, 13, 17, 19, 23, and 29. \n\n1 is not considered a prime number because a prime number is defined as a natural number greater than 1 that has exactly two distinct positive divisors: 1 and itself. Since 1 only has one positive divisor (itself), it does not meet the definition of a prime number.\n\nThe",
+  "tokens_predicted": 101,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 28,
+   "prompt_ms": 244.187,
+   "prompt_per_token_ms": 8.720964285714286,
+   "prompt_per_second": 114.66621892238327,
+   "predicted_n": 101,
+   "predicted_ms": 1802.362,
+   "predicted_per_token_ms": 18.02362,
+   "predicted_per_second": 55.482749858241576
+  }
+ },
+ "prefill": {
+  "tokens": 117964,
+  "seconds": 82.24,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 117964,
+   "prompt_ms": 81644.13,
+   "prompt_per_token_ms": 0.6921105591536402,
+   "prompt_per_second": 1444.855864101926,
+   "predicted_n": 16,
+   "predicted_ms": 561.074,
+   "predicted_per_token_ms": 37.40493333333333,
+   "predicted_per_second": 26.73444144622635
+  },
+  "mem_GiB": {
+   "MemFree": 28.51,
+   "MemAvailable": 36.89,
+   "Cached": 8.65
+  }
+ },
+ "parallel": {
+  "seconds": 74.67,
+  "timings": [
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 20175.579,
+    "prompt_per_token_ms": 0.7696490043488213,
+    "prompt_per_second": 1299.2935667422482,
+    "predicted_n": 64,
+    "predicted_ms": 43795.244,
+    "predicted_per_token_ms": 695.1626031746032,
+    "predicted_per_second": 1.438512364493277
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 24777.626,
+    "prompt_per_token_ms": 0.9452058442053864,
+    "prompt_per_second": 1057.970606223534,
+    "predicted_n": 64,
+    "predicted_ms": 23772.235,
+    "predicted_per_token_ms": 377.3370634920635,
+    "predicted_per_second": 2.650150480171511
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 12510.721,
+    "prompt_per_token_ms": 0.47725341420614936,
+    "prompt_per_second": 2095.322883469306,
+    "predicted_n": 64,
+    "predicted_ms": 59455.997,
+    "predicted_per_token_ms": 943.7459841269841,
+    "predicted_per_second": 1.0596071578784558
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 26188.706,
+    "prompt_per_token_ms": 0.9990350957503623,
+    "prompt_per_second": 1000.9658361890811,
+    "predicted_n": 64,
+    "predicted_ms": 3246.615,
+    "predicted_per_token_ms": 51.53357142857143,
+    "predicted_per_second": 19.404826257502044
+   }
+  ]
+ },
+ "ok": true,
+ "mem": {
+  "samples": 1787,
+  "seconds": 179.58,
+  "start_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 100.64,
+   "MemAvailable": 108.92,
+   "Cached": 7.37,
+   "Buffers": 1.47,
+   "Shmem": 0.01
+  },
+  "end_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 100.36,
+   "MemAvailable": 108.64,
+   "Cached": 7.37,
+   "Buffers": 1.47,
+   "Shmem": 0.01
+  },
+  "min_MemAvailable_GiB": 28.41,
+  "min_MemFree_GiB": 19.99,
+  "max_Cached_GiB": 8.69,
+  "min_Cached_GiB": 7.37,
+  "max_drop_MemAvailable_GiB": 80.51,
+  "max_psi_full_avg10": 0
+ },
+ "server_log_notes": [
+  "0.00.371.956 I srv    load_model: loading model 'models/gpt-oss-120b-MXFP4.gguf'",
+  "0.16.398.347 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 131072, kv_unified = 'true'"
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "run": "qwen-c256k-np1-mtpoff-cram8192-r1",
+ "status": "INTERRUPTED",
+ "recorded": "2026-09-28T21:40:50",
+ "cause": "The engineering session (and every process it started: followup.sh, serve_check2.py v5, memsample.py, llama-server) ended with the remote process restart; last mem.csv sample 21:31:40.92, last attr sample 21:31:42.21 (local, UTC+2). Independently confirmed at 19:37Z: no research-owned harness/llama process remained and nvidia-smi listed no compute apps.",
+ "progress_at_stop": "loaded; greedy done; prefill of 235,929 tokens on slot 0 in progress (context checkpoint 2 of 32 created at server time 2:37.6); no result JSON, no phase peaks, no post-exit tail written",
+ "raw_files_kept_unchanged": {
+  "qwen-c256k-np1-mtpoff-cram8192-r1-mem.csv": {
+   "sha256": "d783b7207bc6357bc432bdb35c8a90dbb425406a97c12e2979285b59d374649a",
+   "size": 131735,
+   "mtime": "2026-09-28T21:31:40.922385"
+  },
+  "qwen-c256k-np1-mtpoff-cram8192-r1-attr.jsonl": {
+   "sha256": "4e738f422b9890c37ae7697033b6e8faca79b6cd4c29d1f59d51503fdd1dd102",
+   "size": 205876,
+   "mtime": "2026-09-28T21:31:42.278387"
+  },
+  "qwen-c256k-np1-mtpoff-cram8192-r1-server.log": {
+   "sha256": "89f7457e61a34d9470e754c5ddf8924b3014ec0b9ea57ddd31ae1bb89aaf45a6",
+   "size": 55605,
+   "mtime": "2026-09-28T21:31:42.203386"
+  }
+ },
+ "use": "Not a sample and not a memory-validity input (no result record). The raw partial series may be read as a diagnostic only.",
+ "retry": "qwen-c256k-np1-mtpoff-cram8192-r1-a2 (new attempt filename; nothing overwritten)"
+}

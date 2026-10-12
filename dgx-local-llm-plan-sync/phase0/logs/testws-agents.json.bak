@@ -1,0 +1,78 @@
+{
+  "ploinky_local-llms_local-llm_gpu-test-workspace_90b386b1": {
+    "agentName": "local-llm",
+    "repoName": "local-llms",
+    "containerImage": "localhost/local-llm:dev",
+    "createdAt": "2026-09-28T15:50:52.996Z",
+    "projectPath": "/home/research/gpu-test-workspace/.data/local-llm",
+    "runMode": "isolated",
+    "type": "agent",
+    "instanceId": "6380f383-3312-4cee-950d-785e2fd4441b",
+    "enableGeneration": "c80306cc-2cb1-4074-9237-a4a49e65b7bb",
+    "config": {
+      "binds": [
+        {
+          "source": "/home/research/gpu-test-workspace",
+          "target": "/root"
+        },
+        {
+          "source": "/opt/ploinky/Agent",
+          "target": "/Agent"
+        },
+        {
+          "source": "/home/research/gpu-test-workspace/local-llms/local-llm",
+          "target": "/code"
+        }
+      ],
+      "env": [],
+      "ports": []
+    },
+    "auth": {
+      "mode": "none"
+    },
+    "profile": "default"
+  },
+  "_config": {
+    "static": {
+      "agent": "AchillesIDE/gitAgent",
+      "port": 8080
+    }
+  },
+  "ploinky_AchillesIDE_gitAgent_gpu-test-workspace_90b386b1": {
+    "agentName": "gitAgent",
+    "repoName": "AchillesIDE",
+    "containerImage": "docker.io/assistos/ploinky-node@sha256:accd925fcbf460c1f4c7a5cd9e2d46539c615bbfad2e896cabb7556d8050a669",
+    "createdAt": "2026-09-28T15:52:01.852Z",
+    "projectPath": "/home/research/gpu-test-workspace",
+    "runMode": "isolated",
+    "type": "agent",
+    "instanceId": "ff8d6862-8f08-402d-979f-8d30840f7d34",
+    "enableGeneration": "01c483ce-6507-4acd-aa55-c6e69386e956",
+    "config": {
+      "binds": [
+        {
+          "source": "/home/research/gpu-test-workspace",
+          "target": "/root"
+        },
+        {
+          "source": "/opt/ploinky/Agent",
+          "target": "/Agent"
+        },
+        {
+          "source": "/home/research/gpu-test-workspace/.ploinky/repos/AchillesIDE/gitAgent",
+          "target": "/code"
+        }
+      ],
+      "env": [],
+      "ports": [
+        {
+          "containerPort": 7000
+        }
+      ]
+    },
+    "auth": {
+      "mode": "none"
+    },
+    "profile": "default"
+  }
+}

@@ -10,9 +10,8 @@ You find DS-NNN specs. Read-only. Return file paths and one-line summaries.
 
 ## How to search
 
-1. Use the `ploinky-mcp` server's `ds_spec_lookup` tool if available. It walks the workspace and returns DS paths fast.
-2. Fallback: `find ~/work/file-parser -name 'DS*.md' -not -path '*/node_modules/*' -not -path '*/.ploinky/repos/*'`.
-3. For substring matches in spec content, use `grep -l "<term>"` over `docs/specs/**/*.md`.
+1. `find ~/work/file-parser -name 'DS*.md' -not -path '*/node_modules/*' -not -path '*/.ploinky/repos/*'`.
+2. For substring matches in spec content, use `grep -l "<term>"` over `docs/specs/**/*.md`.
 
 ## Output
 

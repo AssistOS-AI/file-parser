@@ -1,0 +1,17 @@
+{
+ "repo": "container-image-builds",
+ "clean": false,
+ "remote_dir": "/home/research/dev/container-image-builds",
+ "base_head": "f10aeb51119be6063a0c12f9e5d537c95ba5386f",
+ "head_ref": "local-llm-multiarch",
+ "captured_at_remote_utc": "2026-09-28T16:41:10Z",
+ "captured_at_local": "2026-09-28T19:41:10+0300",
+ "wip_hash": "248059b1ddeb671d44ff68a25fa3f191ef2a42c1",
+ "files_in_patch": 2,
+ "patch_bytes": 28922,
+ "skipped_untracked": [],
+ "validated": "applies to base_head (git apply --cached --check --binary in a throwaway index)",
+ "restore": "git worktree add <dir> <base_head> && git -C <dir> apply --binary wip.patch",
+ "patch_sha256": "57fb1b9dc7e7d728c4e49c6e9141321f5e8919af79121eb85cd8a71d444ad853",
+ "generation": "gen-20260928T194110-711"
+}

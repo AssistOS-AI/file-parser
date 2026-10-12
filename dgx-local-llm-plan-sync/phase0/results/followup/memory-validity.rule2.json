@@ -1,0 +1,572 @@
+{
+ "rule_version": 2,
+ "generated": "2026-09-28T20:55:23",
+ "rules": "plans/phase0-followup-data-quality_codex.md rev 2, sections 3-5; see this tool's docstring",
+ "attribution_check": null,
+ "runs": [
+  {
+   "run": "120b-c128k-np4-cram1-r1",
+   "raw_sha256": "4653ac12a117702950275f5f5add7eab3b398984b554345638252bde3548490e",
+   "rule_version": 2,
+   "harness_version": 1,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "no 10 s flat post-run window within 60 s of exit",
+    "release: 1.14 GiB missing at exit+10 s, max 1.66 GiB",
+    "overlapped engineering activity: grep -a over the llama.cpp release directory (reads 864M of library files into page cache)"
+   ],
+   "notes": [
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": false,
+    "lock": false,
+    "external": null
+   },
+   "baseline_GiB": 109.33,
+   "baseline_waited_s": 10.0,
+   "quiet_after": null,
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 1.17,
+     "+2s": 1.27,
+     "+5s": 1.27,
+     "+10s": 1.18,
+     "+60s": 1.65
+    },
+    "max_offset_GiB": 1.66,
+    "offset_at_10s_GiB": 1.14,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 66.64,
+   "phase_peaks_GiB": {
+    "greedy": 66.95,
+    "prefill": 73.17,
+    "parallel": 73.38,
+    "coldparallel": 69.12,
+    "longgen": 70.11
+   },
+   "peaks_less_explained_GiB": null,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    1,
+    ""
+   ]
+  },
+  {
+   "run": "120b-c128k-np4-cram4096-r1",
+   "raw_sha256": "2303147489dfa4413c6013923ac6ea4a2f4094d215eb333af659c990137fee48",
+   "rule_version": 2,
+   "harness_version": 1,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "release: 1.82 GiB missing at exit+10 s, max 2.19 GiB"
+   ],
+   "notes": [
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": true,
+    "release": false,
+    "lock": true,
+    "external": null
+   },
+   "baseline_GiB": 109.86,
+   "baseline_waited_s": 30.1,
+   "quiet_after": {
+    "start_after_exit_s": 39.0,
+    "mean_GiB": 109.35,
+    "net_post_minus_pre_GiB": -0.5
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 1.18,
+     "+2s": 1.33,
+     "+5s": 2.19,
+     "+10s": 1.76,
+     "+60s": 0.63
+    },
+    "max_offset_GiB": 2.19,
+    "offset_at_10s_GiB": 1.82,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 67.31,
+   "phase_peaks_GiB": {
+    "greedy": 67.61,
+    "prefill": 67.99,
+    "parallel": 68.61,
+    "coldparallel": 71.77,
+    "longgen": 73.14
+   },
+   "peaks_less_explained_GiB": null,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    4096,
+    ""
+   ]
+  },
+  {
+   "run": "120b-c128k-np4-cram8192-r1",
+   "raw_sha256": "504e2775ad5d212809d9a9150135b17b87281e7476b4a80086e02bda1f6a67f5",
+   "rule_version": 2,
+   "harness_version": 1,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "no 10 s flat post-run window within 60 s of exit"
+   ],
+   "notes": [
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": true,
+    "lock": true,
+    "external": null
+   },
+   "baseline_GiB": 109.53,
+   "baseline_waited_s": 20.0,
+   "quiet_after": null,
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": -0.14,
+     "+2s": 0.05,
+     "+5s": -0.08,
+     "+10s": -0.06,
+     "+60s": 0.61
+    },
+    "max_offset_GiB": 0.39,
+    "offset_at_10s_GiB": -0.08,
+    "ok": true
+   },
+   "at_ready_drop_GiB": 67.1,
+   "phase_peaks_GiB": {
+    "greedy": 67.43,
+    "prefill": 67.81,
+    "parallel": 71.8,
+    "coldparallel": 75.68,
+    "longgen": 75.86
+   },
+   "peaks_less_explained_GiB": null,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "120b-c128k-np4-cram8192-r2",
+   "raw_sha256": "b26687e37f94062daf64eea4646dfd3ba497d0358acf5f889c8bca69f6cc3625",
+   "rule_version": 2,
+   "harness_version": 3,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "post-run level differs from pre-run by -3.91 GiB",
+    "release: 3.78 GiB missing at exit+10 s, max 4.08 GiB"
+   ],
+   "notes": [
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": false,
+    "lock": true,
+    "external": null
+   },
+   "baseline_GiB": 107.86,
+   "baseline_waited_s": 10.0,
+   "quiet_after": {
+    "start_after_exit_s": 12.1,
+    "mean_GiB": 103.96,
+    "net_post_minus_pre_GiB": -3.91
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 2.35,
+     "+2s": 2.62,
+     "+5s": 3.21,
+     "+10s": 3.77,
+     "+60s": 7.82
+    },
+    "max_offset_GiB": 4.08,
+    "offset_at_10s_GiB": 3.78,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 66.85,
+   "phase_peaks_GiB": {
+    "greedy": 66.67,
+    "prefill": 66.9,
+    "parallel": 76.57,
+    "coldparallel": 82.93,
+    "longgen": 78.73
+   },
+   "peaks_less_explained_GiB": null,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "20b-c128k-np4-cram1-r1",
+   "raw_sha256": "975e71887ae84b70e53600bbd21ba2b821922d83b4005957e069565e5c2ec20e",
+   "rule_version": 2,
+   "harness_version": 3,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "post-run level differs from pre-run by -2.29 GiB",
+    "release: 2.36 GiB missing at exit+10 s, max 2.4 GiB",
+    "overlapped engineering activity: node --test: C12 tests, two mutation runs, two full-suite runs (--test-concurrency=1), git commit and push"
+   ],
+   "notes": [
+    "host busy before run: the baseline took 100 s to settle",
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": false,
+    "lock": false,
+    "external": null
+   },
+   "baseline_GiB": 108.79,
+   "baseline_waited_s": 100.3,
+   "quiet_after": {
+    "start_after_exit_s": 0.0,
+    "mean_GiB": 106.5,
+    "net_post_minus_pre_GiB": -2.29
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 2.32,
+     "+2s": 2.3,
+     "+5s": 2.23,
+     "+10s": 2.36,
+     "+60s": 1.58
+    },
+    "max_offset_GiB": 2.4,
+    "offset_at_10s_GiB": 2.36,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 16.51,
+   "phase_peaks_GiB": {
+    "greedy": 16.79,
+    "prefill": 17.81,
+    "parallel": 17.92,
+    "coldparallel": 23.56,
+    "longgen": 23.64
+   },
+   "peaks_less_explained_GiB": null,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-20b-MXFP4.gguf",
+    131072,
+    4,
+    1,
+    ""
+   ]
+  },
+  {
+   "run": "20b-c128k-np4-cram8192-r1",
+   "raw_sha256": "a44cd6615e58dbc5d9b1a08392e5fd56cbaf3002ab5806348b57281357f0a500",
+   "rule_version": 2,
+   "harness_version": 3,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "release: 0.72 GiB missing at exit+10 s, max 0.79 GiB",
+    "overlapped engineering activity: node --test, single test files one after another (C12 work), including controller tests"
+   ],
+   "notes": [
+    "host busy before run: the baseline took 281 s to settle",
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": true,
+    "release": false,
+    "lock": false,
+    "external": null
+   },
+   "baseline_GiB": 109.0,
+   "baseline_waited_s": 280.8,
+   "quiet_after": {
+    "start_after_exit_s": 21.7,
+    "mean_GiB": 109.08,
+    "net_post_minus_pre_GiB": 0.08
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 0.16,
+     "+2s": 0.01,
+     "+5s": 0.55,
+     "+10s": 0.74,
+     "+60s": 0.98
+    },
+    "max_offset_GiB": 0.79,
+    "offset_at_10s_GiB": 0.72,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 16.27,
+   "phase_peaks_GiB": {
+    "greedy": 16.59,
+    "prefill": 17.06,
+    "parallel": 20.01,
+    "coldparallel": 23.01,
+    "longgen": 26.89
+   },
+   "peaks_less_explained_GiB": null,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-20b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  }
+ ],
+ "preserved_phase0": [
+  {
+   "run": "phase0/120b-c128k-np4-dio",
+   "raw_sha256": "5a79310cd9f762a995bd8d6a4999eeb00b29105a8f63bb63159bd8ee37c04a46",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 80.51,
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "phase0/20b-c128k-np4-cram-default",
+   "raw_sha256": "85a284db8da8d9b8b9b4e52e49242ff71b528f04a0d03563c347b96e748d0961",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 25.42,
+   "config": [
+    "gpt-oss-20b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "phase0/20b-c128k-np4-cram-8192-v2",
+   "raw_sha256": "5758adcb6a0a8e12b6c7a717d5337c6a476b1c1d607a6028dbbf668d78f4630e",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 20.3,
+   "config": [
+    "gpt-oss-20b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "phase0/qwen-c128k-np4-mtpoff",
+   "raw_sha256": "e3fffac878a8f8317509d2ce1b53ee735823d1b7c87c4b5b106ad566faafaa12",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 33.37,
+   "config": [
+    "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "phase0/qwen-c128k-np4-mtpon",
+   "raw_sha256": "29a3753c4c1ee95bc65e2dc21308eb887eeff5df4193fb0b35f668de04b8fb7b",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 34.86,
+   "config": [
+    "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    131072,
+    4,
+    8192,
+    "--spec-type draft-mtp --spec-draft-n-max 3"
+   ]
+  },
+  {
+   "run": "phase0/qwen-c256k-np1-mtpoff",
+   "raw_sha256": "31b5f80e9f9003238442483154c9b4e724a0285aada16c758baf8f8ece6e0783",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 31.3,
+   "config": [
+    "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    262144,
+    1,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "phase0/qwen-c256k-np1-mtpon",
+   "raw_sha256": "23e63d5f8e0e1d8ec56c163dea322c8afb6c0ba9b1dd4c6dbe83781f37f21377",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 34.8,
+   "config": [
+    "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    262144,
+    1,
+    8192,
+    "--spec-type draft-mtp --spec-draft-n-max 3"
+   ]
+  }
+ ],
+ "configs": [
+  {
+   "config": {
+    "model": "gpt-oss-120b-MXFP4.gguf",
+    "ctx": 131072,
+    "np": 4,
+    "cache_ram": 1,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "120b-c128k-np4-cram1-r1",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 73.38,
+    "from": "120b-c128k-np4-cram1-r1",
+    "phase": "parallel"
+   }
+  },
+  {
+   "config": {
+    "model": "gpt-oss-120b-MXFP4.gguf",
+    "ctx": 131072,
+    "np": 4,
+    "cache_ram": 4096,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "120b-c128k-np4-cram4096-r1",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 73.14,
+    "from": "120b-c128k-np4-cram4096-r1",
+    "phase": "longgen"
+   }
+  },
+  {
+   "config": {
+    "model": "gpt-oss-120b-MXFP4.gguf",
+    "ctx": 131072,
+    "np": 4,
+    "cache_ram": 8192,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "120b-c128k-np4-cram8192-r1",
+     "INCONCLUSIVE"
+    ],
+    [
+     "120b-c128k-np4-cram8192-r2",
+     "INCONCLUSIVE"
+    ],
+    [
+     "phase0/120b-c128k-np4-dio",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 82.93,
+    "from": "120b-c128k-np4-cram8192-r2",
+    "phase": "coldparallel"
+   }
+  },
+  {
+   "config": {
+    "model": "gpt-oss-20b-MXFP4.gguf",
+    "ctx": 131072,
+    "np": 4,
+    "cache_ram": 1,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "20b-c128k-np4-cram1-r1",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 23.64,
+    "from": "20b-c128k-np4-cram1-r1",
+    "phase": "longgen"
+   }
+  },
+  {
+   "config": {
+    "model": "gpt-oss-20b-MXFP4.gguf",
+    "ctx": 131072,
+    "np": 4,
+    "cache_ram": 8192,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "20b-c128k-np4-cram8192-r1",
+     "INCONCLUSIVE"
+    ],
+    [
+     "phase0/20b-c128k-np4-cram-default",
+     "INCONCLUSIVE"
+    ],
+    [
+     "phase0/20b-c128k-np4-cram-8192-v2",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 26.89,
+    "from": "20b-c128k-np4-cram8192-r1",
+    "phase": "longgen"
+   }
+  }
+ ]
+}

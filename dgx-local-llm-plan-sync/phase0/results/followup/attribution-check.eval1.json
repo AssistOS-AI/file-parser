@@ -1,0 +1,21 @@
+{
+ "check": "rev 2, 4e: controlled 2 GiB anonymous allocation, no GPU, under the memory lock",
+ "attribution_sha256": "54ec1f0cf10a1b09223f21f360da605e0c4c348933267335302a1fe8154d480c",
+ "lock_wait_s": 288.5,
+ "samples": 68,
+ "errors": [],
+ "helper": {
+  "alloc_start": 1790621945.444,
+  "touched": 1790621946.096,
+  "released": 1790621966.097
+ },
+ "external_before_GiB": 0.12,
+ "external_while_held_GiB": -1.7,
+ "external_after_GiB": -3.98,
+ "external_step_GiB": -1.82,
+ "rise_seen_s_after_touched": 0.05,
+ "runner_range_GiB": 0.0,
+ "residual_range_GiB": 0.76,
+ "drop_step_GiB": -1.44,
+ "pass": false
+}

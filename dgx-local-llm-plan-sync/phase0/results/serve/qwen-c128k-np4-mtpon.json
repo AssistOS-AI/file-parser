@@ -1,0 +1,148 @@
+{
+ "bin": "l1/llama-b11159",
+ "model": "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+ "load_mode": "dio",
+ "ctx": 131072,
+ "np": 4,
+ "cold": false,
+ "extra": "--spec-type draft-mtp --spec-draft-n-max 3",
+ "load_seconds": 7.66,
+ "load_delta_GiB": {
+  "MemFree": -29.13,
+  "MemAvailable": -29.02,
+  "Cached": 1.73
+ },
+ "after_load_GiB": {
+  "MemFree": 26.39,
+  "MemAvailable": 82.01,
+  "Cached": 54.1
+ },
+ "load_rate_GBps": 2.98,
+ "greedy": {
+  "content": "\n\n<think>\nHere's a thinking process:\n\n1.  **Analyze User Input:**\n   - Statement: \"The capital of France is Paris.\" (True, but irrelevant to the main task)\n   - Task 1: \"List the first ten prime numbers\"\n   - Task 2: \"Explain in two sentences why 1 is not a prime number.\"\n\n2.  **Task 1: First ten prime numbers**\n   - Primes are natural numbers greater than 1 that have exactly two distinct positive divisors: 1 and themselves.\n   - Let's list them: ",
+  "tokens_predicted": 128,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 28,
+   "prompt_ms": 215.1,
+   "prompt_per_token_ms": 7.682142857142857,
+   "prompt_per_second": 130.1720130172013,
+   "predicted_n": 128,
+   "predicted_ms": 1332.938,
+   "predicted_per_token_ms": 10.495574803149607,
+   "predicted_per_second": 95.27825000112531,
+   "draft_n": 109,
+   "draft_n_accepted": 90
+  }
+ },
+ "prefill": {
+  "tokens": 117964,
+  "seconds": 58.88,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 117964,
+   "prompt_ms": 58591.856,
+   "prompt_per_token_ms": 0.49669268590417415,
+   "prompt_per_second": 2013.3173456734328,
+   "predicted_n": 16,
+   "predicted_ms": 219.086,
+   "predicted_per_token_ms": 14.605733333333335,
+   "predicted_per_second": 68.46626438932657,
+   "draft_n": 11,
+   "draft_n_accepted": 11
+  },
+  "mem_GiB": {
+   "MemFree": 24.46,
+   "MemAvailable": 80.86,
+   "Cached": 54.88
+  }
+ },
+ "parallel": {
+  "seconds": 75.54,
+  "timings": [
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 27738.503,
+    "prompt_per_token_ms": 1.0581560616464485,
+    "prompt_per_second": 945.0401847569063,
+    "predicted_n": 64,
+    "predicted_ms": 23391.194,
+    "predicted_per_token_ms": 371.28879365079365,
+    "predicted_per_second": 2.6933212558538053,
+    "draft_n": 48,
+    "draft_n_accepted": 46
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 19293.29,
+    "prompt_per_token_ms": 0.7359918364232853,
+    "prompt_per_second": 1358.7107227435029,
+    "predicted_n": 64,
+    "predicted_ms": 28846.31,
+    "predicted_per_token_ms": 457.8779365079365,
+    "predicted_per_second": 2.1839881773439997,
+    "draft_n": 48,
+    "draft_n_accepted": 47
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 29325.17,
+    "prompt_per_token_ms": 1.1186835278858624,
+    "prompt_per_second": 893.907861403702,
+    "predicted_n": 64,
+    "predicted_ms": 886.655,
+    "predicted_per_token_ms": 14.073888888888888,
+    "predicted_per_second": 71.05356649429598,
+    "draft_n": 47,
+    "draft_n_accepted": 47
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 11139.081,
+    "prompt_per_token_ms": 0.4249287022201877,
+    "prompt_per_second": 2353.3359708938287,
+    "predicted_n": 64,
+    "predicted_ms": 22704.32,
+    "predicted_per_token_ms": 360.38603174603173,
+    "predicted_per_second": 2.774802328367465,
+    "draft_n": 49,
+    "draft_n_accepted": 46
+   }
+  ]
+ },
+ "ok": true,
+ "mem": {
+  "samples": 1461,
+  "seconds": 146.62,
+  "start_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 55.52,
+   "MemAvailable": 111.02,
+   "Cached": 52.36,
+   "Buffers": 1.79,
+   "Shmem": 0.01
+  },
+  "end_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 53.71,
+   "MemAvailable": 111.11,
+   "Cached": 54.21,
+   "Buffers": 1.79,
+   "Shmem": 0.01
+  },
+  "min_MemAvailable_GiB": 76.16,
+  "min_MemFree_GiB": 19.12,
+  "max_Cached_GiB": 55.82,
+  "min_Cached_GiB": 52.36,
+  "max_drop_MemAvailable_GiB": 34.86,
+  "max_psi_full_avg10": 0
+ },
+ "server_log_notes": [
+  "0.00.347.541 I srv    load_model: loading model 'models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf'",
+  "0.07.113.384 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 131072, kv_unified = 'true'"
+ ]
+}

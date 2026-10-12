@@ -1,0 +1,122 @@
+STEP 1/12: FROM docker.io/assistos/ploinky-node:24-trixie-tools@sha256:accd925fcbf460c1f4c7a5cd9e2d46539c615bbfad2e896cabb7556d8050a669
+Trying to pull docker.io/assistos/ploinky-node@sha256:accd925fcbf460c1f4c7a5cd9e2d46539c615bbfad2e896cabb7556d8050a669...
+Getting image source signatures
+Copying blob sha256:4e24ff4642ac1fabc8b1db6074ff1f80277ed13dc84841487ef8f4a5be3a9313
+Copying blob sha256:c6362cf6a10697fe83281ef3fd928e5fb15be872bb08f90d8f0488b50431e241
+Copying blob sha256:7821f4430204ca5a127a8361257d0511d4dc3a6e88a9c2b565d9323390b8da30
+Copying blob sha256:0b76c102c1dc0cc79c6df4e841b0b1d3064285a37ed5b61725d0c6f027254285
+Copying blob sha256:e7abb520f80cc7047427503cbb53d9466a0b3dc0e728e8fdadf629141bcacca0
+Copying blob sha256:bf7af0229701decd1b9f42143504fc8f69e5664c37e57001d198e731e4f86c2e
+Copying config sha256:07fd7e99fa11ca9bab2f06792e94fff2952bb30fcc8f6703227e96cde64fa7f1
+Writing manifest to image destination
+STEP 2/12: ARG TARGETARCH
+--> 7046c23741df
+STEP 3/12: ARG RELEASE_MIRROR=
+--> 58ba5768c36f
+STEP 4/12: USER root
+--> d77efe6e281e
+STEP 5/12: RUN set -eu;     test "${TARGETARCH:-arm64}" = arm64;     test "$(uname -m)" = aarch64;     llama=b11159;     fetch() {         name=$1; url=$2; sha=$3;         if [ -n "$RELEASE_MIRROR" ]; then url="$RELEASE_MIRROR/$name"; fi;         curl -fsSL --retry 5 --retry-all-errors -o "/tmp/$name" "$url";         printf '%s  %s\n' "$sha" "/tmp/$name" | sha256sum --check --strict -;     };     fetch "llama-$llama-bin-ubuntu-cuda-13.4-arm64.tar.gz"         "https://github.com/ggml-org/llama.cpp/releases/download/$llama/llama-$llama-bin-ubuntu-cuda-13.4-arm64.tar.gz"         258c9dc7c6c02fd2d805ebf9511876ab7b9d7b2d3f0c2166454d682ccae7644b;     fetch "cudart-llama-$llama-bin-ubuntu-cuda-13.4-arm64.tar.gz"         "https://github.com/ggml-org/llama.cpp/releases/download/$llama/cudart-llama-$llama-bin-ubuntu-cuda-13.4-arm64.tar.gz"         34d8602d0084b2498dbf0c436fe2d1d4e54ba577b8d5567eb56990e8fff11bfa;     mkdir -p /opt/llama.cpp /opt/local-llm;     tar -xzf "/tmp/llama-$llama-bin-ubuntu-cuda-13.4-arm64.tar.gz" -C /opt/llama.cpp --strip-components=1 --no-same-owner;     tar -xzf "/tmp/cudart-llama-$llama-bin-ubuntu-cuda-13.4-arm64.tar.gz" -C /opt/llama.cpp --strip-components=1 --no-same-owner;     rm -f /tmp/*.tar.gz;     chown -R root:root /opt/llama.cpp /opt/local-llm;     chmod -R go-w /opt/llama.cpp;     /opt/llama.cpp/llama-server --version 2>&1 | grep -q "build 11159,";     printf 'architecture=arm64\nllama_cpp=%s\nllama_cpp_cuda=13.4\nllama_cpp_build=release\ngpu_compute_capabilities=12.1\n' "$llama" > /opt/local-llm/source.contract;     chmod 0444 /opt/local-llm/source.contract
+/tmp/llama-b11159-bin-ubuntu-cuda-13.4-arm64.tar.gz: OK
+/tmp/cudart-llama-b11159-bin-ubuntu-cuda-13.4-arm64.tar.gz: OK
+--> 3fca479219e8
+STEP 6/12: RUN set -eu;     uv=0.12.18;     apt-get update;     apt-get install -y --no-install-recommends gcc libc6-dev libpython3.13-dev;     rm -rf /var/lib/apt/lists/*;     name="uv-aarch64-unknown-linux-gnu.tar.gz";     url="https://github.com/astral-sh/uv/releases/download/$uv/$name";     if [ -n "$RELEASE_MIRROR" ]; then url="$RELEASE_MIRROR/$name"; fi;     curl -fsSL --retry 5 --retry-all-errors -o "/tmp/$name" "$url";     printf '%s  %s\n' afb6291f3f0a6b4521fc67b947822506c41dde5b60d2189dd8f3695b2ac8c9e7 "/tmp/$name" | sha256sum --check --strict -;     tar -xzf "/tmp/$name" -C /usr/local/bin --strip-components=1 --no-same-owner uv-aarch64-unknown-linux-gnu/uv;     rm -f "/tmp/$name";     chown root:root /usr/local/bin/uv;     chmod 0755 /usr/local/bin/uv;     /usr/local/bin/uv --version 2>&1 | grep -q "uv $uv";     install -d -o 1000 -g 1000 -m 0755 /opt/runners;     chmod u+w /opt/local-llm/source.contract;     printf 'uv=%s\n' "$uv" >> /opt/local-llm/source.contract;     chmod 0444 /opt/local-llm/source.contract
+Get:1 http://deb.debian.org/debian trixie InRelease [140 kB]
+Get:2 http://deb.debian.org/debian trixie-updates InRelease [47.3 kB]
+Get:3 http://deb.debian.org/debian-security trixie-security InRelease [43.4 kB]
+Get:4 http://deb.debian.org/debian trixie/main arm64 Packages [9614 kB]
+Get:5 http://deb.debian.org/debian trixie-updates/main arm64 Packages [4424 B]
+Get:6 http://deb.debian.org/debian-security trixie-security/main arm64 Packages [264 kB]
+Fetched 10.1 MB in 2s (4806 kB/s)
+Reading package lists...
+Reading package lists...
+Building dependency tree...
+Reading state information...
+gcc is already the newest version (4:14.2.0-1).
+gcc set to manually installed.
+The following additional packages will be installed:
+  libc-bin libc-dev-bin libc6 libexpat1-dev libpython3.13
+  libpython3.13-minimal libpython3.13-stdlib python3.13 python3.13-minimal
+  zlib1g-dev
+The following NEW packages will be installed:
+  libexpat1-dev libpython3.13 libpython3.13-dev zlib1g-dev
+The following packages will be upgraded:
+  libc-bin libc-dev-bin libc6 libc6-dev libpython3.13-minimal
+  libpython3.13-stdlib python3.13 python3.13-minimal
+8 upgraded, 4 newly installed, 0 to remove and 22 not upgraded.
+Need to get 18.2 MB of archives.
+After this operation, 35.7 MB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian trixie/main arm64 libc6-dev arm64 2.41-12+deb13u4 [1624 kB]
+Get:2 http://deb.debian.org/debian trixie/main arm64 libc-dev-bin arm64 2.41-12+deb13u4 [59.1 kB]
+Get:3 http://deb.debian.org/debian trixie/main arm64 libc6 arm64 2.41-12+deb13u4 [2484 kB]
+Get:4 http://deb.debian.org/debian trixie/main arm64 libc-bin arm64 2.41-12+deb13u4 [552 kB]
+Get:5 http://deb.debian.org/debian trixie/main arm64 python3.13 arm64 3.13.5-2+deb13u5 [757 kB]
+Get:6 http://deb.debian.org/debian trixie/main arm64 libpython3.13-stdlib arm64 3.13.5-2+deb13u5 [1895 kB]
+Get:7 http://deb.debian.org/debian trixie/main arm64 python3.13-minimal arm64 3.13.5-2+deb13u5 [2008 kB]
+Get:8 http://deb.debian.org/debian trixie/main arm64 libpython3.13-minimal arm64 3.13.5-2+deb13u5 [856 kB]
+Get:9 http://deb.debian.org/debian trixie/main arm64 libexpat1-dev arm64 2.8.3-1~deb13u1 [163 kB]
+Get:10 http://deb.debian.org/debian trixie/main arm64 libpython3.13 arm64 3.13.5-2+deb13u5 [1977 kB]
+Get:11 http://deb.debian.org/debian trixie/main arm64 zlib1g-dev arm64 1:1.3.dfsg+really1.3.1-1+b1 [917 kB]
+Get:12 http://deb.debian.org/debian trixie/main arm64 libpython3.13-dev arm64 3.13.5-2+deb13u5 [4933 kB]
+Preconfiguring packages ...
+Fetched 18.2 MB in 1s (13.6 MB/s)
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17808 files and directories currently installed.)
+Preparing to unpack .../libc6-dev_2.41-12+deb13u4_arm64.deb ...
+Unpacking libc6-dev:arm64 (2.41-12+deb13u4) over (2.41-12+deb13u3) ...
+Preparing to unpack .../libc-dev-bin_2.41-12+deb13u4_arm64.deb ...
+Unpacking libc-dev-bin (2.41-12+deb13u4) over (2.41-12+deb13u3) ...
+Preparing to unpack .../libc6_2.41-12+deb13u4_arm64.deb ...
+Unpacking libc6:arm64 (2.41-12+deb13u4) over (2.41-12+deb13u3) ...
+Setting up libc6:arm64 (2.41-12+deb13u4) ...
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17809 files and directories currently installed.)
+Preparing to unpack .../libc-bin_2.41-12+deb13u4_arm64.deb ...
+Unpacking libc-bin (2.41-12+deb13u4) over (2.41-12+deb13u3) ...
+Setting up libc-bin (2.41-12+deb13u4) ...
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 17809 files and directories currently installed.)
+Preparing to unpack .../0-python3.13_3.13.5-2+deb13u5_arm64.deb ...
+Unpacking python3.13 (3.13.5-2+deb13u5) over (3.13.5-2+deb13u4) ...
+Preparing to unpack .../1-libpython3.13-stdlib_3.13.5-2+deb13u5_arm64.deb ...
+Unpacking libpython3.13-stdlib:arm64 (3.13.5-2+deb13u5) over (3.13.5-2+deb13u4) ...
+Preparing to unpack .../2-python3.13-minimal_3.13.5-2+deb13u5_arm64.deb ...
+Unpacking python3.13-minimal (3.13.5-2+deb13u5) over (3.13.5-2+deb13u4) ...
+Preparing to unpack .../3-libpython3.13-minimal_3.13.5-2+deb13u5_arm64.deb ...
+Unpacking libpython3.13-minimal:arm64 (3.13.5-2+deb13u5) over (3.13.5-2+deb13u4) ...
+Selecting previously unselected package libexpat1-dev:arm64.
+Preparing to unpack .../4-libexpat1-dev_2.8.3-1~deb13u1_arm64.deb ...
+Unpacking libexpat1-dev:arm64 (2.8.3-1~deb13u1) ...
+Selecting previously unselected package libpython3.13:arm64.
+Preparing to unpack .../5-libpython3.13_3.13.5-2+deb13u5_arm64.deb ...
+Unpacking libpython3.13:arm64 (3.13.5-2+deb13u5) ...
+Selecting previously unselected package zlib1g-dev:arm64.
+Preparing to unpack .../6-zlib1g-dev_1%3a1.3.dfsg+really1.3.1-1+b1_arm64.deb ...
+Unpacking zlib1g-dev:arm64 (1:1.3.dfsg+really1.3.1-1+b1) ...
+Selecting previously unselected package libpython3.13-dev:arm64.
+Preparing to unpack .../7-libpython3.13-dev_3.13.5-2+deb13u5_arm64.deb ...
+Unpacking libpython3.13-dev:arm64 (3.13.5-2+deb13u5) ...
+Setting up libpython3.13-minimal:arm64 (3.13.5-2+deb13u5) ...
+Setting up python3.13-minimal (3.13.5-2+deb13u5) ...
+Setting up libc-dev-bin (2.41-12+deb13u4) ...
+Setting up libpython3.13-stdlib:arm64 (3.13.5-2+deb13u5) ...
+Setting up libpython3.13:arm64 (3.13.5-2+deb13u5) ...
+Setting up python3.13 (3.13.5-2+deb13u5) ...
+Setting up libc6-dev:arm64 (2.41-12+deb13u4) ...
+Setting up libexpat1-dev:arm64 (2.8.3-1~deb13u1) ...
+Setting up zlib1g-dev:arm64 (1:1.3.dfsg+really1.3.1-1+b1) ...
+Setting up libpython3.13-dev:arm64 (3.13.5-2+deb13u5) ...
+Processing triggers for libc-bin (2.41-12+deb13u4) ...
+/tmp/uv-aarch64-unknown-linux-gnu.tar.gz: OK
+--> f95fd1f9825e
+STEP 7/12: COPY --chmod=0444 runners.lock.arm64.json /opt/local-llm/runners.lock.json
+--> 048a83c15a0c
+STEP 8/12: ENV PATH=/usr/local/nvidia/bin:/opt/llama.cpp:/opt/ollama/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+--> bff9db064080
+STEP 9/12: ENV LD_LIBRARY_PATH=/usr/local/nvidia/lib64
+--> 273022f7e9f0
+STEP 10/12: ENTRYPOINT []
+--> af7b0849f2b4
+STEP 11/12: CMD ["node"]
+--> 917d64883039
+STEP 12/12: USER 1000:1000
+COMMIT localhost/local-llm:dev
+--> b14cdc2705ee
+Successfully tagged localhost/local-llm:dev
+b14cdc2705eeb0aa60fd9f83a5570ff7694b18c7b93353938f37d1850758953c

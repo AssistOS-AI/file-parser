@@ -1,0 +1,12 @@
+{
+ "when": "active",
+ "signal": "TERM",
+ "model": "gpt-oss-20b-MXFP4.gguf",
+ "ctx": 32768,
+ "np": 4,
+ "baseline_GiB": 109.42,
+ "baseline_spread_GiB": 0.075,
+ "drop_at_signal_GiB": 14.25,
+ "ok": false,
+ "error": "Command '['/home/research/phase0/tools/gpurun', 'l1/llama-b11159/llama-server', '-m', 'models/gpt-oss-20b-MXFP4.gguf', '--host', '127.0.0.1', '--port', '18092', '--no-webui', '-ngl', '99', '-fa', 'on', '-b', '2048', '-ub', '2048', '-t', '10', '-c', '32768', '-np', '4', '--load-mode', 'dio', '--cache-ram', '8192', '--kv-unified']' timed out after 120 seconds"
+}

@@ -1,0 +1,657 @@
+{
+ "harness_version": 5,
+ "harness_sha256": "babbc54e1ee54bdc177a09dd5e7cf1da31a68b937f1973af16d3fdd899020ea6",
+ "bin": "l1/llama-b11159",
+ "model": "gpt-oss-120b-MXFP4.gguf",
+ "ctx": 131072,
+ "np": 4,
+ "cache_ram": 1,
+ "load_mode": "dio",
+ "patterns": [
+  "greedy",
+  "prefill",
+  "parallel",
+  "coldparallel",
+  "longgen"
+ ],
+ "extra": "",
+ "phases": [
+  {
+   "name": "load",
+   "start": 1790622055.011,
+   "end": 1790622071.502,
+   "peak_drop_GiB": 68.41,
+   "gpu_used_MiB_max": 65591
+  },
+  {
+   "name": "settle",
+   "start": 1790622071.502,
+   "end": 1790622073.502,
+   "peak_drop_GiB": 69.22,
+   "gpu_used_MiB_max": 65612
+  },
+  {
+   "name": "greedy",
+   "start": 1790622073.502,
+   "end": 1790622075.597,
+   "ok": true,
+   "overlap": null,
+   "peak_drop_GiB": 69.44,
+   "gpu_used_MiB_max": 65712
+  },
+  {
+   "name": "prefill",
+   "start": 1790622075.597,
+   "end": 1790622159.66,
+   "ok": true,
+   "overlap": null,
+   "peak_drop_GiB": 71.25,
+   "gpu_used_MiB_max": 65724
+  },
+  {
+   "name": "parallel",
+   "start": 1790622159.66,
+   "end": 1790622235.256,
+   "ok": true,
+   "overlap": {
+    "all_overlap_s": 73.136,
+    "distinct_slots": 4
+   },
+   "peak_drop_GiB": 71.03,
+   "gpu_used_MiB_max": 65724
+  },
+  {
+   "name": "coldparallel",
+   "start": 1790622235.256,
+   "end": 1790622321.545,
+   "ok": true,
+   "overlap": {
+    "all_overlap_s": 35.572,
+    "distinct_slots": 4
+   },
+   "peak_drop_GiB": 76.21,
+   "gpu_used_MiB_max": 65724
+  },
+  {
+   "name": "longgen",
+   "start": 1790622321.545,
+   "end": 1790622418.347,
+   "ok": true,
+   "overlap": {
+    "all_overlap_s": 96.735,
+    "distinct_slots": 4
+   },
+   "peak_drop_GiB": 75.67,
+   "gpu_used_MiB_max": 65724
+  }
+ ],
+ "requests": [
+  {
+   "pattern": "greedy",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790622073.502,
+   "end": 1790622075.597,
+   "slot": 3,
+   "prompt_n": 28,
+   "predicted_n": 101,
+   "prompt_tps": 110.57447388270418,
+   "predicted_tps": 54.40385614532358,
+   "stop_type": "eos",
+   "stopping_word": "",
+   "content": "\n\nThe first ten prime numbers are: 2, 3, 5, 7, 11, 13, 17, 19, 23, and 29. \n\n1 is not considered a prime number because a prime number is defined as a natural number greater than 1 that has exactly two distinct positive divisors: 1 and itself. Since 1 only has one positive divisor (itself), it does not meet the definition of a prime number.\n\nThe",
+   "ok": true,
+   "stop_reason": "eos"
+  },
+  {
+   "pattern": "prefill",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790622076.301,
+   "end": 1790622159.659,
+   "slot": 2,
+   "prompt_n": 117964,
+   "predicted_n": 16,
+   "prompt_tps": 1425.653781977988,
+   "predicted_tps": 25.776871959403145,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790622160.325,
+   "end": 1790622234.785,
+   "slot": 2,
+   "prompt_n": 26214,
+   "predicted_n": 64,
+   "prompt_tps": 1048.7753345516903,
+   "predicted_tps": 2.629105786870496,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 1,
+   "status": 200,
+   "error": null,
+   "start": 1790622160.327,
+   "end": 1790622234.183,
+   "slot": 1,
+   "prompt_n": 26214,
+   "predicted_n": 64,
+   "prompt_tps": 1263.7653960844389,
+   "predicted_tps": 1.4288458576964782,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 2,
+   "status": 200,
+   "error": null,
+   "start": 1790622160.328,
+   "end": 1790622233.465,
+   "slot": 0,
+   "prompt_n": 26214,
+   "predicted_n": 64,
+   "prompt_tps": 2028.5256486151563,
+   "predicted_tps": 1.046610603889833,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 3,
+   "status": 200,
+   "error": null,
+   "start": 1790622160.329,
+   "end": 1790622235.256,
+   "slot": 3,
+   "prompt_n": 26214,
+   "predicted_n": 64,
+   "prompt_tps": 996.2083733187321,
+   "predicted_tps": 18.999383877122845,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790622236.042,
+   "end": 1790622321.545,
+   "slot": 3,
+   "prompt_n": 29491,
+   "predicted_n": 16,
+   "prompt_tps": 946.3271941275152,
+   "predicted_tps": 25.43053902570519,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 1,
+   "status": 200,
+   "error": null,
+   "start": 1790622236.045,
+   "end": 1790622271.621,
+   "slot": 0,
+   "prompt_n": 29491,
+   "predicted_n": 16,
+   "prompt_tps": 1921.8385003990174,
+   "predicted_tps": 0.7421936810817502,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 2,
+   "status": 200,
+   "error": null,
+   "start": 1790622236.047,
+   "end": 1790622295.295,
+   "slot": 1,
+   "prompt_n": 29491,
+   "predicted_n": 16,
+   "prompt_tps": 1287.2431804504902,
+   "predicted_tps": 0.5954100553326472,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 3,
+   "status": 200,
+   "error": null,
+   "start": 1790622236.049,
+   "end": 1790622321.006,
+   "slot": 2,
+   "prompt_n": 29491,
+   "predicted_n": 16,
+   "prompt_tps": 996.4593273725528,
+   "predicted_tps": 0.5834317064016071,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790622321.581,
+   "end": 1790622418.347,
+   "slot": 2,
+   "prompt_n": 1024,
+   "predicted_n": 2048,
+   "prompt_tps": 617.7539095255964,
+   "predicted_tps": 21.52628286050964,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 1,
+   "status": 200,
+   "error": null,
+   "start": 1790622321.582,
+   "end": 1790622418.318,
+   "slot": 1,
+   "prompt_n": 1024,
+   "predicted_n": 2048,
+   "prompt_tps": 640.8687777368195,
+   "predicted_tps": 21.519184405460205,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 2,
+   "status": 200,
+   "error": null,
+   "start": 1790622321.582,
+   "end": 1790622418.318,
+   "slot": 0,
+   "prompt_n": 1024,
+   "predicted_n": 2048,
+   "prompt_tps": 640.2520992640852,
+   "predicted_tps": 21.51917490416372,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 3,
+   "status": 200,
+   "error": null,
+   "start": 1790622321.583,
+   "end": 1790622418.347,
+   "slot": 3,
+   "prompt_n": 1024,
+   "predicted_n": 2048,
+   "prompt_tps": 1181.5570937849404,
+   "predicted_tps": 21.526287161554084,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  }
+ ],
+ "memlock_wait_s": 36.8,
+ "baseline": {
+  "MemAvailable": 114336427130.88,
+  "spread_GiB": 0.204,
+  "waited_s": 80.2
+ },
+ "baseline_meminfo": {
+  "MemAvailable": 114356563968,
+  "Cached": 19151720448,
+  "Unevictable": 22188032,
+  "Mlocked": 22188032,
+  "AnonPages": 9783103488,
+  "Shmem": 8060928,
+  "epoch": 1790622054.51
+ },
+ "attribution_sha256": "54ec1f0cf10a1b09223f21f360da605e0c4c348933267335302a1fe8154d480c",
+ "argv": [
+  "l1/llama-b11159/llama-server",
+  "-m",
+  "models/gpt-oss-120b-MXFP4.gguf",
+  "--host",
+  "127.0.0.1",
+  "--port",
+  "18090",
+  "--no-webui",
+  "-lv",
+  "4",
+  "-ngl",
+  "99",
+  "-fa",
+  "on",
+  "-b",
+  "2048",
+  "-ub",
+  "2048",
+  "-t",
+  "10",
+  "-c",
+  "131072",
+  "-np",
+  "4",
+  "--load-mode",
+  "dio",
+  "--kv-unified",
+  "--cache-ram",
+  "1"
+ ],
+ "load_seconds": 16.49,
+ "at_ready_drop_GiB": 69.19,
+ "stop_signal_epoch": 1790622418.347,
+ "exit_epoch": 1790622419.564,
+ "ok": true,
+ "release": {
+  "end_drop_GiB": -2.72,
+  "seconds_to_within_0.5GiB": 0.1
+ },
+ "drift": true,
+ "gpu_used_MiB_max": 65724,
+ "peak_drop_GiB": 76.21,
+ "buffers_MiB": {
+  "CUDA0 model": 59851.68,
+  "CUDA_Host model": 586.82,
+  "CUDA_Host output": 3.07,
+  "CUDA0 KV": 4698.0,
+  "CUDA0 compute": 869.07,
+  "CUDA_Host compute": 567.08
+ },
+ "buffers_total_GiB": 65.02,
+ "cache_events": {
+  "saved": 24,
+  "skipped_exceeds_limit": 10,
+  "cleared_idle": 0,
+  "no_memory_slot": 0
+ },
+ "baseline_spread_GiB": 0.204,
+ "v4": {
+  "baseline": {
+   "waited_s": 80.2,
+   "wait_over_60s": true,
+   "idle_reference_GiB": 109.4,
+   "off_reference_GiB": -2.92,
+   "off_reference": true
+  },
+  "release_10s": {
+   "offsets_GiB": {
+    "+0s": -2.86,
+    "+2s": -2.89,
+    "+5s": -2.47,
+    "+10s": -2.97,
+    "+60s": -2.15
+   },
+   "max_offset_GiB": -2.45,
+   "offset_at_10s_GiB": -2.96,
+   "ok": true
+  },
+  "quiet_after": {
+   "start_after_exit_s": 7.2,
+   "mean_GiB": 109.49,
+   "net_post_minus_pre_GiB": 3.01
+  },
+  "external": {
+   "formula": "external = (AnonPages + Shmem) - runner (RssAnon + RssShmem), minus the same at the pre-run baseline",
+   "max_abs_growth_GiB": 8.63,
+   "within_0.5GiB": false,
+   "phases": [
+    {
+     "name": "load",
+     "external_growth_max_GiB": 0.89,
+     "external_growth_min_GiB": -1.85,
+     "peak_drop_less_external_GiB": 67.52,
+     "residual_max_GiB": 2.44,
+     "residual_min_GiB": -44.16
+    },
+    {
+     "name": "settle",
+     "external_growth_max_GiB": 1.35,
+     "external_growth_min_GiB": 0.98,
+     "peak_drop_less_external_GiB": 67.5,
+     "residual_max_GiB": 1.95,
+     "residual_min_GiB": 1.92
+    },
+    {
+     "name": "greedy",
+     "external_growth_max_GiB": 1.68,
+     "external_growth_min_GiB": 1.35,
+     "peak_drop_less_external_GiB": 67.86,
+     "residual_max_GiB": 2.03,
+     "residual_min_GiB": 1.94
+    },
+    {
+     "name": "prefill",
+     "external_growth_max_GiB": 3.84,
+     "external_growth_min_GiB": -1.76,
+     "peak_drop_less_external_GiB": 67.93,
+     "residual_max_GiB": 2.07,
+     "residual_min_GiB": 1.02
+    },
+    {
+     "name": "parallel",
+     "external_growth_max_GiB": 3.49,
+     "external_growth_min_GiB": -0.55,
+     "peak_drop_less_external_GiB": 67.92,
+     "residual_max_GiB": 1.99,
+     "residual_min_GiB": 0.96
+    },
+    {
+     "name": "coldparallel",
+     "external_growth_max_GiB": 8.63,
+     "external_growth_min_GiB": -0.53,
+     "peak_drop_less_external_GiB": 68.27,
+     "residual_max_GiB": 2.19,
+     "residual_min_GiB": 1.0
+    },
+    {
+     "name": "longgen",
+     "external_growth_max_GiB": 8.26,
+     "external_growth_min_GiB": -3.15,
+     "peak_drop_less_external_GiB": 67.86,
+     "residual_max_GiB": 2.35,
+     "residual_min_GiB": 1.06
+    }
+   ]
+  },
+  "coverage_at_ready": {
+   "runner_gpu_GiB": 64.07,
+   "logged_CUDA0_buffers_GiB": 63.89,
+   "gpu_minus_buffers_GiB": 0.19,
+   "runner_rssanon_GiB": 0.31,
+   "runner_rssshmem_GiB": 1.17,
+   "logged_CUDA_Host_buffers_GiB": 1.13,
+   "residual_GiB": 1.92
+  },
+  "load_lag": {
+   "lag_s": 0.2,
+   "mean_abs_error_GiB": 1.9,
+   "points": 29
+  },
+  "residual_status": "diagnostic only until the validation checks (rev 2, 4a-4e) pass",
+  "attribution": {
+   "formula": "unattributed = (baseline - MemAvailable) - runner GPU (nvidia-smi, runner pids) - runner RssAnon - runner RssShmem",
+   "samples": 787,
+   "unattributed_at_ready_GiB": 3.09,
+   "phases": [
+    {
+     "name": "load",
+     "runner_gpu_max_GiB": 64.07,
+     "runner_host_max_GiB": 1.48,
+     "unattributed_min_GiB": -44.62,
+     "unattributed_max_GiB": 2.86,
+     "unattributed_vs_ready_max_GiB": 47.71,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       0.9
+      ],
+      [
+       "research",
+       0.06
+      ],
+      [
+       "root",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "settle",
+     "runner_gpu_max_GiB": 64.07,
+     "runner_host_max_GiB": 1.48,
+     "unattributed_min_GiB": 2.92,
+     "unattributed_max_GiB": 3.27,
+     "unattributed_vs_ready_max_GiB": 0.18,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       1.35
+      ],
+      [
+       "root",
+       0.0
+      ],
+      [
+       "daniel",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "greedy",
+     "runner_gpu_max_GiB": 64.17,
+     "runner_host_max_GiB": 1.66,
+     "unattributed_min_GiB": 3.32,
+     "unattributed_max_GiB": 3.63,
+     "unattributed_vs_ready_max_GiB": 0.54,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       1.68
+      ],
+      [
+       "research",
+       0.01
+      ],
+      [
+       "daniel",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "prefill",
+     "runner_gpu_max_GiB": 64.18,
+     "runner_host_max_GiB": 1.71,
+     "unattributed_min_GiB": -0.58,
+     "unattributed_max_GiB": 5.36,
+     "unattributed_vs_ready_max_GiB": 3.67,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       3.85
+      ],
+      [
+       "research",
+       0.07
+      ],
+      [
+       "root",
+       0.02
+      ]
+     ]
+    },
+    {
+     "name": "parallel",
+     "runner_gpu_max_GiB": 64.18,
+     "runner_host_max_GiB": 1.82,
+     "unattributed_min_GiB": 0.5,
+     "unattributed_max_GiB": 5.05,
+     "unattributed_vs_ready_max_GiB": 2.59,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       3.55
+      ],
+      [
+       "research",
+       0.03
+      ],
+      [
+       "root",
+       0.01
+      ]
+     ]
+    },
+    {
+     "name": "coldparallel",
+     "runner_gpu_max_GiB": 64.18,
+     "runner_host_max_GiB": 1.9,
+     "unattributed_min_GiB": 0.47,
+     "unattributed_max_GiB": 10.11,
+     "unattributed_vs_ready_max_GiB": 7.02,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       8.66
+      ],
+      [
+       "research",
+       0.03
+      ],
+      [
+       "root",
+       0.02
+      ]
+     ]
+    },
+    {
+     "name": "longgen",
+     "runner_gpu_max_GiB": 64.18,
+     "runner_host_max_GiB": 1.9,
+     "unattributed_min_GiB": -1.77,
+     "unattributed_max_GiB": 9.52,
+     "unattributed_vs_ready_max_GiB": 6.43,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       8.29
+      ],
+      [
+       "research",
+       0.03
+      ],
+      [
+       "sshd",
+       0.0
+      ]
+     ]
+    }
+   ],
+   "within_0.5GiB_of_ready": false
+  }
+ }
+}

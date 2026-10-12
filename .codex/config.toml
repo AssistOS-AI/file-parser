@@ -1,0 +1,10 @@
+# Engineering defaults for this workspace. Keep role copies aligned with ~/.codex/agents.
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
+plan_mode_reasoning_effort = "high"
+service_tier = "default"
+
+[agents]
+max_concurrent_threads_per_session = 3
+default_subagent_model = "gpt-6.1-sol"
+default_subagent_reasoning_effort = "medium"

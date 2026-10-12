@@ -1,0 +1,338 @@
+{
+ "bin": "l1/llama-b11159",
+ "model": "gpt-oss-20b-MXFP4.gguf",
+ "ctx": 32768,
+ "np": 4,
+ "cache_ram": 1,
+ "load_mode": "dio",
+ "patterns": [
+  "greedy",
+  "prefill",
+  "parallel",
+  "coldparallel",
+  "longgen"
+ ],
+ "extra": "",
+ "phases": [
+  {
+   "name": "load",
+   "start": 1790611778.91,
+   "end": 1790611783.658,
+   "peak_drop_GiB": 4.77
+  },
+  {
+   "name": "settle",
+   "start": 1790611783.658,
+   "end": 1790611785.658,
+   "peak_drop_GiB": 5.05
+  },
+  {
+   "name": "greedy",
+   "start": 1790611785.658,
+   "end": 1790611787.405,
+   "ok": true,
+   "overlap": null,
+   "peak_drop_GiB": 5.18
+  },
+  {
+   "name": "prefill",
+   "start": 1790611787.405,
+   "end": 1790611795.083,
+   "ok": true,
+   "overlap": null,
+   "peak_drop_GiB": 5.31
+  },
+  {
+   "name": "parallel",
+   "start": 1790611795.083,
+   "end": 1790611803.42,
+   "ok": true,
+   "overlap": {
+    "all_overlap_s": 7.9,
+    "distinct_slots": 4
+   },
+   "peak_drop_GiB": 5.09
+  },
+  {
+   "name": "coldparallel",
+   "start": 1790611803.42,
+   "end": 1790611811.433,
+   "ok": true,
+   "overlap": {
+    "all_overlap_s": 7.542,
+    "distinct_slots": 4
+   },
+   "peak_drop_GiB": 5.26
+  },
+  {
+   "name": "longgen",
+   "start": 1790611811.433,
+   "end": 1790611818.938,
+   "ok": true,
+   "overlap": {
+    "all_overlap_s": 7.447,
+    "distinct_slots": 4
+   },
+   "peak_drop_GiB": 5.03
+  }
+ ],
+ "requests": [
+  {
+   "pattern": "greedy",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790611785.659,
+   "end": 1790611787.405,
+   "slot": 3,
+   "prompt_n": 28,
+   "predicted_n": 128,
+   "prompt_tps": 175.30568929570939,
+   "predicted_tps": 80.15480606954912,
+   "ok": true
+  },
+  {
+   "pattern": "prefill",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790611787.566,
+   "end": 1790611795.083,
+   "slot": 2,
+   "prompt_n": 29491,
+   "predicted_n": 16,
+   "prompt_tps": 4057.109061821559,
+   "predicted_tps": 62.67758649506937,
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790611795.323,
+   "end": 1790611803.42,
+   "slot": 3,
+   "prompt_n": 6553,
+   "predicted_n": 64,
+   "prompt_tps": 2383.9771126555606,
+   "predicted_tps": 36.31172055883161,
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 1,
+   "status": 200,
+   "error": null,
+   "start": 1790611795.324,
+   "end": 1790611803.303,
+   "slot": 1,
+   "prompt_n": 6553,
+   "predicted_n": 64,
+   "prompt_tps": 2062.198915182039,
+   "predicted_tps": 14.426812437011508,
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 2,
+   "status": 200,
+   "error": null,
+   "start": 1790611795.325,
+   "end": 1790611803.369,
+   "slot": 2,
+   "prompt_n": 6553,
+   "predicted_n": 64,
+   "prompt_tps": 2124.978435668248,
+   "predicted_tps": 22.412957677932205,
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 3,
+   "status": 200,
+   "error": null,
+   "start": 1790611795.325,
+   "end": 1790611803.225,
+   "slot": 0,
+   "prompt_n": 6553,
+   "predicted_n": 64,
+   "prompt_tps": 3057.6602017038535,
+   "predicted_tps": 10.954163260153726,
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790611803.658,
+   "end": 1790611811.202,
+   "slot": 0,
+   "prompt_n": 7372,
+   "predicted_n": 16,
+   "prompt_tps": 3408.8880791572296,
+   "predicted_tps": 2.791167629154304,
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 1,
+   "status": 200,
+   "error": null,
+   "start": 1790611803.658,
+   "end": 1790611811.433,
+   "slot": 3,
+   "prompt_n": 7372,
+   "predicted_n": 16,
+   "prompt_tps": 2265.0230604050184,
+   "predicted_tps": 43.684909484867546,
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 2,
+   "status": 200,
+   "error": null,
+   "start": 1790611803.659,
+   "end": 1790611811.301,
+   "slot": 1,
+   "prompt_n": 7372,
+   "predicted_n": 16,
+   "prompt_tps": 1969.9863020214539,
+   "predicted_tps": 4.327113636350524,
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 3,
+   "status": 200,
+   "error": null,
+   "start": 1790611803.66,
+   "end": 1790611811.365,
+   "slot": 2,
+   "prompt_n": 7372,
+   "predicted_n": 16,
+   "prompt_tps": 2281.9961584953435,
+   "predicted_tps": 8.204809549960727,
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790611811.469,
+   "end": 1790611818.938,
+   "slot": 2,
+   "prompt_n": 1024,
+   "predicted_n": 256,
+   "prompt_tps": 1163.4592005308282,
+   "predicted_tps": 38.73096107462469,
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 1,
+   "status": 200,
+   "error": null,
+   "start": 1790611811.469,
+   "end": 1790611818.938,
+   "slot": 3,
+   "prompt_n": 1024,
+   "predicted_n": 256,
+   "prompt_tps": 2207.1248749870674,
+   "predicted_tps": 38.730861069059856,
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 2,
+   "status": 200,
+   "error": null,
+   "start": 1790611811.469,
+   "end": 1790611818.916,
+   "slot": 0,
+   "prompt_n": 1024,
+   "predicted_n": 256,
+   "prompt_tps": 1212.7499816429447,
+   "predicted_tps": 38.64604271342505,
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 3,
+   "status": 200,
+   "error": null,
+   "start": 1790611811.469,
+   "end": 1790611818.916,
+   "slot": 1,
+   "prompt_n": 1024,
+   "predicted_n": 256,
+   "prompt_tps": 1213.1278440088188,
+   "predicted_tps": 38.64608371196392,
+   "ok": true
+  }
+ ],
+ "baseline": {
+  "MemAvailable": 107647743863.46666,
+  "spread_GiB": 0.33,
+  "waited_s": 12.0
+ },
+ "argv": [
+  "l1/llama-b11159/llama-server",
+  "-m",
+  "models/gpt-oss-20b-MXFP4.gguf",
+  "--host",
+  "127.0.0.1",
+  "--port",
+  "18090",
+  "--no-webui",
+  "-lv",
+  "4",
+  "-ngl",
+  "99",
+  "-fa",
+  "on",
+  "-b",
+  "2048",
+  "-ub",
+  "2048",
+  "-t",
+  "10",
+  "-c",
+  "32768",
+  "-np",
+  "4",
+  "--load-mode",
+  "dio",
+  "--kv-unified",
+  "--cache-ram",
+  "1"
+ ],
+ "load_seconds": 4.75,
+ "at_ready_drop_GiB": 5.05,
+ "stop_signal_epoch": 1790611818.938,
+ "exit_epoch": 1790611819.503,
+ "ok": true,
+ "release": {
+  "end_drop_GiB": -9.19
+ },
+ "peak_drop_GiB": 5.31,
+ "buffers_MiB": {
+  "CUDA0 model": 10949.38,
+  "CUDA_Host model": 586.82,
+  "CUDA_Host output": 3.07,
+  "CUDA0 KV": 828.0,
+  "CUDA0 compute": 485.07,
+  "CUDA_Host compute": 183.08
+ },
+ "buffers_total_GiB": 12.73,
+ "cache_events": {
+  "saved": 24,
+  "skipped_exceeds_limit": 10,
+  "cleared_idle": 0,
+  "no_memory_slot": 0
+ },
+ "baseline_spread_GiB": 0.33
+}

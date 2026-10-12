@@ -19,7 +19,7 @@ Workspace plugin for `~/work/file-parser`. Provides 4 Achilles skill-build skill
 
 ## Hooks
 
-- `commit_attribution_guard` (PreToolUse on `git commit`) — Hard-blocks commits whose message contains AI/coding-agent attribution. Workspace policy is in `~/work/file-parser/CLAUDE.md`.
+- `commit_attribution_guard` (PreToolUse on `git commit`) — Hard-blocks commits whose message contains AI/coding-agent attribution. Workspace policy is in `~/work/file-parser/AGENTS.md`.
 
 ## Installation
 

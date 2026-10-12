@@ -1,0 +1,26 @@
+{
+ "samples": 744,
+ "seconds": 74.64,
+ "start_GiB": {
+  "MemTotal": 119.63,
+  "MemFree": 94.93,
+  "MemAvailable": 104.17,
+  "Cached": 7.48,
+  "Buffers": 1.48,
+  "Shmem": 0.01
+ },
+ "end_GiB": {
+  "MemTotal": 119.63,
+  "MemFree": 100.63,
+  "MemAvailable": 109.8,
+  "Cached": 7.42,
+  "Buffers": 1.48,
+  "Shmem": 0.01
+ },
+ "min_MemAvailable_GiB": 83.31,
+ "min_MemFree_GiB": 74.01,
+ "max_Cached_GiB": 8.74,
+ "min_Cached_GiB": 7.42,
+ "max_drop_MemAvailable_GiB": 20.85,
+ "max_psi_full_avg10": 0
+}

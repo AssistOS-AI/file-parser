@@ -1,0 +1,41 @@
+{
+  "revision": "b972b38d95d6b67989029ce31202ba663472cc6f",
+  "source": "/Users/danielsava/work/file-parser/dgx-local-llm-plan-sync/supervision-snapshots/c12-b972b38-verification_codex/source",
+  "imageId": "740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28",
+  "imageDigest": "sha256:2a42511a8baae7169906a0553dbf02992580c7507839feabf38fd200f94cc010",
+  "architecture": "arm64",
+  "os": "linux",
+  "checkedAt": "2026-09-28T20:31:44.278Z",
+  "verification": {
+    "started": "2026-09-28T20:32:06.047Z",
+    "finished": "2026-09-28T20:32:06.879Z",
+    "exitCode": 0,
+    "error": null,
+    "command": [
+      "podman",
+      "run",
+      "--rm",
+      "--pull=never",
+      "--network",
+      "none",
+      "--user",
+      "1000:1000",
+      "--read-only",
+      "--tmpfs",
+      "/tmp:rw,mode=1777,size=256m",
+      "--memory",
+      "512m",
+      "--cpus",
+      "1",
+      "-v",
+      "/Users/danielsava/work/file-parser/dgx-local-llm-plan-sync/supervision-snapshots/c12-b972b38-verification_codex/source:/src:ro",
+      "-v",
+      "/Users/danielsava/work/file-parser/dgx-local-llm-plan-sync/supervision-snapshots/c12-b972b38-verification_codex/fixture:/fixture:ro",
+      "--entrypoint",
+      "node",
+      "740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28",
+      "-e",
+      "const cp = require('node:child_process'); console.log(JSON.stringify({uid:process.getuid(),platform:process.platform,arch:process.arch,node:process.version})); for (const args of [['--test','--test-concurrency=1','--test-reporter=tap','--test-name-pattern=^21','/src/local-llm/tests/shared-models-recheck.test.mjs'],['--test','--test-concurrency=1','--test-reporter=tap','/fixture/cancel_repro_codex.mjs']]) { const result=cp.spawnSync(process.execPath,args,{stdio:'inherit',env:{...process.env,LOCAL_LLMS_SRC:'/src/local-llm/src'}}); if(result.status!==0)process.exit(result.status||1); }"
+    ]
+  }
+}

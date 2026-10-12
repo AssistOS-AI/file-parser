@@ -1,0 +1,216 @@
+// endpoints.chatCompletions responder (D10). AgentServer runs this command
+// per request, after the Router verified the caller, with
+// { endpoint, request, metadata } on stdin. The request is forwarded to the
+// active runner with its per-start key; streaming responses are piped through
+// unchanged. With no model ready the answer is a 503 failure envelope.
+
+import { stdin, stdout, exit } from 'node:process';
+
+import { callController } from './controlSocket.mjs';
+import { serializeError } from './errors.mjs';
+
+const FORWARDED_FIELDS = new Set([
+    'messages', 'stream', 'stream_options', 'max_tokens', 'max_completion_tokens', 'temperature', 'top_p',
+    'top_k', 'min_p', 'repeat_penalty', 'stop', 'seed', 'presence_penalty', 'frequency_penalty', 'n', 'tools',
+    'tool_choice', 'parallel_tool_calls', 'response_format', 'reasoning_effort', 'chat_template_kwargs',
+    'logprobs', 'top_logprobs',
+]);
+
+// Runner-reported speed for the Settings test prompt: llama.cpp adds
+// `timings` to a response and to the last stream chunk; Ollama's /v1 gives
+// token counts in `usage` only.
+export function completionStats(body) {
+    if (!body || typeof body !== 'object') return null;
+    const timings = body.timings && typeof body.timings === 'object' ? body.timings : null;
+    const usage = body.usage && typeof body.usage === 'object' ? body.usage : null;
+    if (!timings && !usage) return null;
+    const count = (value) => (Number.isFinite(value) && value >= 0 ? value : null);
+    return {
+        promptTokens: count(timings?.prompt_n) ?? count(usage?.prompt_tokens),
+        completionTokens: count(timings?.predicted_n) ?? count(usage?.completion_tokens),
+        promptTokensPerSecond: count(timings?.prompt_per_second),
+        generationTokensPerSecond: count(timings?.predicted_per_second),
+        source: timings ? 'runner timings' : 'usage',
+    };
+}
+
+// Watches SSE `data:` lines as they pass through and keeps the last stats.
+function createStreamStatsReader() {
+    const decoder = new TextDecoder();
+    let pending = '';
+    let stats = null;
+    const scan = (line) => {
+        if (!line.startsWith('data:') || !/"(timings|usage)"/.test(line)) return;
+        try {
+            stats = completionStats(JSON.parse(line.slice(5).trim())) || stats;
+        } catch {}
+    };
+    return {
+        push(chunk) {
+            pending += typeof chunk === 'string' ? chunk : decoder.decode(chunk, { stream: true });
+            let newline;
+            while ((newline = pending.indexOf('\n')) >= 0) {
+                scan(pending.slice(0, newline).trim());
+                pending = pending.slice(newline + 1);
+            }
+        },
+        finish() {
+            scan(pending.trim());
+            return stats;
+        },
+    };
+}
+
+async function reportStats(call, stats) {
+    if (!stats) return;
+    try {
+        await call('recordCompletion', stats, { timeoutMs: 2000 });
+    } catch {
+        // Stats are informational; the completion was already delivered.
+    }
+}
+
+// Limits for Router-authorized callers: one choice per request, at most the
+// completion budget in generated tokens (larger values are clamped, and a
+// request that sets no limit gets it as `max_tokens`), and a runner call that
+// ends inside the endpoint's 600 s command limit (manifest `timeoutMs`). The
+// operator may set both through the agent's environment, within these bounds;
+// the caller's own deadline still applies (Soul Gateway: 120 s by default), so
+// a long budget needs that deadline raised too (DS001).
+export const MAX_COMPLETION_TOKENS = 8192;
+export const MAX_COMPLETION_TOKENS_LIMIT = 32768;
+export const RUNNER_TIMEOUT_MS = 570_000;
+const MIN_RUNNER_TIMEOUT_MS = 10_000;
+const TOKEN_LIMIT_FIELDS = ['max_tokens', 'max_completion_tokens'];
+
+function boundedInteger(value, fallback, min, max) {
+    if (!/^\d{1,9}$/.test(String(value ?? ''))) return fallback;
+    const number = Number(value);
+    return number >= min && number <= max ? number : fallback;
+}
+
+/** The completion budget and runner deadline from the agent's environment, each within its bounds. */
+export function chatLimits(env = process.env) {
+    return {
+        maxCompletionTokens: boundedInteger(env.LOCAL_LLM_MAX_COMPLETION_TOKENS, MAX_COMPLETION_TOKENS, 1, MAX_COMPLETION_TOKENS_LIMIT),
+        runnerTimeoutMs: boundedInteger(env.LOCAL_LLM_RUNNER_TIMEOUT_MS, RUNNER_TIMEOUT_MS, MIN_RUNNER_TIMEOUT_MS, RUNNER_TIMEOUT_MS),
+    };
+}
+
+export function requestLimitProblem(request) {
+    if (request.n !== undefined && request.n !== 1) return 'n must be 1; local models return one choice per request';
+    for (const field of TOKEN_LIMIT_FIELDS) {
+        const value = request[field];
+        if (value !== undefined && value !== null && (!Number.isInteger(value) || value < 1)) {
+            return `${field} must be a positive integer`;
+        }
+    }
+    return null;
+}
+
+export function buildRunnerRequest(request, target, { maxCompletionTokens = MAX_COMPLETION_TOKENS } = {}) {
+    const body = {};
+    for (const [key, value] of Object.entries(request || {})) {
+        if (FORWARDED_FIELDS.has(key)) body[key] = value;
+    }
+    for (const field of TOKEN_LIMIT_FIELDS) {
+        if (Number.isInteger(body[field]) && body[field] > maxCompletionTokens) body[field] = maxCompletionTokens;
+    }
+    if (!TOKEN_LIMIT_FIELDS.some((field) => Number.isInteger(body[field]))) body.max_tokens = maxCompletionTokens;
+    // A stream ends with a chunk that carries `usage`, unless the caller says otherwise.
+    if (body.stream === true) {
+        const options = body.stream_options && typeof body.stream_options === 'object' && !Array.isArray(body.stream_options)
+            ? body.stream_options : {};
+        body.stream_options = { include_usage: true, ...options };
+    }
+    body.model = target.model;
+    return body;
+}
+
+// A failure envelope chooses the HTTP status. For a streaming request the
+// SSE headers are already sent, and AgentServer reads the envelope from the
+// last stderr line instead of stdout.
+function failure(status, code, message, { streaming = false } = {}) {
+    const type = status === 503 ? 'service_unavailable' : status === 400 ? 'invalid_request_error' : 'server_error';
+    const envelope = JSON.stringify({ ok: false, error: code, message, status, type });
+    if (streaming) process.stderr.write(`${envelope}\n`);
+    else stdout.write(envelope);
+    exit(1);
+}
+
+export async function respond(payload, {
+    call = callController,
+    fetchImpl = globalThis.fetch,
+    out = stdout,
+    limits = chatLimits(),
+    timeoutMs = limits.runnerTimeoutMs,
+} = {}) {
+    const request = payload?.request;
+    if (!request || !Array.isArray(request.messages)) {
+        return { status: 400, code: 'invalid_request', message: 'messages must be an array' };
+    }
+    const limitProblem = requestLimitProblem(request);
+    if (limitProblem) return { status: 400, code: 'invalid_request', message: limitProblem };
+    let target;
+    try {
+        target = await call('chatTarget', {}, { timeoutMs: 10_000 });
+    } catch (error) {
+        const { code, message } = serializeError(error);
+        return { status: code === 'not_ready' ? 503 : 502, code, message };
+    }
+    const headers = { 'content-type': 'application/json' };
+    if (target.apiKey) headers.authorization = `Bearer ${target.apiKey}`;
+    const signal = AbortSignal.timeout(timeoutMs);
+    const timedOut = () => ({
+        status: 504, code: 'runner_timeout', message: `The local runner did not finish within ${Math.round(timeoutMs / 1000)} s.`,
+    });
+    try {
+        const response = await fetchImpl(`${target.baseUrl}/v1/chat/completions`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(buildRunnerRequest(request, target, limits)),
+            signal,
+        });
+        if (!response.ok) {
+            const text = (await response.text().catch(() => '')).slice(0, 500);
+            return { status: response.status >= 500 ? 502 : response.status, code: 'runner_error', message: `The runner answered HTTP ${response.status}: ${text}` };
+        }
+        if (request.stream === true) {
+            const reader = createStreamStatsReader();
+            for await (const chunk of response.body) {
+                out.write(chunk);
+                reader.push(chunk);
+            }
+            await reportStats(call, reader.finish());
+            return null;
+        }
+        const body = await response.json();
+        out.write(JSON.stringify(body));
+        await reportStats(call, completionStats(body));
+        return null;
+    } catch (error) {
+        if (signal.aborted) return timedOut();
+        throw error;
+    }
+}
+
+async function main() {
+    const chunks = [];
+    for await (const chunk of stdin) chunks.push(chunk);
+    let payload;
+    try {
+        payload = JSON.parse(Buffer.concat(chunks).toString('utf8') || '{}');
+    } catch {
+        failure(400, 'invalid_request', 'The request body is not valid JSON.');
+        return;
+    }
+    const streaming = payload?.request?.stream === true;
+    try {
+        const problem = await respond(payload);
+        if (problem) failure(problem.status, problem.code, problem.message, { streaming });
+    } catch (error) {
+        failure(502, 'runner_unreachable', `The local model runner is unreachable: ${error.message}`, { streaming });
+    }
+}
+
+if (import.meta.url === `file://${process.argv[1]}`) await main();

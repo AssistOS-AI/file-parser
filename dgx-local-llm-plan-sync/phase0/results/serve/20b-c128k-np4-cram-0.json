@@ -1,0 +1,134 @@
+{
+ "bin": "l1/llama-b11159",
+ "model": "gpt-oss-20b-MXFP4.gguf",
+ "load_mode": "dio",
+ "ctx": 131072,
+ "np": 4,
+ "cold": false,
+ "extra": "-lv 4 --cache-ram 0",
+ "load_seconds": 5.14,
+ "load_delta_GiB": {
+  "MemFree": -16.93,
+  "MemAvailable": -16.92,
+  "Cached": 1.17
+ },
+ "after_load_GiB": {
+  "MemFree": 78.0,
+  "MemAvailable": 87.25,
+  "Cached": 8.66
+ },
+ "load_rate_GBps": 2.36,
+ "greedy": {
+  "content": " The answer should be in JSON format. The JSON should have a key called \"prime_numbers\" with the list of prime numbers, and a key called \"explanation\" with the explanation. The JSON should be pretty-printed with an indentation of 4 spaces.\"\n\nWe need to produce JSON with keys \"prime_numbers\" and \"explanation\". The prime_numbers list should contain the first ten prime numbers. The explanation should be two sentences explaining why 1 is not a prime number. The JSON should be pretty-printed with indentation of 4 spaces. So we need to output JSON with 4 spaces indentation. The prime numbers: ",
+  "tokens_predicted": 128,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 28,
+   "prompt_ms": 166.883,
+   "prompt_per_token_ms": 5.960107142857143,
+   "prompt_per_second": 167.78221868015316,
+   "predicted_n": 128,
+   "predicted_ms": 1610.518,
+   "predicted_per_token_ms": 12.68124409448819,
+   "predicted_per_second": 78.85661631847641
+  }
+ },
+ "prefill": {
+  "tokens": 117964,
+  "seconds": 54.34,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 117964,
+   "prompt_ms": 53914.615,
+   "prompt_per_token_ms": 0.4570429537825099,
+   "prompt_per_second": 2187.978157685073,
+   "predicted_n": 16,
+   "predicted_ms": 392.71,
+   "predicted_per_token_ms": 26.180666666666664,
+   "predicted_per_second": 38.19612436658094
+  },
+  "mem_GiB": {
+   "MemFree": 84.23,
+   "MemAvailable": 93.4,
+   "Cached": 8.59
+  }
+ },
+ "parallel": {
+  "seconds": 9.93,
+  "timings": [
+   null,
+   null,
+   null,
+   null
+  ]
+ },
+ "ok": true,
+ "mem": {
+  "samples": 744,
+  "seconds": 74.64,
+  "start_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 94.93,
+   "MemAvailable": 104.17,
+   "Cached": 7.48,
+   "Buffers": 1.48,
+   "Shmem": 0.01
+  },
+  "end_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 100.63,
+   "MemAvailable": 109.8,
+   "Cached": 7.42,
+   "Buffers": 1.48,
+   "Shmem": 0.01
+  },
+  "min_MemAvailable_GiB": 83.31,
+  "min_MemFree_GiB": 74.01,
+  "max_Cached_GiB": 8.74,
+  "min_Cached_GiB": 7.42,
+  "max_drop_MemAvailable_GiB": 20.85,
+  "max_psi_full_avg10": 0
+ },
+ "server_log_notes": [
+  "0.00.371.180 I srv    load_model: loading model 'models/gpt-oss-20b-MXFP4.gguf'",
+  "0.00.371.183 I srv    load_model: local path 'models/gpt-oss-20b-MXFP4.gguf'",
+  "0.00.971.011 I llama_prepare_model_devices: using device CUDA0 (NVIDIA GB10) (000f:01:00.0) - 106175 MiB free",
+  "0.01.289.717 I load_tensors: loading model tensors, this can take a while... (load_mode = dio)",
+  "0.02.068.439 I load_tensors:        CUDA0 model buffer size = 10949.38 MiB",
+  "0.04.617.858 I llama_kv_cache:      CUDA0 KV buffer size =  3072.00 MiB",
+  "0.04.636.283 I llama_kv_cache:      CUDA0 KV buffer size =    60.00 MiB",
+  "0.04.980.362 I sched_reserve:      CUDA0 compute buffer size =   869.07 MiB",
+  "0.05.115.908 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 131072, kv_unified = 'true'",
+  "0.05.115.944 I slot   load_model: id  0 | task -1 | new slot, n_ctx = 131072",
+  "0.05.115.948 I slot   load_model: id  1 | task -1 | new slot, n_ctx = 131072",
+  "0.05.115.948 I slot   load_model: id  2 | task -1 | new slot, n_ctx = 131072",
+  "0.05.115.948 I slot   load_model: id  3 | task -1 | new slot, n_ctx = 131072",
+  "0.05.116.014 I srv    load_model: prompt cache is disabled - use `--cache-ram N` to enable it",
+  "0.05.116.016 I srv    load_model: for more info see https://github.com/ggml-org/llama.cpp/pull/16391",
+  "0.05.116.016 I srv    load_model: context checkpoints enabled, max = 32, min spacing = 8192",
+  "1.10.250.962 W decode: failed to find a memory slot for batch of size 2048",
+  "1.10.251.342 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 0, n_batch = 1024, ret = 1",
+  "1.10.254.458 W decode: failed to find a memory slot for batch of size 1024",
+  "1.10.254.718 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 0, n_batch = 512, ret = 1",
+  "1.11.835.020 W decode: failed to find a memory slot for batch of size 1536",
+  "1.11.835.044 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 512, n_batch = 1024, ret = 1",
+  "1.11.837.127 W decode: failed to find a memory slot for batch of size 1024",
+  "1.11.837.143 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 512, n_batch = 512, ret = 1",
+  "1.11.839.021 W decode: failed to find a memory slot for batch of size 512",
+  "1.11.839.036 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 512, n_batch = 256, ret = 1",
+  "1.11.840.891 W decode: failed to find a memory slot for batch of size 256",
+  "1.11.840.906 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 512, n_batch = 128, ret = 1",
+  "1.12.221.794 W decode: failed to find a memory slot for batch of size 1408",
+  "1.12.221.815 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 640, n_batch = 1024, ret = 1",
+  "1.12.223.773 W decode: failed to find a memory slot for batch of size 1024",
+  "1.12.223.789 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 640, n_batch = 512, ret = 1",
+  "1.12.225.354 W decode: failed to find a memory slot for batch of size 512",
+  "1.12.225.373 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 640, n_batch = 256, ret = 1",
+  "1.12.226.874 W decode: failed to find a memory slot for batch of size 256",
+  "1.12.226.890 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 640, n_batch = 128, ret = 1",
+  "1.12.228.346 W decode: failed to find a memory slot for batch of size 128",
+  "1.12.228.363 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 640, n_batch = 64, ret = 1",
+  "1.12.229.754 W decode: failed to find a memory slot for batch of size 64",
+  "1.12.229.772 W srv        decode: failed to find free space in the KV cache, retrying with smaller batch size, off = 640, n_batch = 32, ret = 1"
+ ]
+}

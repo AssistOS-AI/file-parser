@@ -1,0 +1,76 @@
+{
+ "first-load-empty-jit": {
+  "wall_s": 44.99,
+  "load_s": 29.06,
+  "eval_tps": 45.3,
+  "prompt_tps": 7.4,
+  "jit_cache_bytes": 212427922,
+  "ps": [
+   {
+    "name": "gpt-oss:20b",
+    "model": "gpt-oss:20b",
+    "size": 12854199582,
+    "digest": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+    "details": {
+     "parent_model": "",
+     "format": "gguf",
+     "family": "gptoss",
+     "families": [
+      "gptoss"
+     ],
+     "parameter_size": "20.9B",
+     "quantization_level": "MXFP4"
+    },
+    "expires_at": "2026-09-28T17:45:20.337596662+02:00",
+    "size_vram": 12854199582,
+    "context_length": 8192
+   }
+  ],
+  "max_drop_MemAvailable_GiB": 15.55,
+  "min_MemAvailable_GiB": 95.42,
+  "response_head": "The first ten prime numbers are:  \n2, 3, 5, 7, 11, 13, 17, 19, 23, 29.  \n\nA prime number is defined as a natural number greater than 1 that has exactly two dist"
+ },
+ "reload-warm-jit": {
+  "wall_s": 9.6,
+  "load_s": 6.83,
+  "eval_tps": 58.4,
+  "prompt_tps": 258.4,
+  "jit_cache_bytes": 212427922,
+  "ps": [
+   {
+    "name": "gpt-oss:20b",
+    "model": "gpt-oss:20b",
+    "size": 12854199582,
+    "digest": "17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7",
+    "details": {
+     "parent_model": "",
+     "format": "gguf",
+     "family": "gptoss",
+     "families": [
+      "gptoss"
+     ],
+     "parameter_size": "20.9B",
+     "quantization_level": "MXFP4"
+    },
+    "expires_at": "2026-09-28T17:45:33.533553714+02:00",
+    "size_vram": 12854199582,
+    "context_length": 8192
+   }
+  ],
+  "max_drop_MemAvailable_GiB": 15.56,
+  "min_MemAvailable_GiB": 94.95,
+  "response_head": "The first ten prime numbers are:  \n2, 3, 5, 7, 11, 13, 17, 19, 23, 29.  \n\nA prime number is defined as a natural number greater than 1 that has exactly two dist"
+ },
+ "tool_call": [
+  {
+   "id": "call_44457wg3",
+   "function": {
+    "index": 0,
+    "name": "get_weather",
+    "arguments": {
+     "city": "Bucharest"
+    }
+   }
+  }
+ ]
+}

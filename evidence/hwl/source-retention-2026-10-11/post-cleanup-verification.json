@@ -1,0 +1,8 @@
+{
+  "checkedAt": "2026-10-11T17:14:04.564Z",
+  "removedTargetsAbsent": 25,
+  "retainedFilesMatching": 1060,
+  "archiveHashesMatching": 17,
+  "freedMiB": 506.86328125,
+  "measurement": "Net allocated file size reduction (du), including recovery archives and evidence"
+}

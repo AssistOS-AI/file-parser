@@ -1,0 +1,151 @@
+{
+ "bin": "l1/llama-b11159",
+ "model": "gpt-oss-20b-MXFP4.gguf",
+ "load_mode": "dio",
+ "ctx": 131072,
+ "np": 4,
+ "cold": false,
+ "extra": "-lv 4",
+ "load_seconds": 4.97,
+ "load_delta_GiB": {
+  "MemFree": -16.55,
+  "MemAvailable": -16.55,
+  "Cached": 1.17
+ },
+ "after_load_GiB": {
+  "MemFree": 84.35,
+  "MemAvailable": 93.48,
+  "Cached": 8.55
+ },
+ "load_rate_GBps": 2.44,
+ "greedy": {
+  "content": " The answer should be in JSON format. The JSON should have a key called \"prime_numbers\" with the list of prime numbers, and a key called \"explanation\" with the explanation. The JSON should be pretty-printed with an indentation of 4 spaces.\"\n\nWe need to produce JSON with keys \"prime_numbers\" and \"explanation\". The prime_numbers list should contain the first ten prime numbers. The explanation should be two sentences explaining why 1 is not a prime number. The JSON should be pretty-printed with indentation of 4 spaces. So we need to output JSON with 4 spaces indentation. The prime numbers: ",
+  "tokens_predicted": 128,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 28,
+   "prompt_ms": 167.805,
+   "prompt_per_token_ms": 5.993035714285715,
+   "prompt_per_second": 166.8603438514943,
+   "predicted_n": 128,
+   "predicted_ms": 1592.29,
+   "predicted_per_token_ms": 12.53771653543307,
+   "predicted_per_second": 79.75934032117266
+  }
+ },
+ "prefill": {
+  "tokens": 117964,
+  "seconds": 50.49,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 117964,
+   "prompt_ms": 50056.724,
+   "prompt_per_token_ms": 0.42433898477501614,
+   "prompt_per_second": 2356.6064770838775,
+   "predicted_n": 16,
+   "predicted_ms": 391.072,
+   "predicted_per_token_ms": 26.071466666666666,
+   "predicted_per_second": 38.35610833810654
+  },
+  "mem_GiB": {
+   "MemFree": 84.22,
+   "MemAvailable": 93.37,
+   "Cached": 8.57
+  }
+ },
+ "parallel": {
+  "seconds": 46.24,
+  "timings": [
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 12156.143,
+    "prompt_per_token_ms": 0.46372713054093234,
+    "prompt_per_second": 2156.440574942233,
+    "predicted_n": 64,
+    "predicted_ms": 27867.72,
+    "predicted_per_token_ms": 442.3447619047619,
+    "predicted_per_second": 2.260680098694834
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 6966.488,
+    "prompt_per_token_ms": 0.2657544823376822,
+    "prompt_per_second": 3762.8716219707835,
+    "predicted_n": 64,
+    "predicted_ms": 37211.224,
+    "predicted_per_token_ms": 590.6543492063493,
+    "predicted_per_second": 1.6930375630750547
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 15642.673,
+    "prompt_per_token_ms": 0.5967297245746548,
+    "prompt_per_second": 1675.8005489215302,
+    "predicted_n": 64,
+    "predicted_ms": 15126.735,
+    "predicted_per_token_ms": 240.10690476190476,
+    "predicted_per_second": 4.164811507572519
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 16636.221,
+    "prompt_per_token_ms": 0.6346311512932021,
+    "prompt_per_second": 1575.718427880947,
+    "predicted_n": 64,
+    "predicted_ms": 2074.129,
+    "predicted_per_token_ms": 32.92268253968254,
+    "predicted_per_second": 30.37419562621226
+   }
+  ]
+ },
+ "ok": true,
+ "mem": {
+  "samples": 1068,
+  "seconds": 107.17,
+  "start_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 100.9,
+   "MemAvailable": 110.02,
+   "Cached": 7.38,
+   "Buffers": 1.47,
+   "Shmem": 0.01
+  },
+  "end_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 95.06,
+   "MemAvailable": 104.3,
+   "Cached": 7.48,
+   "Buffers": 1.48,
+   "Shmem": 0.01
+  },
+  "min_MemAvailable_GiB": 84.6,
+  "min_MemFree_GiB": 75.38,
+  "max_Cached_GiB": 8.65,
+  "min_Cached_GiB": 7.38,
+  "max_drop_MemAvailable_GiB": 25.43,
+  "max_psi_full_avg10": 0
+ },
+ "server_log_notes": [
+  "0.00.362.319 I srv    load_model: loading model 'models/gpt-oss-20b-MXFP4.gguf'",
+  "0.00.362.321 I srv    load_model: local path 'models/gpt-oss-20b-MXFP4.gguf'",
+  "0.00.887.511 I llama_prepare_model_devices: using device CUDA0 (NVIDIA GB10) (000f:01:00.0) - 112244 MiB free",
+  "0.01.126.173 I load_tensors: loading model tensors, this can take a while... (load_mode = dio)",
+  "0.01.783.264 I load_tensors:        CUDA0 model buffer size = 10949.38 MiB",
+  "0.04.374.798 I llama_kv_cache:      CUDA0 KV buffer size =  3072.00 MiB",
+  "0.04.393.195 I llama_kv_cache:      CUDA0 KV buffer size =    60.00 MiB",
+  "0.04.755.087 I sched_reserve:      CUDA0 compute buffer size =   869.07 MiB",
+  "0.04.888.719 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 131072, kv_unified = 'true'",
+  "0.04.888.886 I slot   load_model: id  0 | task -1 | new slot, n_ctx = 131072",
+  "0.04.888.890 I slot   load_model: id  1 | task -1 | new slot, n_ctx = 131072",
+  "0.04.888.890 I slot   load_model: id  2 | task -1 | new slot, n_ctx = 131072",
+  "0.04.888.890 I slot   load_model: id  3 | task -1 | new slot, n_ctx = 131072",
+  "0.04.888.964 I srv    load_model: prompt cache is enabled, size limit: 8192 MiB",
+  "0.04.888.965 I srv    load_model: use `--cache-ram 0` to disable the prompt cache",
+  "0.04.888.965 I srv    load_model: for more info see https://github.com/ggml-org/llama.cpp/pull/16391",
+  "0.04.888.965 I srv    load_model: context checkpoints enabled, max = 32, min spacing = 8192"
+ ]
+}

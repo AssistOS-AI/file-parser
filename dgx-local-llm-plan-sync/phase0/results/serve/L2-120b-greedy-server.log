@@ -1,0 +1,23 @@
+0.00.000.325 I srv  llama_server: initializing ...
+0.00.354.678 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.355.259 I srv  init_listene: The UI is disabled
+0.00.355.260 I srv  init_listene: Use --ui/--no-ui (or deprecated --webui/--no-webui) to enable/disable
+0.00.355.300 W srv  llama_server: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+0.00.357.153 I srv    load_model: loading model 'models/gpt-oss-120b-MXFP4.gguf'
+0.01.125.332 W load: setting token '<|message|>' (200008) attribute to USER_DEFINED (16), old attributes: 8
+0.01.125.338 W load: setting token '<|start|>' (200006) attribute to USER_DEFINED (16), old attributes: 8
+0.01.125.338 W load: setting token '<|constrain|>' (200003) attribute to USER_DEFINED (16), old attributes: 8
+0.01.126.434 W load: setting token '<|channel|>' (200005) attribute to USER_DEFINED (16), old attributes: 8
+0.01.133.536 W load: special_eog_ids contains both '<|return|>' and '<|call|>', or '<|calls|>' and '<|flush|>' tokens, removing '<|end|>' token from EOG list
+0.15.642.780 I cmn          init: llama threadpool init, n_threads = 10
+0.15.762.120 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 32768, kv_unified = 'false'
+0.15.766.455 I srv  llama_server: model loaded
+0.15.766.461 I srv  llama_server: listening on http://127.0.0.1:18090
+0.15.868.391 I slot get_availabl: id  0 | task -1 | selected slot by LRU, t_last = -1
+0.15.868.425 I slot launch_slot_: id  0 | task 0 | processing task, is_child = 0
+0.17.831.167 I slot print_timing: id  0 | task 0 | prompt eval time =     318.82 ms /    28 tokens (   11.39 ms per token,    87.82 tokens per second)
+0.17.831.173 I slot print_timing: id  0 | task 0 |        eval time =    1643.90 ms /    92 tokens (   18.06 ms per token,    55.36 tokens per second)
+0.17.831.173 I slot print_timing: id  0 | task 0 |       total time =    1962.71 ms /   120 tokens
+0.17.831.178 I slot print_timing: id  0 | task 0 |    graphs reused =         91
+0.17.831.203 I slot      release: id  0 | task 0 | stop processing: n_tokens = 119, truncated = 0
+0.17.832.803 I srv    operator(): operator(): cleaning up before exit...

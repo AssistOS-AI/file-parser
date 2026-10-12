@@ -1,0 +1,793 @@
+[
+  {
+    "path": ".",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".github",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".github/workflows",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".github/workflows/build-qa-git-toolchain.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2594,
+    "sha256": "78744bdf7ceba660253ab9879b1bd863a19491fc24e6bdee2aa47723075ee445"
+  },
+  {
+    "path": ".github/workflows/publish-bwrap-runner.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 28658,
+    "sha256": "0fa5317a708b5e50330495ac03b351ca25ebc18f9f5ca6650cf0130580d27ba9"
+  },
+  {
+    "path": ".github/workflows/publish-livekit-egress-loopback.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8143,
+    "sha256": "1d369f9936f608bfb61da10b86396239e90f9c319469c97a59007943c491949d"
+  },
+  {
+    "path": ".github/workflows/publish-livekit-server-agent.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5477,
+    "sha256": "06f5f2c0ed0e7a33c4509f64ccfd911eb7daab9d9ee9da371686e2f0ef16eb28"
+  },
+  {
+    "path": ".github/workflows/publish-llm-runtime-cpu-image.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3919,
+    "sha256": "543c63867f033fa573e4877c25c9a1e78ade49f972a8c63d012d7d38454c8d6e"
+  },
+  {
+    "path": ".github/workflows/publish-local-llm-image.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 25892,
+    "sha256": "911ace5785852f9bee987db19c351d3eb66c07aac7bfdd3cf8dfbac6a00f174c"
+  },
+  {
+    "path": ".github/workflows/publish-onlyoffice-agent-image.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6179,
+    "sha256": "f37309f7e5f1dcb5217a3d87049b1d81afb706e66746f1eaa3b80038d7cb5fd8"
+  },
+  {
+    "path": ".github/workflows/publish-opencode-free-agent-image.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12683,
+    "sha256": "9da399c8ab8ed88a992f4f47b2e718749391996c79cf7f035c5cfda9208ad003"
+  },
+  {
+    "path": ".github/workflows/publish-ploinky-box-image.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16727,
+    "sha256": "0354c63b7b6d06d0290047ff1b816b9bf76cd0c0fff2295ad6750e85c35ab900"
+  },
+  {
+    "path": ".github/workflows/publish-ploinky-node-image.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10500,
+    "sha256": "67da7bdde6f845a08321fedafa19ea01336c52f039ee782833bd5d27536b9f3c"
+  },
+  {
+    "path": ".github/workflows/publish-roboteam-agent-image.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10234,
+    "sha256": "cb31e72e43093596e322d10f3d72293b3c2ce6b7c2aa5902fa1d1da05c525923"
+  },
+  {
+    "path": ".github/workflows/publish-search-agent-image.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11747,
+    "sha256": "4562013832cc29125946b14449527c340d2a408e87bee8919778dd0c94c2533e"
+  },
+  {
+    "path": ".github/workflows/publish-soul-gateway-image.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2664,
+    "sha256": "2ad37492f9c2aa50771b6d927c832b6ec691d7b10c37ecc45b7a5adfce119a23"
+  },
+  {
+    "path": ".github/workflows/publish-umami-agent-image.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10745,
+    "sha256": "757ae792a76957f5eb40f4b33a42f43f3eb1b0b716ed60b491288c7206b287e7"
+  },
+  {
+    "path": ".github/workflows/reproduce-ploinky-box-private-routing.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4919,
+    "sha256": "c850fe8d638bc7ac0be93f47dc488067bb6716bc6c93c7a33d67d5b6e57ebf3b"
+  },
+  {
+    "path": ".github/workflows/verify-edge-routing-source-absence.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 392,
+    "sha256": "08c882f439c1205038cff9f54dc4a18943ee5f19500083a3893cf2a6ea01df2e"
+  },
+  {
+    "path": ".gitignore",
+    "mode": 420,
+    "type": "file",
+    "bytes": 161,
+    "sha256": "fd7b9214250a9d7ffe1f5740b24f073996495f8973da1bc6c0adc0694b721364"
+  },
+  {
+    "path": ".idea",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".idea/container-image-builds.iml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 281,
+    "sha256": "e9c004d5beedb8d8501aa5456096bd5d18180f3081cd2f56e8196c44659838a2"
+  },
+  {
+    "path": ".idea/modules.xml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 296,
+    "sha256": "5e8c8b4768cc017510b33a06927adc67de4b8ca6dc7914e2d80beda5f07e1f5c"
+  },
+  {
+    "path": ".idea/workspace.xml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7997,
+    "sha256": "697fc2aef17aa7edad3210ac28116666b4ecb951a2670c4d17eca3a3468e32a0"
+  },
+  {
+    "path": "README.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 35992,
+    "sha256": "2a6fe1dbd3775bdbfdd2ee5199e5b8e233a497cfb0ba04e762fd7e38ad0de12c"
+  },
+  {
+    "path": "dependencies.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2838,
+    "sha256": "3786526e3b8dd14c9d1cf180c7150142b63a3b95742856225278a572730d89a8"
+  },
+  {
+    "path": "images",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/bwrap-runner",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/bwrap-runner/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2603,
+    "sha256": "3225ef0b1493b1aaa78346fa190519eb6a23f1ee6de11fc8f280809d3864377f"
+  },
+  {
+    "path": "images/livekit-egress-loopback",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/livekit-egress-loopback/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4170,
+    "sha256": "487c524188a1ae4dc632e39416722faa9eb0e93c61cb407fc0a2157c6f43930d"
+  },
+  {
+    "path": "images/livekit-server-agent",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/livekit-server-agent/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6077,
+    "sha256": "157332487d1fc5903ad467eb2d75d490c7fe02596ddf73788479aa95b409cd8e"
+  },
+  {
+    "path": "images/llm-runtime-cpu",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/llm-runtime-cpu/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1652,
+    "sha256": "ed8dc771f50090d62623fe9c7c002645ac96a237983afb3030982e467730e51f"
+  },
+  {
+    "path": "images/local-llm",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/local-llm/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11253,
+    "sha256": "176613fb90f6c9d7481a8836a5055e8ccb7171cf94f9969cac6a3a303e5bab85"
+  },
+  {
+    "path": "images/local-llm/Dockerfile.arm64",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4987,
+    "sha256": "b89f3fe6336da5f4e48ba4eada7dabb6b82da65dcca5871a05af0108621cec32"
+  },
+  {
+    "path": "images/local-llm/runners.lock.arm64.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 80815,
+    "sha256": "4b4e656f53058b97c90627cc6e4f1f6f51ae45644f9a5bcfe6150219be2e69d2"
+  },
+  {
+    "path": "images/local-llm/runners.lock.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 118300,
+    "sha256": "bb9b1dea99da32fede5cdba86c05f68028671075881f6e320fcde98c4513acc4"
+  },
+  {
+    "path": "images/local-llm/sources.lock.arm64.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1313,
+    "sha256": "e32060595681072c13285c664d7027c8590e12efff8f3301a4eb78cc3506db76"
+  },
+  {
+    "path": "images/local-llm/sources.lock.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6188,
+    "sha256": "5f4a4d8060e77794282bfc82c124884142f473a7903d2caf386853bd26423a52"
+  },
+  {
+    "path": "images/onlyoffice-agent",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/onlyoffice-agent/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3553,
+    "sha256": "88fd84b628ca10e8462d4b20ac643e57981a8e8935eef6d0d9fa251765b33a4e"
+  },
+  {
+    "path": "images/onlyoffice-agent/docservice-loopback-bind.c",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2387,
+    "sha256": "8d234fc17c7bb43572c19c7bf5bf020824c2015351e3d8671f9aa38073ef860c"
+  },
+  {
+    "path": "images/opencode-free-agent",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/opencode-free-agent/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1984,
+    "sha256": "408cdd49c94e01abc546b726bebdd274ead4c23ffed8f32d0597b31a1bda1168"
+  },
+  {
+    "path": "images/opencode-free-agent/opencode.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 580,
+    "sha256": "789d8b67e84a365237a884ca87c3c56eb1f36b733667b13afee8adeb0a70cbc8"
+  },
+  {
+    "path": "images/opencode-free-agent/smoke-runtime.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7149,
+    "sha256": "894749b7fb44656a52eb273524126c21fe998dd1964cc97aa0dd0e58a4b4f0a3"
+  },
+  {
+    "path": "images/ploinky-box",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/ploinky-box/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14326,
+    "sha256": "395ae81f3632d20659a38a6c07e9627dd414f6ee4fad5d08c3fd631d3f9036ad"
+  },
+  {
+    "path": "images/ploinky-box/explorer-smoke-edge-desired.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 380,
+    "sha256": "093157b5494ca5f04ee22295627a904a09b0d6d2c4b87d606e2b8373405db659"
+  },
+  {
+    "path": "images/ploinky-box/verify-publication.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8815,
+    "sha256": "b78b6388232b5bb53ca18e50bcaca4337221465445a74e51d6b9d7d7e675032f"
+  },
+  {
+    "path": "images/ploinky-node",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/ploinky-node/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 461,
+    "sha256": "f8d822cc0431d6be1c16b94578d14e788fa87025199ff62024cef7f8d59073bf"
+  },
+  {
+    "path": "images/qa-git",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/qa-git/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3402,
+    "sha256": "2a350cae021ab7ab168b79c652c9aacdc16ae9f4596003065afd00ddd7f89bd5"
+  },
+  {
+    "path": "images/roboteam-agent",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/roboteam-agent/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1988,
+    "sha256": "e3c33347a1bb0bb854795af503d93df90839045fc2381d36f5b4715b253551a1"
+  },
+  {
+    "path": "images/roboteam-agent/Dockerfile.browser",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1271,
+    "sha256": "af40be1eeebf6308eeaed28dd84278bb6a0460bbab240448c2fb52214fbe5abd"
+  },
+  {
+    "path": "images/roboteam-agent/Dockerfile.workstation",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1687,
+    "sha256": "8a1c202f48aedc9d69362004b7ecba7ebb9e4c7fcb7adf8308f6fb11a9589907"
+  },
+  {
+    "path": "images/roboteam-agent/roboteam-computer-use-mcp",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1113,
+    "sha256": "a5543306164df4b3360ccd1d73eaf990a7f6331d66f8ed413532ca77dc6beb57"
+  },
+  {
+    "path": "images/roboteam-agent/roboteam-open-browser",
+    "mode": 420,
+    "type": "file",
+    "bytes": 971,
+    "sha256": "aaaaf12ac0b7a050621f037a77555b1559a4e5f9a70a2ec5fa18792d076df2a8"
+  },
+  {
+    "path": "images/roboteam-agent/services",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/roboteam-agent/services/browser-mcp.run",
+    "mode": 420,
+    "type": "file",
+    "bytes": 416,
+    "sha256": "614b60f8f988223a3937028fd0592a82b22520562b21a8d66456018e1fa13fe5"
+  },
+  {
+    "path": "images/roboteam-agent/services/desktop-mcp.run",
+    "mode": 420,
+    "type": "file",
+    "bytes": 332,
+    "sha256": "37cdac6bd63d9cd12772bf16e18714a768ad1abd6470fd9ab375f084d9fa32c7"
+  },
+  {
+    "path": "images/roboteam-agent/services/longrun.type",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8,
+    "sha256": "d0001a150b83f68f09004c5059045cb76a3f064eed4d42ce072bc3722c118006"
+  },
+  {
+    "path": "images/roboteam-agent/services/s6-marker",
+    "mode": 420,
+    "type": "file",
+    "bytes": 87,
+    "sha256": "ebfae94fef263b480a321e8ac8989ddc340450a398c377daf3d6ac2c6f5d2052"
+  },
+  {
+    "path": "images/roboteam-agent/sources.lock.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2192,
+    "sha256": "ecc232fb7e6ec89de4e80bdda218faca345c9f2149aecb6a2e1934b873c94878"
+  },
+  {
+    "path": "images/roboteam-agent/storage.conf",
+    "mode": 420,
+    "type": "file",
+    "bytes": 218,
+    "sha256": "aa36505b46df24c41461dddbd96d7e35614d06f957e2696cdf5f2b18cef6784f"
+  },
+  {
+    "path": "images/search-agent",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/search-agent/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2765,
+    "sha256": "daadc13c866897ec2f0bd3da26c41f9c5571e2be7fe27ae1af28872f5c53e79a"
+  },
+  {
+    "path": "images/search-agent/package-lock.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11599,
+    "sha256": "5c9a69822989b9ae197f9ce4067f249d5a87911c70048d91d3d522fea05b68bc"
+  },
+  {
+    "path": "images/search-agent/package.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 134,
+    "sha256": "21ee4edda95e7a1da804832acc4c3ea1864cbbc521dae2264954bc048cb59302"
+  },
+  {
+    "path": "images/search-agent/smoke-runtime.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6900,
+    "sha256": "ef518668e7ede4d27c81b2f6d5ac60843e95d75f2c7ece8af89dbb7382ffe894"
+  },
+  {
+    "path": "images/soul-gateway",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/soul-gateway/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 814,
+    "sha256": "fef82319c6ffe45a3e02b7eff6a034c8c860ff087d1828eb631fb45e278d66b6"
+  },
+  {
+    "path": "images/umami-agent",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "images/umami-agent/Dockerfile",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4607,
+    "sha256": "7dd8f241461d781cd907d9893b0b10b670e4dd2b13ca6a9ff7593cc2db1ffa1a"
+  },
+  {
+    "path": "images/umami-agent/patch-login-query-cache.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2910,
+    "sha256": "0eeb9ce76331aeb425a35989c872fbd265a74d43875ba70290323b8c2b274a7b"
+  },
+  {
+    "path": "images/umami-agent/patch-metadata-assets.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3907,
+    "sha256": "bce41c071a36ef1daf0e6162a19b7792ae0a4b674a0d6a6fcb7d7472a13b8e39"
+  },
+  {
+    "path": "images/umami-agent/smoke-runtime.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18630,
+    "sha256": "a9320514981e6b8a14b37ca208a4b525eaa831a1340ba03449a5bc34b6b7f094"
+  },
+  {
+    "path": "images/umami-agent/sources.lock.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6425,
+    "sha256": "9570c1508ceb9f5b9155782f2936f7a80bb39613bfd1dfe5b20075944afd698c"
+  },
+  {
+    "path": "images/umami-agent/verify-build.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3792,
+    "sha256": "4c91b9f103b124d35c0ba4b682f1b6dd923cd60dd3c5af57828625f01ec24601"
+  },
+  {
+    "path": "images/umami-agent/verify-login-query-cache.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5200,
+    "sha256": "85457c860397068565217839d2996a3333e405d92cab09e7add9218803c5c43c"
+  },
+  {
+    "path": "images/umami-agent/verify-publication.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9067,
+    "sha256": "06f64630b50047004aceb472972159ecf92dae80186c04d5c1f48489ba6ee07a"
+  },
+  {
+    "path": "scripts",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "scripts/install-roboteam-local-in-box.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 2475,
+    "sha256": "8b882d64efee8e2df992aff845227f5924e722db88d58619459cc61a9b770234"
+  },
+  {
+    "path": "scripts/install-roboteam-local.mjs",
+    "mode": 493,
+    "type": "file",
+    "bytes": 3393,
+    "sha256": "dfaabbe90f7736c1ae498de933ef31e73eeeabf010ca231e32fc4eb06920a7fe"
+  },
+  {
+    "path": "scripts/smoke-git-transport.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9312,
+    "sha256": "507316c8338889de1d57bd79c3befd99be9290ad99c9ccf4ceb985ad27bc3b2b"
+  },
+  {
+    "path": "scripts/smoke-gpt-researcher.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 4939,
+    "sha256": "8a676ad151db9fe64f300610334da653effc58a7df259c43952e63e9a0a07d10"
+  },
+  {
+    "path": "scripts/smoke-roboteam-agent.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 1130,
+    "sha256": "642662161030a3d8de7b12d80e77da50be5724c5a6b5acbc1dc38ef02d1b5d16"
+  },
+  {
+    "path": "tests",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/box-publication.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14470,
+    "sha256": "6a242af26d228292b92ddc5f6b08424e617e658a5c18c40d94c228af9bd7f15b"
+  },
+  {
+    "path": "tests/box-transport-entrypoint.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3710,
+    "sha256": "f04939e720b078ec5da285cde51f94cc8a50b35283cad3992da6511ca097f06e"
+  },
+  {
+    "path": "tests/edge-routing-source-absence.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4487,
+    "sha256": "c0d88e6d215fd96ef1f0410b427c12587e9d9cf7d15b60fe1b070ab6eeb25abe"
+  },
+  {
+    "path": "tests/fixtures",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/umami-login",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/umami-login/LoginForm.tsx",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1881,
+    "sha256": "71a0069a1f099365e6ec6e37fc58f81c759d85918742e8eb9635e8fd6a79794d"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/public",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/public/android-chrome-192x192.png",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7707,
+    "sha256": "994680e10dec4bde65aee757742ff7d95942edc2db2b7f61e8646bb4ff9a6eb8"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/public/android-chrome-512x512.png",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21989,
+    "sha256": "64bb4fa928178e26b6a9b37d58a112382995a430bf924a252d2c4be5105df32d"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/public/apple-touch-icon.png",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1992,
+    "sha256": "d1e226b7989d100cf404cc7c2dcc63017b79e1e8848cee6c9aa8c5a27ceba097"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/public/browserconfig.xml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 246,
+    "sha256": "c348b0d6df3d900efef7ae4b4dfc8b62b1737b04d09d4584fef243211c266866"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/public/favicon-16x16.png",
+    "mode": 420,
+    "type": "file",
+    "bytes": 580,
+    "sha256": "40fdfe178aea1849dc1b1b3cc8c8ad177c2f28b05b8f444b35fd13fe8846092e"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/public/favicon-32x32.png",
+    "mode": 420,
+    "type": "file",
+    "bytes": 851,
+    "sha256": "65e5c8002254ba4bbc9206ae3346fc5643a2059f5c29257ecc895c2f13519e23"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/public/favicon.ico",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15086,
+    "sha256": "42db99711f76494af5ea6d9ad0655e3babbd58cfe84eedf9e6e55576a2eda571"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/public/mstile-150x150.png",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2602,
+    "sha256": "dcbcd2991f3f6d766a0ef21bfc4981086768de544225a9facfcb637c6adb550d"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/public/safari-pinned-tab.svg",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4954,
+    "sha256": "1b82a7321c07d2b2a7beb6b689fbe2aa7f4fc482eeb64a67253a000103af3880"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/public/site.webmanifest",
+    "mode": 420,
+    "type": "file",
+    "bytes": 360,
+    "sha256": "e302b643ac7a6e1f1f8ab02b6c5605654b057af967920b7ff686cea8a144663d"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/src",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/src/app",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/umami-metadata/src/app/layout.tsx",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1777,
+    "sha256": "208c2e427b69d3ec60d590a98c218d2461ae0f6f8122125fb0a292eb2c11f9ff"
+  },
+  {
+    "path": "tests/git-transport-smoke.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6698,
+    "sha256": "925f99a10ebc419ee17b11cfd26745b14d246815847133afd70d6f4f159b0614"
+  },
+  {
+    "path": "tests/image-definitions.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 77700,
+    "sha256": "3e1744911b26be6dc08bd8d105b0cefe988c1856c2678b067037ce1ebbb30fc2"
+  },
+  {
+    "path": "tests/livekit-egress-loopback.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2591,
+    "sha256": "10157da69396794c83bfc2e4f0d30626e5335fc70b585d3dea14a17ea2b2e486"
+  },
+  {
+    "path": "tests/opencode-free-image-proof.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8271,
+    "sha256": "c5e76a5dd65d182f0d47dcfc24b3d48add4b61c8fb0f5a5d2e43166d7955593e"
+  },
+  {
+    "path": "tests/roboteam-agent-supply-chain.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10994,
+    "sha256": "3de0cb8598e90f4f6600248fa883ac76b59ebe485b286ca94ff331e70064496b"
+  },
+  {
+    "path": "tests/search-image-proof.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5825,
+    "sha256": "06f314e8a9ba4db949e0a788ea0a8acd958d557a1a2339d715e8a3a6ef6a035c"
+  },
+  {
+    "path": "tests/umami-agent-supply-chain.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 25797,
+    "sha256": "6453e759bbaddf4f0dca04714608c14f83bb37d0393a608edde6248fff836c6e"
+  }
+]

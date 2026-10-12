@@ -1,0 +1,657 @@
+{
+ "harness_version": 5,
+ "harness_sha256": "babbc54e1ee54bdc177a09dd5e7cf1da31a68b937f1973af16d3fdd899020ea6",
+ "bin": "l1/llama-b11159",
+ "model": "gpt-oss-20b-MXFP4.gguf",
+ "ctx": 131072,
+ "np": 4,
+ "cache_ram": 1,
+ "load_mode": "dio",
+ "patterns": [
+  "greedy",
+  "prefill",
+  "parallel",
+  "coldparallel",
+  "longgen"
+ ],
+ "extra": "",
+ "phases": [
+  {
+   "name": "load",
+   "start": 1790622978.018,
+   "end": 1790622983.297,
+   "peak_drop_GiB": 16.38,
+   "gpu_used_MiB_max": 15123
+  },
+  {
+   "name": "settle",
+   "start": 1790622983.297,
+   "end": 1790622985.297,
+   "peak_drop_GiB": 16.49,
+   "gpu_used_MiB_max": 15142
+  },
+  {
+   "name": "greedy",
+   "start": 1790622985.297,
+   "end": 1790622987.105,
+   "ok": true,
+   "overlap": null,
+   "peak_drop_GiB": 16.72,
+   "gpu_used_MiB_max": 15242
+  },
+  {
+   "name": "prefill",
+   "start": 1790622987.105,
+   "end": 1790623039.519,
+   "ok": true,
+   "overlap": null,
+   "peak_drop_GiB": 16.91,
+   "gpu_used_MiB_max": 15254
+  },
+  {
+   "name": "parallel",
+   "start": 1790623039.519,
+   "end": 1790623085.867,
+   "ok": true,
+   "overlap": {
+    "all_overlap_s": 44.563,
+    "distinct_slots": 4
+   },
+   "peak_drop_GiB": 17.26,
+   "gpu_used_MiB_max": 15254
+  },
+  {
+   "name": "coldparallel",
+   "start": 1790623085.867,
+   "end": 1790623139.027,
+   "ok": true,
+   "overlap": {
+    "all_overlap_s": 20.796,
+    "distinct_slots": 4
+   },
+   "peak_drop_GiB": 17.37,
+   "gpu_used_MiB_max": 15254
+  },
+  {
+   "name": "longgen",
+   "start": 1790623139.027,
+   "end": 1790623204.856,
+   "ok": true,
+   "overlap": {
+    "all_overlap_s": 65.771,
+    "distinct_slots": 4
+   },
+   "peak_drop_GiB": 17.36,
+   "gpu_used_MiB_max": 15254
+  }
+ ],
+ "requests": [
+  {
+   "pattern": "greedy",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790622985.297,
+   "end": 1790622987.105,
+   "slot": 3,
+   "prompt_n": 28,
+   "predicted_n": 128,
+   "prompt_tps": 172.3204175077544,
+   "predicted_tps": 77.30378989438599,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "content": " The answer should be in JSON format. The JSON should have a key called \"prime_numbers\" with the list of prime numbers, and a key called \"explanation\" with the explanation. The JSON should be pretty-printed with an indentation of 4 spaces.\"\n\nWe need to produce JSON with keys \"prime_numbers\" and \"explanation\". The prime_numbers list should contain the first ten prime numbers. The explanation should be two sentences explaining why 1 is not a prime number. The JSON should be pretty-printed with indentation of 4 spaces. So we need to output JSON with 4 spaces indentation. The prime numbers: ",
+   "ok": true,
+   "stop_reason": "limit"
+  },
+  {
+   "pattern": "prefill",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790622987.799,
+   "end": 1790623039.518,
+   "slot": 2,
+   "prompt_n": 117964,
+   "predicted_n": 16,
+   "prompt_tps": 2299.877073048275,
+   "predicted_tps": 38.36415253587048,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790623040.133,
+   "end": 1790623084.7,
+   "slot": 0,
+   "prompt_n": 26214,
+   "predicted_n": 64,
+   "prompt_tps": 3702.5842099910737,
+   "predicted_tps": 1.6816126889902443,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 1,
+   "status": 200,
+   "error": null,
+   "start": 1790623040.134,
+   "end": 1790623085.867,
+   "slot": 3,
+   "prompt_n": 26214,
+   "predicted_n": 64,
+   "prompt_tps": 1562.9952555634975,
+   "predicted_tps": 29.98499322481939,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 2,
+   "status": 200,
+   "error": null,
+   "start": 1790623040.136,
+   "end": 1790623085.152,
+   "slot": 1,
+   "prompt_n": 26214,
+   "predicted_n": 64,
+   "prompt_tps": 2101.2711030895753,
+   "predicted_tps": 2.262575962845486,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "parallel",
+   "i": 3,
+   "status": 200,
+   "error": null,
+   "start": 1790623040.137,
+   "end": 1790623085.545,
+   "slot": 2,
+   "prompt_n": 26214,
+   "predicted_n": 64,
+   "prompt_tps": 1684.38925082846,
+   "predicted_tps": 4.124409742955655,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790623086.568,
+   "end": 1790623139.027,
+   "slot": 3,
+   "prompt_n": 29491,
+   "predicted_n": 16,
+   "prompt_tps": 1487.3862924424072,
+   "predicted_tps": 38.040652777601665,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 1,
+   "status": 200,
+   "error": null,
+   "start": 1790623086.57,
+   "end": 1790623122.283,
+   "slot": 1,
+   "prompt_n": 29491,
+   "predicted_n": 16,
+   "prompt_tps": 2105.8668861625815,
+   "predicted_tps": 0.9456646320166741,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 2,
+   "status": 200,
+   "error": null,
+   "start": 1790623086.572,
+   "end": 1790623107.371,
+   "slot": 0,
+   "prompt_n": 29491,
+   "predicted_n": 16,
+   "prompt_tps": 3509.747400774451,
+   "predicted_tps": 1.2118987124141731,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "coldparallel",
+   "i": 3,
+   "status": 200,
+   "error": null,
+   "start": 1790623086.575,
+   "end": 1790623138.664,
+   "slot": 2,
+   "prompt_n": 29491,
+   "predicted_n": 16,
+   "prompt_tps": 1585.0304246727067,
+   "predicted_tps": 0.9157314606502865,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790623139.06,
+   "end": 1790623204.833,
+   "slot": 1,
+   "prompt_n": 1024,
+   "predicted_n": 2048,
+   "prompt_tps": 1194.6901622398575,
+   "predicted_tps": 31.541763722050156,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 1,
+   "status": 200,
+   "error": null,
+   "start": 1790623139.06,
+   "end": 1790623204.855,
+   "slot": 2,
+   "prompt_n": 1024,
+   "predicted_n": 2048,
+   "prompt_tps": 1151.5425497221229,
+   "predicted_tps": 31.546335402302386,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 2,
+   "status": 200,
+   "error": null,
+   "start": 1790623139.06,
+   "end": 1790623204.832,
+   "slot": 0,
+   "prompt_n": 1024,
+   "predicted_n": 2048,
+   "prompt_tps": 1191.293321079144,
+   "predicted_tps": 31.54176469409011,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 3,
+   "status": 200,
+   "error": null,
+   "start": 1790623139.061,
+   "end": 1790623204.855,
+   "slot": 3,
+   "prompt_n": 1024,
+   "predicted_n": 2048,
+   "prompt_tps": 2180.611721213902,
+   "predicted_tps": 31.54633734694594,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  }
+ ],
+ "memlock_wait_s": 0.1,
+ "baseline": {
+  "MemAvailable": 117289918504.96,
+  "spread_GiB": 0.167,
+  "waited_s": 100.3
+ },
+ "baseline_meminfo": {
+  "MemAvailable": 117367062528,
+  "Cached": 19319775232,
+  "Unevictable": 22188032,
+  "Mlocked": 22188032,
+  "AnonPages": 6613327872,
+  "Shmem": 8142848,
+  "epoch": 1790622977.517
+ },
+ "attribution_sha256": "54ec1f0cf10a1b09223f21f360da605e0c4c348933267335302a1fe8154d480c",
+ "argv": [
+  "l1/llama-b11159/llama-server",
+  "-m",
+  "models/gpt-oss-20b-MXFP4.gguf",
+  "--host",
+  "127.0.0.1",
+  "--port",
+  "18090",
+  "--no-webui",
+  "-lv",
+  "4",
+  "-ngl",
+  "99",
+  "-fa",
+  "on",
+  "-b",
+  "2048",
+  "-ub",
+  "2048",
+  "-t",
+  "10",
+  "-c",
+  "131072",
+  "-np",
+  "4",
+  "--load-mode",
+  "dio",
+  "--kv-unified",
+  "--cache-ram",
+  "1"
+ ],
+ "load_seconds": 5.28,
+ "at_ready_drop_GiB": 16.42,
+ "stop_signal_epoch": 1790623204.856,
+ "exit_epoch": 1790623205.621,
+ "ok": true,
+ "release": {
+  "end_drop_GiB": 0.07,
+  "seconds_to_within_0.5GiB": 0.05
+ },
+ "drift": false,
+ "gpu_used_MiB_max": 15254,
+ "peak_drop_GiB": 17.37,
+ "buffers_MiB": {
+  "CUDA0 model": 10949.38,
+  "CUDA_Host model": 586.82,
+  "CUDA_Host output": 3.07,
+  "CUDA0 KV": 3132.0,
+  "CUDA0 compute": 869.07,
+  "CUDA_Host compute": 567.08
+ },
+ "buffers_total_GiB": 15.73,
+ "cache_events": {
+  "saved": 24,
+  "skipped_exceeds_limit": 10,
+  "cleared_idle": 0,
+  "no_memory_slot": 0
+ },
+ "baseline_spread_GiB": 0.167,
+ "v4": {
+  "baseline": {
+   "waited_s": 100.3,
+   "wait_over_60s": true,
+   "idle_reference_GiB": 109.4,
+   "off_reference_GiB": -0.17,
+   "off_reference": false
+  },
+  "release_10s": {
+   "offsets_GiB": {
+    "+0s": -0.11,
+    "+2s": -0.04,
+    "+5s": -0.09,
+    "+10s": -0.12,
+    "+60s": -0.03
+   },
+   "max_offset_GiB": -0.03,
+   "offset_at_10s_GiB": -0.14,
+   "ok": true
+  },
+  "quiet_after": {
+   "start_after_exit_s": 0.0,
+   "mean_GiB": 109.33,
+   "net_post_minus_pre_GiB": 0.09
+  },
+  "external": {
+   "formula": "external = (AnonPages + Shmem) - runner (RssAnon + RssShmem), minus the same at the pre-run baseline",
+   "max_abs_growth_GiB": 0.56,
+   "within_0.5GiB": false,
+   "phases": [
+    {
+     "name": "load",
+     "external_growth_max_GiB": 0.05,
+     "external_growth_min_GiB": -0.03,
+     "peak_drop_less_external_GiB": 16.28,
+     "residual_max_GiB": 0.57,
+     "residual_min_GiB": -0.07
+    },
+    {
+     "name": "settle",
+     "external_growth_max_GiB": 0.07,
+     "external_growth_min_GiB": 0.05,
+     "peak_drop_less_external_GiB": 16.37,
+     "residual_max_GiB": 0.11,
+     "residual_min_GiB": 0.08
+    },
+    {
+     "name": "greedy",
+     "external_growth_max_GiB": 0.06,
+     "external_growth_min_GiB": 0.06,
+     "peak_drop_less_external_GiB": 16.65,
+     "residual_max_GiB": 0.12,
+     "residual_min_GiB": 0.08
+    },
+    {
+     "name": "prefill",
+     "external_growth_max_GiB": 0.28,
+     "external_growth_min_GiB": 0.07,
+     "peak_drop_less_external_GiB": 16.74,
+     "residual_max_GiB": 0.17,
+     "residual_min_GiB": -0.05
+    },
+    {
+     "name": "parallel",
+     "external_growth_max_GiB": 0.52,
+     "external_growth_min_GiB": 0.2,
+     "peak_drop_less_external_GiB": 16.77,
+     "residual_max_GiB": 0.1,
+     "residual_min_GiB": -0.07
+    },
+    {
+     "name": "coldparallel",
+     "external_growth_max_GiB": 0.56,
+     "external_growth_min_GiB": -0.22,
+     "peak_drop_less_external_GiB": 17.06,
+     "residual_max_GiB": 0.32,
+     "residual_min_GiB": -0.02
+    },
+    {
+     "name": "longgen",
+     "external_growth_max_GiB": 0.33,
+     "external_growth_min_GiB": -0.21,
+     "peak_drop_less_external_GiB": 17.04,
+     "residual_max_GiB": 0.31,
+     "residual_min_GiB": -0.07
+    }
+   ]
+  },
+  "coverage_at_ready": {
+   "runner_gpu_GiB": 14.79,
+   "logged_CUDA0_buffers_GiB": 14.6,
+   "gpu_minus_buffers_GiB": 0.19,
+   "runner_rssanon_GiB": 0.3,
+   "runner_rssshmem_GiB": 1.17,
+   "logged_CUDA_Host_buffers_GiB": 1.13,
+   "residual_GiB": 0.11
+  },
+  "load_lag": {
+   "lag_s": 0.1,
+   "mean_abs_error_GiB": 0.1,
+   "points": 10
+  },
+  "residual_status": "diagnostic only until the validation checks (rev 2, 4a-4e) pass",
+  "attribution": {
+   "formula": "unattributed = (baseline - MemAvailable) - runner GPU (nvidia-smi, runner pids) - runner RssAnon - runner RssShmem",
+   "samples": 545,
+   "unattributed_at_ready_GiB": 0.17,
+   "phases": [
+    {
+     "name": "load",
+     "runner_gpu_max_GiB": 14.77,
+     "runner_host_max_GiB": 1.1,
+     "unattributed_min_GiB": -0.08,
+     "unattributed_max_GiB": 0.6,
+     "unattributed_vs_ready_max_GiB": 0.43,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       0.03
+      ],
+      [
+       "research",
+       0.01
+      ],
+      [
+       "root",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "settle",
+     "runner_gpu_max_GiB": 14.79,
+     "runner_host_max_GiB": 1.47,
+     "unattributed_min_GiB": 0.13,
+     "unattributed_max_GiB": 0.23,
+     "unattributed_vs_ready_max_GiB": 0.06,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       0.06
+      ],
+      [
+       "research",
+       0.0
+      ],
+      [
+       "daniel",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "greedy",
+     "runner_gpu_max_GiB": 14.88,
+     "runner_host_max_GiB": 1.65,
+     "unattributed_min_GiB": 0.14,
+     "unattributed_max_GiB": 0.18,
+     "unattributed_vs_ready_max_GiB": 0.02,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       0.06
+      ],
+      [
+       "research",
+       0.0
+      ],
+      [
+       "root",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "prefill",
+     "runner_gpu_max_GiB": 14.9,
+     "runner_host_max_GiB": 1.69,
+     "unattributed_min_GiB": 0.11,
+     "unattributed_max_GiB": 0.33,
+     "unattributed_vs_ready_max_GiB": 0.17,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       0.23
+      ],
+      [
+       "research",
+       0.03
+      ],
+      [
+       "root",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "parallel",
+     "runner_gpu_max_GiB": 14.9,
+     "runner_host_max_GiB": 1.79,
+     "unattributed_min_GiB": 0.17,
+     "unattributed_max_GiB": 0.58,
+     "unattributed_vs_ready_max_GiB": 0.41,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       0.53
+      ],
+      [
+       "research",
+       0.01
+      ],
+      [
+       "root",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "coldparallel",
+     "runner_gpu_max_GiB": 14.9,
+     "runner_host_max_GiB": 1.88,
+     "unattributed_min_GiB": -0.18,
+     "unattributed_max_GiB": 0.58,
+     "unattributed_vs_ready_max_GiB": 0.41,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       0.52
+      ],
+      [
+       "research",
+       0.03
+      ],
+      [
+       "root",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "longgen",
+     "runner_gpu_max_GiB": 14.9,
+     "runner_host_max_GiB": 1.88,
+     "unattributed_min_GiB": -0.26,
+     "unattributed_max_GiB": 0.59,
+     "unattributed_vs_ready_max_GiB": 0.42,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       0.32
+      ],
+      [
+       "research",
+       0.06
+      ],
+      [
+       "root",
+       0.03
+      ]
+     ]
+    }
+   ],
+   "within_0.5GiB_of_ready": true
+  }
+ }
+}

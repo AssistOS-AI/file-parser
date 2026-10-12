@@ -1,0 +1,392 @@
+{
+ "harness_version": 5,
+ "harness_sha256": "babbc54e1ee54bdc177a09dd5e7cf1da31a68b937f1973af16d3fdd899020ea6",
+ "bin": "l1/llama-b11159",
+ "model": "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+ "ctx": 262144,
+ "np": 1,
+ "cache_ram": 8192,
+ "load_mode": "dio",
+ "patterns": [
+  "greedy",
+  "prefill",
+  "longgen"
+ ],
+ "extra": "",
+ "phases": [
+  {
+   "name": "load",
+   "start": 1790624506.801,
+   "end": 1790624514.51,
+   "peak_drop_GiB": 29.75,
+   "gpu_used_MiB_max": 27569
+  },
+  {
+   "name": "settle",
+   "start": 1790624514.51,
+   "end": 1790624516.51,
+   "peak_drop_GiB": 29.83,
+   "gpu_used_MiB_max": 27572
+  },
+  {
+   "name": "greedy",
+   "start": 1790624516.51,
+   "end": 1790624518.702,
+   "ok": true,
+   "overlap": null,
+   "peak_drop_GiB": 30.27,
+   "gpu_used_MiB_max": 27674
+  },
+  {
+   "name": "prefill",
+   "start": 1790624518.702,
+   "end": 1790624664.759,
+   "ok": true,
+   "overlap": null,
+   "peak_drop_GiB": 40.34,
+   "gpu_used_MiB_max": 27708
+  },
+  {
+   "name": "longgen",
+   "start": 1790624664.759,
+   "end": 1790624699.202,
+   "ok": true,
+   "overlap": null,
+   "peak_drop_GiB": 39.87,
+   "gpu_used_MiB_max": 27708
+  }
+ ],
+ "requests": [
+  {
+   "pattern": "greedy",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790624516.51,
+   "end": 1790624518.702,
+   "slot": 0,
+   "prompt_n": 28,
+   "predicted_n": 128,
+   "prompt_tps": 131.65566401474544,
+   "predicted_tps": 64.22776480298259,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "content": "\n\n<think>\nHere's a thinking process:\n\n1.  **Analyze User Input:**\n   - Statement: \"The capital of France is Paris.\" (True, but irrelevant to the main task)\n   - Task 1: \"List the first ten prime numbers\"\n   - Task 2: \"Explain in two sentences why 1 is not a prime number.\"\n\n2.  **Task 1: First ten prime numbers**\n   - Primes are natural numbers greater than 1 that have exactly two distinct positive divisors: 1 and themselves.\n   - Let's list them: ",
+   "ok": true,
+   "stop_reason": "limit"
+  },
+  {
+   "pattern": "prefill",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790624519.406,
+   "end": 1790624664.759,
+   "slot": 0,
+   "prompt_n": 235929,
+   "predicted_n": 16,
+   "prompt_tps": 1630.7202257463275,
+   "predicted_tps": 25.7578385395649,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  },
+  {
+   "pattern": "longgen",
+   "i": 0,
+   "status": 200,
+   "error": null,
+   "start": 1790624664.763,
+   "end": 1790624699.202,
+   "slot": 0,
+   "prompt_n": 1024,
+   "predicted_n": 2048,
+   "prompt_tps": 2429.7992093661164,
+   "predicted_tps": 62.380689693338724,
+   "stop_type": "limit",
+   "stopping_word": "",
+   "ok": true
+  }
+ ],
+ "memlock_wait_s": 0.0,
+ "baseline": {
+  "MemAvailable": 119054168678.4,
+  "spread_GiB": 0.164,
+  "waited_s": 10.0
+ },
+ "baseline_meminfo": {
+  "MemAvailable": 118843138048,
+  "Cached": 26277134336,
+  "Unevictable": 22122496,
+  "Mlocked": 22122496,
+  "AnonPages": 5512429568,
+  "Shmem": 7294976,
+  "epoch": 1790624506.3
+ },
+ "attribution_sha256": "54ec1f0cf10a1b09223f21f360da605e0c4c348933267335302a1fe8154d480c",
+ "argv": [
+  "l1/llama-b11159/llama-server",
+  "-m",
+  "models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+  "--host",
+  "127.0.0.1",
+  "--port",
+  "18090",
+  "--no-webui",
+  "-lv",
+  "4",
+  "-ngl",
+  "99",
+  "-fa",
+  "on",
+  "-b",
+  "2048",
+  "-ub",
+  "2048",
+  "-t",
+  "10",
+  "-c",
+  "262144",
+  "-np",
+  "1",
+  "--load-mode",
+  "dio",
+  "--cache-ram",
+  "8192"
+ ],
+ "load_seconds": 7.71,
+ "at_ready_drop_GiB": 29.81,
+ "stop_signal_epoch": 1790624699.202,
+ "exit_epoch": 1790624700.418,
+ "ok": true,
+ "release": {
+  "end_drop_GiB": 2.12,
+  "seconds_to_within_0.5GiB": 50.16
+ },
+ "drift": true,
+ "gpu_used_MiB_max": 27708,
+ "peak_drop_GiB": 40.34,
+ "buffers_MiB": {
+  "CUDA0 model": 20764.8,
+  "CUDA_Host model": 515.31,
+  "CUDA_Host output": 0.95,
+  "CUDA0 KV": 5120.0,
+  "CUDA0 RS": 62.81,
+  "CUDA0 compute": 1430.2,
+  "CUDA_Host compute": 1056.07
+ },
+ "buffers_total_GiB": 28.27,
+ "cache_events": {
+  "saved": 0,
+  "skipped_exceeds_limit": 0,
+  "cleared_idle": 0,
+  "no_memory_slot": 0
+ },
+ "baseline_spread_GiB": 0.164,
+ "v4": {
+  "baseline": {
+   "waited_s": 10.0,
+   "wait_over_60s": false,
+   "idle_reference_GiB": 109.4,
+   "off_reference_GiB": 1.48,
+   "off_reference": true
+  },
+  "release_10s": {
+   "offsets_GiB": {
+    "+0s": 1.3,
+    "+2s": 1.47,
+    "+5s": 1.31,
+    "+10s": 1.3,
+    "+60s": 2.07
+   },
+   "max_offset_GiB": 1.47,
+   "offset_at_10s_GiB": 1.32,
+   "ok": false
+  },
+  "quiet_after": {
+   "start_after_exit_s": 0.1,
+   "mean_GiB": 109.53,
+   "net_post_minus_pre_GiB": -1.35
+  },
+  "external": {
+   "formula": "external = (AnonPages + Shmem) - runner (RssAnon + RssShmem), minus the same at the pre-run baseline",
+   "max_abs_growth_GiB": 10.17,
+   "within_0.5GiB": false,
+   "phases": [
+    {
+     "name": "load",
+     "external_growth_max_GiB": 0.01,
+     "external_growth_min_GiB": -0.1,
+     "peak_drop_less_external_GiB": 29.75,
+     "residual_max_GiB": 1.04,
+     "residual_min_GiB": -2.91
+    },
+    {
+     "name": "settle",
+     "external_growth_max_GiB": 0.05,
+     "external_growth_min_GiB": 0.04,
+     "peak_drop_less_external_GiB": 29.79,
+     "residual_max_GiB": 0.91,
+     "residual_min_GiB": 0.84
+    },
+    {
+     "name": "greedy",
+     "external_growth_max_GiB": 0.04,
+     "external_growth_min_GiB": -0.41,
+     "peak_drop_less_external_GiB": 30.08,
+     "residual_max_GiB": 1.22,
+     "residual_min_GiB": 0.88
+    },
+    {
+     "name": "prefill",
+     "external_growth_max_GiB": 10.17,
+     "external_growth_min_GiB": -0.41,
+     "peak_drop_less_external_GiB": 31.92,
+     "residual_max_GiB": 2.52,
+     "residual_min_GiB": 0.7
+    },
+    {
+     "name": "longgen",
+     "external_growth_max_GiB": 4.2,
+     "external_growth_min_GiB": 0.78,
+     "peak_drop_less_external_GiB": 36.17,
+     "residual_max_GiB": 2.28,
+     "residual_min_GiB": 1.01
+    }
+   ]
+  },
+  "coverage_at_ready": {
+   "runner_gpu_GiB": 26.93,
+   "logged_CUDA0_buffers_GiB": 26.74,
+   "gpu_minus_buffers_GiB": 0.19,
+   "runner_rssanon_GiB": 0.38,
+   "runner_rssshmem_GiB": 1.58,
+   "logged_CUDA_Host_buffers_GiB": 1.54,
+   "residual_GiB": 0.89
+  },
+  "load_lag": {
+   "lag_s": 0.0,
+   "mean_abs_error_GiB": 0.56,
+   "points": 14
+  },
+  "residual_status": "diagnostic only until the validation checks (rev 2, 4a-4e) pass",
+  "attribution": {
+   "formula": "unattributed = (baseline - MemAvailable) - runner GPU (nvidia-smi, runner pids) - runner RssAnon - runner RssShmem",
+   "samples": 491,
+   "unattributed_at_ready_GiB": 0.93,
+   "phases": [
+    {
+     "name": "load",
+     "runner_gpu_max_GiB": 26.93,
+     "runner_host_max_GiB": 1.96,
+     "unattributed_min_GiB": -2.84,
+     "unattributed_max_GiB": 1.01,
+     "unattributed_vs_ready_max_GiB": 3.76,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       0.11
+      ],
+      [
+       "research",
+       0.01
+      ],
+      [
+       "daniel",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "settle",
+     "runner_gpu_max_GiB": 26.93,
+     "runner_host_max_GiB": 1.96,
+     "unattributed_min_GiB": 0.91,
+     "unattributed_max_GiB": 0.94,
+     "unattributed_vs_ready_max_GiB": 0.02,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       0.16
+      ],
+      [
+       "daniel",
+       0.0
+      ],
+      [
+       "root",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "greedy",
+     "runner_gpu_max_GiB": 27.03,
+     "runner_host_max_GiB": 2.24,
+     "unattributed_min_GiB": 0.77,
+     "unattributed_max_GiB": 0.95,
+     "unattributed_vs_ready_max_GiB": 0.16,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       0.15
+      ],
+      [
+       "daniel",
+       0.0
+      ],
+      [
+       "root",
+       0.0
+      ]
+     ]
+    },
+    {
+     "name": "prefill",
+     "runner_gpu_max_GiB": 27.06,
+     "runner_host_max_GiB": 2.47,
+     "unattributed_min_GiB": 0.63,
+     "unattributed_max_GiB": 10.92,
+     "unattributed_vs_ready_max_GiB": 9.99,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       10.2
+      ],
+      [
+       "daniel",
+       0.07
+      ],
+      [
+       "research",
+       0.03
+      ]
+     ]
+    },
+    {
+     "name": "longgen",
+     "runner_gpu_max_GiB": 27.06,
+     "runner_host_max_GiB": 7.1,
+     "unattributed_min_GiB": 1.92,
+     "unattributed_max_GiB": 5.66,
+     "unattributed_vs_ready_max_GiB": 4.73,
+     "others_anon_growth_top_GiB": [
+      [
+       "salboaie",
+       4.29
+      ],
+      [
+       "root",
+       0.03
+      ],
+      [
+       "daniel",
+       0.0
+      ]
+     ]
+    }
+   ],
+   "within_0.5GiB_of_ready": false
+  }
+ }
+}

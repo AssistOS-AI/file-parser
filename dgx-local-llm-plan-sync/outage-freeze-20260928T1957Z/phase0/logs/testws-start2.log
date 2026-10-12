@@ -1,0 +1,76 @@
+Trying to pull docker.io/assistos/ploinky-box:latest...
+Getting image source signatures
+Copying blob sha256:e14d721092b255490d9b48101bcb15bae53f7064797acc092dfa9ba6b4be9d4e
+Copying blob sha256:0247ac906dc932888d695f6c5f6670c676c3b46fa0185723f5742c7e60c7a3ca
+Copying config sha256:740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+Writing manifest to image destination
+740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+[ploinky] Pulling Box image docker.io/assistos/ploinky-box:latest...
+Trying to pull docker.io/assistos/ploinky-box:latest...
+Getting image source signatures
+Copying blob sha256:e14d721092b255490d9b48101bcb15bae53f7064797acc092dfa9ba6b4be9d4e
+Copying blob sha256:0247ac906dc932888d695f6c5f6670c676c3b46fa0185723f5742c7e60c7a3ca
+Copying config sha256:740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+Writing manifest to image destination
+740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+[ploinky] Creating Box container ploinky-box-gpu-test-workspace-90b386b1f08a...
+[ploinky] Starting Box container ploinky-box-gpu-test-workspace-90b386b1f08a; streaming startup logs...
+[ploinky-box] Starting runtime self-checks
+[ploinky-box] Validating the host-selected workspace root
+[ploinky-box] Preparing the mounted Ploinky workspace
+[ploinky-box] Validating runtime tools and identities
+[ploinky-box] Validating nested-container devices
+[ploinky-box] Validating nested rootless Podman networking
+[ploinky-box] Runtime self-checks passed
+PLOINKY_BOX_READY
+[ploinky] Verifying and installing Box dependencies...
+[ploinky] using .ploinky: /home/research/gpu-test-workspace/.ploinky
+Static: agent=AchillesIDE/gitAgent port=8080
+[start] Watchdog launched in background (pid 408); router generation reader is ready.
+[start] Dependency wave 1/1: AchillesIDE/gitAgent
+[pull] image 'docker.io/assistos/ploinky-node@sha256:accd925fcbf460c1f4c7a5cd9e2d46539c615bbfad2e896cabb7556d8050a669' not present locally — pulling before runtime probe...
+[pull] podman pull docker.io/assistos/ploinky-node@sha256:accd925fcbf460c1f4c7a5cd9e2d46539c615bbfad2e896cabb7556d8050a669 (timeout 1800s)
+Trying to pull docker.io/assistos/ploinky-node@sha256:accd925fcbf460c1f4c7a5cd9e2d46539c615bbfad2e896cabb7556d8050a669...
+Getting image source signatures
+Copying blob sha256:4e24ff4642ac1fabc8b1db6074ff1f80277ed13dc84841487ef8f4a5be3a9313
+Copying blob sha256:0b76c102c1dc0cc79c6df4e841b0b1d3064285a37ed5b61725d0c6f027254285
+Copying blob sha256:7821f4430204ca5a127a8361257d0511d4dc3a6e88a9c2b565d9323390b8da30
+Copying blob sha256:bf7af0229701decd1b9f42143504fc8f69e5664c37e57001d198e731e4f86c2e
+Copying blob sha256:e7abb520f80cc7047427503cbb53d9466a0b3dc0e728e8fdadf629141bcacca0
+Copying blob sha256:c6362cf6a10697fe83281ef3fd928e5fb15be872bb08f90d8f0488b50431e241
+Copying config sha256:07fd7e99fa11ca9bab2f06792e94fff2952bb30fcc8f6703227e96cde64fa7f1
+Writing manifest to image destination
+07fd7e99fa11ca9bab2f06792e94fff2952bb30fcc8f6703227e96cde64fa7f1
+[pull] docker.io/assistos/ploinky-node@sha256:accd925fcbf460c1f4c7a5cd9e2d46539c615bbfad2e896cabb7556d8050a669 ready — 0.99 GB unpacked in 38s (avg 26.6 MB/s)
+[start] gitAgent: podman create (cwd='/home/research/gpu-test-workspace') -> /Agent/server/AgentEntrypoint.sh -> docker-entrypoint.sh sh -c if [ "${PLOINKY_RUNTIME:-}" = "bwrap" ] || [ "${PLOINKY_RUNTIME:-}" = "seatbelt" ]; then command -v git >/dev/null 2>&1 || { echo "ERROR: git not found on host. Install git or set ASSISTOS_GIT_BINARY to the full path of the git binary."; exit 1; }; elif command -v apk >/dev/null 2>&1; then apk add --no-cache git openssh-client ca-certificates; fi && exec sh /Agent/server/AgentServer.sh
+[pull] image 'docker.io/library/node:24-bookworm-slim@sha256:6f7b03f7c2c8e2e784dcf9295400527b9b1270fd37b7e9a7285cf83b6951452d' not present locally — pulling before runtime probe...
+[pull] podman pull docker.io/library/node:24-bookworm-slim@sha256:6f7b03f7c2c8e2e784dcf9295400527b9b1270fd37b7e9a7285cf83b6951452d (timeout 1800s)
+Trying to pull docker.io/library/node@sha256:6f7b03f7c2c8e2e784dcf9295400527b9b1270fd37b7e9a7285cf83b6951452d...
+Getting image source signatures
+Copying blob sha256:4ba67d92468baa0bb098947ae9a73e9cddcc64be289cadb8dff2e2feaaadde35
+Copying blob sha256:53bb9e501f1803aca595be8d902a62cea6bf4d996ce6f7dfe16c1c97be343e6c
+Copying blob sha256:5c528215feb53db02e98a6d95f43621b7f609e88fec908fd682ebf5dc53ca821
+Copying blob sha256:68e4074636d4cc8d1a86c94e93f1b348fc57b7e76c5d2e56a2105159328e3b79
+Copying blob sha256:ad381f39995fa25f1bac19f5977f372c4ad116be7fc9bcf8d5b492fd8424f85c
+Copying config sha256:9be410e06dadc1794f44aa4c0fd107a7ecb2edb5cb6bcc6a71c7888caf3cfa12
+Writing manifest to image destination
+9be410e06dadc1794f44aa4c0fd107a7ecb2edb5cb6bcc6a71c7888caf3cfa12
+[pull] docker.io/library/node:24-bookworm-slim@sha256:6f7b03f7c2c8e2e784dcf9295400527b9b1270fd37b7e9a7285cf83b6951452d ready — 0.23 GB unpacked in 11s (avg 21.9 MB/s)
+85f017a6bb23a9c7112fae3da48a3254cdd2c3c4186205ee4f1f95f0f9b885bc
+[start] Waiting for static agent 'AchillesIDE/gitAgent' to become ready on port 41085...
+[start] Tracking readiness for 1 agent(s): AchillesIDE/gitAgent
+[start] AchillesIDE/gitAgent: ready after 0s.
+[start] Readiness 1/1 ready.
+[start] Starting 1 additional enabled agent(s) outside the dependency graph: ploinky_local-llms_local-llm_gpu-test-workspace_90b386b1
+[pull] image 'localhost/local-llm:dev' not present locally — pulling before runtime probe...
+[pull] podman pull localhost/local-llm:dev (timeout 1800s)
+Trying to pull localhost/local-llm:dev...
+time="2026-09-28T15:52:54Z" level=warning msg="Failed, retrying in 1s ... (1/3). Error: initializing source docker://localhost/local-llm:dev: pinging container registry localhost: Get \"https://localhost/v2/\": dial tcp 127.0.0.1:443: connect: connection refused"
+time="2026-09-28T15:52:55Z" level=warning msg="Failed, retrying in 1s ... (2/3). Error: initializing source docker://localhost/local-llm:dev: pinging container registry localhost: Get \"https://localhost/v2/\": dial tcp 127.0.0.1:443: connect: connection refused"
+time="2026-09-28T15:52:56Z" level=warning msg="Failed, retrying in 1s ... (3/3). Error: initializing source docker://localhost/local-llm:dev: pinging container registry localhost: Get \"https://localhost/v2/\": dial tcp 127.0.0.1:443: connect: connection refused"
+Error: unable to copy from source docker://localhost/local-llm:dev: initializing source docker://localhost/local-llm:dev: pinging container registry localhost: Get "https://localhost/v2/": dial tcp 127.0.0.1:443: connect: connection refused
+[start] Failed to start agent 'local-llm': Image pull for 'localhost/local-llm:dev' exited with code 125.
+[start] 1 agent(s) failed to start: local-llm
+❌ Error: start (workspace) failed: additional runtime failure left edge selectors inactive; repair and run start again
+Run ploinky diagnose from this workspace for prerequisite, storage, and security-profile diagnostics.
+ploinky: In-box start failed with status 1

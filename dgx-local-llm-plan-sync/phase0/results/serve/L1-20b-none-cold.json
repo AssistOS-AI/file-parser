@@ -1,0 +1,67 @@
+{
+ "bin": "l1/llama-b11159",
+ "model": "gpt-oss-20b-MXFP4.gguf",
+ "load_mode": "none",
+ "ctx": 8192,
+ "np": 1,
+ "cold": true,
+ "extra": "",
+ "load_seconds": 8.7,
+ "load_delta_GiB": {
+  "MemFree": -23.97,
+  "MemAvailable": -12.55,
+  "Cached": 12.1
+ },
+ "after_load_GiB": {
+  "MemFree": 23.14,
+  "MemAvailable": 97.27,
+  "Cached": 70.44
+ },
+ "load_rate_GBps": 1.39,
+ "greedy": {
+  "content": " The answer should be in JSON format. The JSON should have a key called \"prime_numbers\" with the list of prime numbers, and a key called \"explanation\" with the explanation. The JSON should be pretty-printed with an indentation of 4 spaces.\"\n\nWe need to produce JSON with keys \"prime_numbers\" and \"explanation\". The prime_numbers list should contain the first ten prime numbers. The explanation should be two sentences explaining why 1 is not a prime number. The JSON should be pretty-printed with indentation of 4 spaces. So we need to output JSON with 4 spaces indentation. The prime numbers: ",
+  "tokens_predicted": 128,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 28,
+   "prompt_ms": 164.499,
+   "prompt_per_token_ms": 5.874964285714285,
+   "prompt_per_second": 170.21380069179753,
+   "predicted_n": 128,
+   "predicted_ms": 1574.892,
+   "predicted_per_token_ms": 12.40072440944882,
+   "predicted_per_second": 80.640450265796
+  }
+ },
+ "ok": true,
+ "mem": {
+  "samples": 125,
+  "seconds": 12.43,
+  "start_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 47.11,
+   "MemAvailable": 109.82,
+   "Cached": 58.33,
+   "Buffers": 1.74,
+   "Shmem": 0.01
+  },
+  "end_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 35.8,
+   "MemAvailable": 109.96,
+   "Cached": 69.77,
+   "Buffers": 1.74,
+   "Shmem": 0.01
+  },
+  "min_MemAvailable_GiB": 96.93,
+  "min_MemFree_GiB": 22.78,
+  "max_Cached_GiB": 70.46,
+  "min_Cached_GiB": 58.33,
+  "max_drop_MemAvailable_GiB": 12.89,
+  "max_psi_full_avg10": 0
+ },
+ "server_log_notes": [
+  "0.00.355.165 I srv    load_model: loading model 'models/gpt-oss-20b-MXFP4.gguf'",
+  "0.08.621.068 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8192, kv_unified = 'false'"
+ ]
+}

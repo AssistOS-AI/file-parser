@@ -1,0 +1,44 @@
+{
+  "state": "complete",
+  "completedAt": "2026-10-11T17:13:34.896Z",
+  "manifestSha256": "7c95813a5285ae088259aab2f4e60dda6542877a7c88339cd39b6eb2d58229f7",
+  "activity": {
+    "checkedAt": "2026-10-11T17:13:26.657Z",
+    "openFiles": 0,
+    "processReferences": 0,
+    "inboundDependencies": 0
+  },
+  "removed": [
+    "evidence/hwl/full_budget_prepare_2026-10-04_codex/AssistOSExplorer",
+    "evidence/hwl/full_budget_prepare_2026-10-04_codex/container-image-builds",
+    "evidence/hwl/full_budget_prepare_2026-10-04_codex/local-llms",
+    "evidence/hwl/full_budget_prepare_2026-10-04_codex/ploinky",
+    "evidence/hwl/full_budget_prepare_2026-10-04_codex/deps/achillesAgentLib",
+    "evidence/hwl/full_budget_prepare_2026-10-04_codex/deps/mcp-sdk",
+    "evidence/hwl/vllm_stage2_2026-10-04_codex/AssistOSExplorer",
+    "evidence/hwl/vllm_stage2_2026-10-04_codex/container-image-builds",
+    "evidence/hwl/vllm_stage2_2026-10-04_codex/local-llms",
+    "evidence/hwl/vllm_stage2_2026-10-04_codex/ploinky",
+    "evidence/hwl/vllm_stage2_2026-10-04_codex/deps/achillesAgentLib",
+    "evidence/hwl/vllm_stage2_2026-10-04_codex/deps/mcp-sdk",
+    "evidence/hwl/live-apparatus-vllm-20261003-170239_postcleanup_claude/AssistOSExplorer",
+    "evidence/hwl/live-apparatus-vllm-20261003-170239_postcleanup_claude/container-image-builds",
+    "evidence/hwl/live-apparatus-vllm-20261003-170239_postcleanup_claude/local-llms",
+    "evidence/hwl/live-apparatus-vllm-20261003-170239_postcleanup_claude/ploinky",
+    "evidence/hwl/live-apparatus-vllm-20261003-170239_postcleanup_claude/deps/achillesAgentLib",
+    "evidence/hwl/live-apparatus-vllm-20261003-170239_postcleanup_claude/deps/mcp-sdk",
+    "container-image-builds/sources/ploinky",
+    "evidence/hwl/full_budget_prepare_2026-10-04_codex/proposal_codex/candidate-4425e2a3f5dbbcf5b22e7942dfe2fd84",
+    "evidence/hwl/vllm_stage2_2026-10-04_codex/proposal_codex/candidate-5c4b9581f2a1494715f83ac729b52860",
+    "evidence/hwl/live-apparatus-vllm-20261003-170239_postcleanup_claude/evidence/candidate-752291a0db0906c0e701a38c7a611872",
+    "evidence/hwl/full_budget_prepare_2026-10-04_codex/proposal_codex/candidate_4425e2a3f5dbbcf5b22e7942dfe2fd84_codex.tar",
+    "evidence/hwl/vllm_stage2_2026-10-04_codex/proposal_codex/candidate_5c4b9581f2a1494715f83ac729b52860_codex.tar",
+    "evidence/hwl/live-apparatus-vllm-20261003-170239_postcleanup_claude/evidence/candidate-752291a0db0906c0e701a38c7a611872.tar"
+  ],
+  "beforeKiB": 691560,
+  "afterKiB": 172532,
+  "freedKiB": 519028,
+  "retainedEvidenceUnchanged": true,
+  "archivesUnchanged": true
+}
+

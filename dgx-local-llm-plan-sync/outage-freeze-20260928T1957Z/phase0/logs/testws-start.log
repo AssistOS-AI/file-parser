@@ -1,0 +1,50 @@
+Trying to pull docker.io/assistos/ploinky-box:latest...
+Getting image source signatures
+Copying blob sha256:e14d721092b255490d9b48101bcb15bae53f7064797acc092dfa9ba6b4be9d4e
+Copying blob sha256:0247ac906dc932888d695f6c5f6670c676c3b46fa0185723f5742c7e60c7a3ca
+Copying config sha256:740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+Writing manifest to image destination
+740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+[ploinky] Pulling Box image docker.io/assistos/ploinky-box:latest...
+Trying to pull docker.io/assistos/ploinky-box:latest...
+Getting image source signatures
+Copying blob sha256:e14d721092b255490d9b48101bcb15bae53f7064797acc092dfa9ba6b4be9d4e
+Copying blob sha256:0247ac906dc932888d695f6c5f6670c676c3b46fa0185723f5742c7e60c7a3ca
+Copying config sha256:740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+Writing manifest to image destination
+740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+[ploinky] Creating Box container ploinky-box-gpu-test-workspace-90b386b1f08a...
+[ploinky] Starting Box container ploinky-box-gpu-test-workspace-90b386b1f08a; streaming startup logs...
+[ploinky-box] Starting runtime self-checks
+[ploinky-box] Validating the host-selected workspace root
+[ploinky-box] Preparing the mounted Ploinky workspace
+[ploinky-box] Validating runtime tools and identities
+[ploinky-box] Validating nested-container devices
+[ploinky-box] Validating nested rootless Podman networking
+[ploinky-box] Runtime self-checks passed
+PLOINKY_BOX_READY
+[ploinky] Verifying and installing Box dependencies...
+[ploinky] using .ploinky: /home/research/gpu-test-workspace/.ploinky
+Default 'AchillesIDE' repository not found. Cloning...
+Cloning into '/home/research/gpu-test-workspace/.ploinky/repos/AchillesIDE'...
+AchillesIDE repository cloned successfully.
+Default 'AchillesCLI' repository not found. Cloning...
+Cloning into '/home/research/gpu-test-workspace/.ploinky/repos/AchillesCLI'...
+AchillesCLI repository cloned successfully.
+Default 'copilot-agents' repository not found. Cloning...
+Cloning into '/home/research/gpu-test-workspace/.ploinky/repos/copilot-agents'...
+copilot-agents repository cloned successfully.
+Static: agent=local-llms/local-llm port=8080
+[start] Watchdog launched in background (pid 441); router generation reader is ready.
+[start] Dependency wave 1/1: local-llms/local-llm
+[pull] image 'localhost/local-llm:dev' not present locally — pulling before runtime probe...
+[pull] podman pull localhost/local-llm:dev (timeout 1800s)
+Trying to pull localhost/local-llm:dev...
+time="2026-09-28T15:50:53Z" level=warning msg="Failed, retrying in 1s ... (1/3). Error: initializing source docker://localhost/local-llm:dev: pinging container registry localhost: Get \"https://localhost/v2/\": dial tcp 127.0.0.1:443: connect: connection refused"
+time="2026-09-28T15:50:54Z" level=warning msg="Failed, retrying in 1s ... (2/3). Error: initializing source docker://localhost/local-llm:dev: pinging container registry localhost: Get \"https://localhost/v2/\": dial tcp 127.0.0.1:443: connect: connection refused"
+time="2026-09-28T15:50:55Z" level=warning msg="Failed, retrying in 1s ... (3/3). Error: initializing source docker://localhost/local-llm:dev: pinging container registry localhost: Get \"https://localhost/v2/\": dial tcp 127.0.0.1:443: connect: connection refused"
+Error: unable to copy from source docker://localhost/local-llm:dev: initializing source docker://localhost/local-llm:dev: pinging container registry localhost: Get "https://localhost/v2/": dial tcp 127.0.0.1:443: connect: connection refused
+[start] Failed to start agent 'local-llm': Image pull for 'localhost/local-llm:dev' exited with code 125.
+❌ Error: start (workspace) failed: 1 agent(s) failed to start: local-llm
+Run ploinky diagnose from this workspace for prerequisite, storage, and security-profile diagnostics.
+ploinky: In-box start failed with status 1

@@ -1,0 +1,473 @@
+diff --git a/local-llm/src/controller/deployments.mjs b/local-llm/src/controller/deployments.mjs
+index 9d49e10..a9ef48f 100644
+--- a/local-llm/src/controller/deployments.mjs
++++ b/local-llm/src/controller/deployments.mjs
+@@ -176,6 +176,8 @@ export function createController({
+     const state = reconcileAfterRestart(stateStore.load(), now().toISOString());
+     let detected = {};
+     let job = null;
++    // The acquisition planning of the Run being admitted, which Stop, Cancel and drain can abort (F5).
++    let planning = null;
+     // One runner install at a time, beside the deployment job.
+     let installJob = null;
+     // Installable through the controller: in the image's runner lock and with
+@@ -388,10 +390,10 @@ export function createController({
+     // How the weights would be obtained and the disk that needs (C12, R4):
+     // Run, its preview and the overview all use it for the disk term of
+     // admission. It hashes and copies nothing.
+-    async function acquisitionOf(source, index = null) {
++    async function acquisitionOf(source, index = null, signal = undefined) {
+         if (!source) return { bytesNeeded: 0, files: [] };
+         const store = storeFor(source);
+-        if (store.plan) return store.plan(source, { index });
++        if (store.plan) return store.plan(source, { index, signal });
+         const disk = await store.state(source);
+         return { bytesNeeded: disk?.total ? Math.max(0, disk.total - (disk.bytes || 0)) : 0, files: [] };
+     }
+@@ -928,8 +930,16 @@ export function createController({
+             throwIfAborted(signal);
+         }
+         if (store.recheck) {
+-            // The last check before loading: an unchanged stat, or the bytes hashed again (C12).
+-            const checked = await store.recheck({ artifact: deployment.artifact, signal, onProgress: updateProgress });
++            // The last check before loading: an unchanged stat, or the bytes hashed again (C12); hashing shows as verifying.
++            const checked = await store.recheck({
++                artifact: deployment.artifact,
++                signal,
++                onProgress: (progress) => {
++                    if (progress.phase === 'verifying' && state.deployment?.phase === 'starting') setPhase('verifying');
++                    updateProgress(progress);
++                },
++            });
++            if (state.deployment?.phase === 'verifying') setPhase('starting');
+             for (const note of checked.notes || []) log.append('controller', note);
+             throwIfAborted(signal);
+         }
+@@ -1082,7 +1092,20 @@ export function createController({
+                 await stopEverything('replace');
+             }
+             const disk = await weightsState(source);
+-            const acquisition = await acquisitionOf(source);
++            // Planning walks /shared: Stop, Cancel and drain abort it before they queue behind this Run (F5).
++            const planAbort = new AbortController();
++            planning = planAbort;
++            let acquisition;
++            try {
++                acquisition = await acquisitionOf(source, null, planAbort.signal);
++            } catch (error) {
++                if (planAbort.signal.aborted) {
++                    throw new LocalLlmError('cancelled', 'The Run was stopped while it was looking for the model files.');
++                }
++                throw error;
++            } finally {
++                if (planning === planAbort) planning = null;
++            }
+             const admission = admitHere({
+                 definition, model, source, params: normalized, snap: await snapshot(), remainingDownloadBytes: acquisition.bytesNeeded,
+             });
+@@ -1121,6 +1144,7 @@ export function createController({
+     }
+ 
+     function stop() {
++        planning?.abort();
+         return queue.run(async () => {
+             await stopEverything('stop');
+             // Stop also clears a failed or paused deployment (a paused partial stays on disk).
+@@ -1132,6 +1156,7 @@ export function createController({
+     }
+ 
+     function cancelDownload() {
++        planning?.abort();
+         return queue.run(async () => {
+             const deployment = state.deployment;
+             if (!deployment || !job || !(TRANSFER_PHASES.has(deployment.phase) || deployment.phase === 'starting')) {
+@@ -1415,6 +1440,7 @@ export function createController({
+      */
+     async function drain() {
+         draining = true;
++        planning?.abort();
+         // Let a command that is already running finish first (a Run refuses to
+         // start a job once draining is set); bounded so it cannot block the drain.
+         const waited = new AbortController();
+diff --git a/local-llm/src/controller/downloader.mjs b/local-llm/src/controller/downloader.mjs
+index 315de1a..c6ccbb7 100644
+--- a/local-llm/src/controller/downloader.mjs
++++ b/local-llm/src/controller/downloader.mjs
+@@ -21,6 +21,8 @@ import { DownloadError, abortedError, throwIfAborted } from './downloadError.mjs
+ import {
+     CHUNK_BYTES,
+     MAX_CANDIDATES_PER_FILE,
++    anchorRoot,
++    anchorStore,
+     assertRealDirs,
+     copyToStaging,
+     createDigest,
+@@ -430,7 +432,7 @@ async function useOwnFile(ctx) {
+     const { fsApi, paths, artifact, identityKeys, label } = ctx;
+     const meta = await readJson(fsApi, paths.meta);
+     const recorded = sameIdentity(meta, artifact, identityKeys);
+-    const opened = await openBound(fsApi, paths.root, paths.file);
++    const opened = await openBound(fsApi, ctx.anchor, paths.file, { signal: ctx.signal });
+     if (!opened.handle) {
+         if (opened.rejected !== 'missing') {
+             ctx.notes.push(`${label}: the store path is ${opened.rejected === 'symlink' ? 'a symbolic link' : opened.rejected}; treated as absent`);
+@@ -467,6 +469,8 @@ async function useOwnFile(ctx) {
+             return null;
+         }
+         const provenance = recorded ? provenanceOf(meta, ctx) : { file: label, source: paths.file, method: 'in-place', bytes: 0 };
++        // A snapshot keeps its records in a separate .state tree, which a canonical file placed by the operator lacks (F3).
++        await ensureDirUnder(fsApi, paths.root, path.dirname(paths.meta));
+         await writeJsonAtomic(fsApi, paths.meta, {
+             ...identityOf(artifact, identityKeys),
+             verifiedAt: new Date().toISOString(),
+@@ -495,7 +499,7 @@ async function adoptCopy(ctx, candidates) {
+     for (const candidate of candidates) {
+         if (hashed >= MAX_CANDIDATES_PER_FILE) break;
+         throwIfAborted(ctx.signal);
+-        const opened = await openBound(fsApi, candidate.root, candidate.path);
++        const opened = await openBound(fsApi, candidate.anchor, candidate.path, { signal: ctx.signal });
+         if (!opened.handle) {
+             ctx.notes.push(`${label}: skipped ${candidate.path} (${opened.rejected === 'symlink' ? 'a symbolic link' : opened.rejected})`);
+             continue;
+@@ -511,7 +515,7 @@ async function adoptCopy(ctx, candidates) {
+             const copied = await copyToStaging(fsApi, {
+                 source: candidate.path,
+                 opened,
+-                root: paths.root,
++                anchor: ctx.anchor,
+                 staging,
+                 artifact,
+                 signal: ctx.signal,
+@@ -762,15 +766,41 @@ async function transfer(ctx) {
+     }
+ }
+ 
++function mismatchError(ctx, actual, why = 'Downloaded bytes do not match') {
++    return new DownloadError('SHA256_MISMATCH', `${why} the pinned ${ctx.artifact.sha256 === undefined ? 'git oid' : 'sha256'}`, {
++        details: { expected: expectedDigest(ctx.artifact), actual },
++    });
++}
++
++/**
++ * The finished partial, verified through its own descriptor with an identical
++ * fstat before and after (F4): the streamed digest only proves the bytes
++ * received, not the bytes now on disk, including a resumed prefix.
++ */
++async function verifyPartial(ctx) {
++    const streamed = ctx.hash.digest('hex');
++    if (streamed !== expectedDigest(ctx.artifact)) {
++        await removePartial(ctx.fsApi, ctx.paths);
++        throw mismatchError(ctx, streamed);
++    }
++    const checked = await hashBound(ctx.handle, ctx.artifact, {
++        signal: ctx.signal,
++        chunkBytes: ctx.chunkBytes,
++        onBytes: (bytes) => ctx.progress.tick(bytes, ctx.transferred, 'verifying'),
++    });
++    if (!checked.stable) {
++        throw new DownloadError('CHANGED_WHILE_VERIFYING', `${ctx.label} changed while it was being verified; run again`, { retryable: true });
++    }
++    if (!checked.matches) {
++        await removePartial(ctx.fsApi, ctx.paths);
++        throw mismatchError(ctx, null, 'The bytes on disk changed after they were received; they do not match');
++    }
++    // The object whose every byte was just hashed through this descriptor.
++    ctx.written = checked.stat;
++}
++
+ async function finalize(ctx) {
+     const { paths } = ctx;
+-    const digest = ctx.hash.digest('hex');
+-    if (digest !== expectedDigest(ctx.artifact)) {
+-        await removePartial(ctx.fsApi, paths);
+-        throw new DownloadError('SHA256_MISMATCH', `Downloaded bytes do not match the pinned ${ctx.artifact.sha256 === undefined ? 'git oid' : 'sha256'}`, {
+-            details: { expected: expectedDigest(ctx.artifact), actual: digest },
+-        });
+-    }
+     // The record goes first: a crash before the rename leaves a verifiable
+     // partial, never a final file without its identity record.
+     await publishVerified(ctx.fsApi, {
+@@ -794,11 +824,11 @@ async function runTransfer(ctx) {
+         await transfer(ctx);
+         try {
+             await ctx.handle.sync();
+-            // The object whose every byte went through the running digest.
+-            ctx.written = statIdentity(await ctx.handle.stat());
+         } catch (err) {
+             throw new LocalWriteError(err);
+         }
++        ctx.progress.finish(ctx.have, ctx.transferred);
++        await verifyPartial(ctx);
+     } catch (err) {
+         await syncQuietly(ctx.handle);
+         if (err instanceof LocalWriteError) {
+@@ -814,7 +844,6 @@ async function runTransfer(ctx) {
+     } finally {
+         await ctx.handle.close().catch(() => {});
+     }
+-    ctx.progress.finish(ctx.have, ctx.transferred);
+     await finalize(ctx);
+ }
+ 
+@@ -868,6 +897,8 @@ async function downloadInto({
+         progress: createProgress({ total: artifact.size, onProgress, intervalMs: progressIntervalMs }),
+     };
+     const done = (result, bytesTransferred = 0) => ({ status: 'complete', path: paths.file, bytesTransferred, notes: ctx.notes, ...result });
++    // The store root is anchored once for this operation (F1).
++    ctx.anchor = await anchorStore(fsApi, paths.root);
+     // No symbolic link on the way to either directory (R2); they are created only when something is placed (R3).
+     await assertRealDirs(fsApi, paths.root, path.dirname(paths.file));
+     await assertRealDirs(fsApi, paths.root, path.dirname(paths.partial));
+@@ -888,7 +919,7 @@ async function downloadInto({
+     await ensureDirUnder(fsApi, paths.root, path.dirname(paths.file));
+     await ensureDirUnder(fsApi, paths.root, path.dirname(paths.partial));
+     await writeJsonAtomic(fsApi, paths.identity, identityOf(artifact, identityKeys));
+-    const handle = await openPartialBound(fsApi, paths.root, paths.partial);
++    const handle = await openPartialBound(fsApi, ctx.anchor, paths.partial);
+     const hash = createDigest(artifact);
+     try {
+         await hashPrefix(handle, have, hash, { signal, chunkBytes, onBytes: (bytes) => ctx.progress.tick(bytes, 0, 'verifying') });
+@@ -915,8 +946,9 @@ async function verifyInto({ paths, artifact, identityKeys, url = null, baseUrl =
+         notes: [],
+         progress: createProgress({ total: artifact.size, onProgress, intervalMs: progressIntervalMs }),
+     };
++    ctx.anchor = await anchorRoot(fsApi, paths.root);
+     const meta = await readJson(fsApi, paths.meta);
+-    const own = sameIdentity(meta, artifact, identityKeys) ? await useOwnFile(ctx) : null;
++    const own = ctx.anchor && sameIdentity(meta, artifact, identityKeys) ? await useOwnFile(ctx) : null;
+     if (!own) {
+         throw new DownloadError('CHANGED_AFTER_VERIFY', `${ctx.label} is no longer the verified file; run again to fetch it`);
+     }
+diff --git a/local-llm/src/controller/workspaceReuse.mjs b/local-llm/src/controller/workspaceReuse.mjs
+index 46f64de..4162031 100644
+--- a/local-llm/src/controller/workspaceReuse.mjs
++++ b/local-llm/src/controller/workspaceReuse.mjs
+@@ -7,10 +7,13 @@
+ // written. Hashing proves the bytes it read; the stat identity recorded next to
+ // a verified file only detects accidental change afterwards.
+ //
+-// Every file is opened without following a final symbolic link, must be a
+-// regular file, and must be, according to /proc/self/fd, exactly the path
+-// that was asked for under its root: a symbolic link anywhere below the root
+-// makes it unusable. The bytes are then read through that descriptor.
++// Every root is anchored once per operation: its resolved path and directory
++// identity (an untrusted root must be a real directory, not a link). Every
++// file is opened without following a final symbolic link and without
++// blocking (a FIFO or device cannot hold the open), must be a regular file,
++// and must be, according to /proc/self/fd, exactly the path that was asked
++// for under the anchored root: a symbolic link anywhere below the root makes
++// it unusable. The bytes are then read through that descriptor.
+ 
+ import crypto from 'node:crypto';
+ import fs from 'node:fs';
+@@ -24,7 +27,7 @@ export const MAX_CANDIDATES_PER_FILE = 3;
+ const WALK_MAX_DEPTH = 8;
+ const WALK_MAX_ENTRIES = 20_000;
+ const GIT_OID_RE = /^[a-f0-9]{40}$/;
+-const { O_RDONLY, O_WRONLY, O_RDWR, O_CREAT, O_EXCL, O_APPEND, O_NOFOLLOW } = fs.constants;
++const { O_RDONLY, O_WRONLY, O_RDWR, O_CREAT, O_EXCL, O_APPEND, O_NOFOLLOW, O_NONBLOCK } = fs.constants;
+ 
+ // The running digest a file is verified with: sha256, or the git blob oid
+ // (sha1 over "blob <size>\0" and the bytes) for a small file kept in git.
+@@ -57,14 +60,56 @@ function unsafePath(message) {
+     return new DownloadError('UNSAFE_PATH', message);
+ }
+ 
++/**
++ * Anchor a root for one operation (F1): its resolved path and directory
++ * identity, taken once and never re-resolved. An untrusted root (/shared)
++ * must itself be a directory, not a symbolic link; the agent's own store root
++ * is trusted and may be a link the operator configured. Returns null when
++ * there is no usable root.
++ */
++export async function anchorRoot(fsApi, root, { untrusted = false } = {}) {
++    let own;
++    try {
++        own = await fsApi.promises.lstat(root);
++    } catch (error) {
++        if (error.code === 'ENOENT' || error.code === 'ENOTDIR') return null;
++        throw error;
++    }
++    if (untrusted && !own.isDirectory()) return null;
++    const real = await fsApi.promises.realpath(root);
++    const target = await fsApi.promises.stat(real);
++    if (!target.isDirectory()) return null;
++    if (untrusted && (target.dev !== own.dev || target.ino !== own.ino)) return null;
++    return Object.freeze({ path: path.resolve(root), real, dev: target.dev, ino: target.ino, untrusted });
++}
++
++// The trusted store root, created if needed, anchored for this operation.
++export async function anchorStore(fsApi, root) {
++    await fsApi.promises.mkdir(root, { recursive: true });
++    const anchor = await anchorRoot(fsApi, root);
++    if (!anchor) throw unsafePath('The model store root is not a directory');
++    return anchor;
++}
++
++// An untrusted root must still be the same directory at the same path.
++async function anchorIntact(fsApi, anchor) {
++    if (!anchor.untrusted) return true;
++    try {
++        const own = await fsApi.promises.lstat(anchor.path);
++        return own.isDirectory() && own.dev === anchor.dev && own.ino === anchor.ino;
++    } catch {
++        return false;
++    }
++}
++
+ // Where the kernel must say an opened descriptor points: the path itself,
+-// with the root resolved once (the root may be a configured link).
+-async function boundPath(fsApi, root, file) {
+-    const relative = path.relative(root, file);
++// under the anchored real root.
++function boundPath(anchor, file) {
++    const relative = path.relative(anchor.path, path.resolve(file));
+     if (!relative || relative.startsWith('..') || path.isAbsolute(relative)) {
+         throw unsafePath('A model file path escapes its directory');
+     }
+-    return path.join(await fsApi.promises.realpath(root), relative);
++    return path.join(anchor.real, relative);
+ }
+ 
+ async function confirmBound(fsApi, handle, expected) {
+@@ -79,28 +124,26 @@ async function confirmBound(fsApi, handle, expected) {
+ }
+ 
+ /**
+- * Open an existing regular file for reading, bound to `file` under `root`.
+- * Returns { handle, stat } or { rejected } when the path is missing, a
+- * symbolic link, not a regular file, or reached through a symbolic link.
++ * Open an existing regular file for reading, bound to `file` under the
++ * anchored root, without following a final link or blocking on a special
++ * file (F2). Returns { handle, stat } or { rejected } when the path is
++ * missing, a symbolic link, not a regular file, reached through a symbolic
++ * link, or its untrusted root changed.
+  */
+-export async function openBound(fsApi, root, file, flags = O_RDONLY) {
+-    let expected;
+-    try {
+-        expected = await boundPath(fsApi, root, file);
+-    } catch (error) {
+-        // No store yet, so nothing in it.
+-        if (error.code === 'ENOENT') return { rejected: 'missing' };
+-        throw error;
+-    }
++export async function openBound(fsApi, anchor, file, { signal } = {}) {
++    throwIfAborted(signal);
++    const expected = boundPath(anchor, file);
++    if (!(await anchorIntact(fsApi, anchor))) return { rejected: 'its root directory changed' };
+     let handle;
+     try {
+-        handle = await fsApi.promises.open(file, flags | O_NOFOLLOW);
++        handle = await fsApi.promises.open(file, O_RDONLY | O_NOFOLLOW | O_NONBLOCK);
+     } catch (error) {
+         if (error.code === 'ELOOP') return { rejected: 'symlink' };
+-        if (['ENOENT', 'ENOTDIR', 'EACCES', 'EPERM', 'ENXIO', 'EISDIR'].includes(error.code)) return { rejected: 'missing' };
++        if (['ENOENT', 'ENOTDIR', 'EACCES', 'EPERM', 'ENXIO', 'EISDIR', 'EWOULDBLOCK', 'EAGAIN'].includes(error.code)) return { rejected: 'missing' };
+         throw error;
+     }
+     try {
++        throwIfAborted(signal);
+         const stat = await handle.stat();
+         if (!stat.isFile()) {
+             await handle.close();
+@@ -117,10 +160,10 @@ export async function openBound(fsApi, root, file, flags = O_RDONLY) {
+     }
+ }
+ 
+-/** Create a new file (never an existing one or a link), bound to `file` under `root`. */
+-export async function createBound(fsApi, root, file) {
+-    const expected = await boundPath(fsApi, root, file);
+-    const handle = await fsApi.promises.open(file, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW, 0o644);
++/** Create a new file (never an existing one or a link), bound to `file` under the anchored store. */
++export async function createBound(fsApi, anchor, file) {
++    const expected = boundPath(anchor, file);
++    const handle = await fsApi.promises.open(file, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW | O_NONBLOCK, 0o644);
+     if (!(await confirmBound(fsApi, handle, expected))) {
+         await handle.close().catch(() => {});
+         throw unsafePath('A model staging file was created through a symbolic link');
+@@ -129,9 +172,9 @@ export async function createBound(fsApi, root, file) {
+ }
+ 
+ /** A download's partial file: appended to and read back through one bound descriptor. */
+-export async function openPartialBound(fsApi, root, file) {
+-    const expected = await boundPath(fsApi, root, file);
+-    const handle = await fsApi.promises.open(file, O_RDWR | O_APPEND | O_CREAT | O_NOFOLLOW, 0o644);
++export async function openPartialBound(fsApi, anchor, file) {
++    const expected = boundPath(anchor, file);
++    const handle = await fsApi.promises.open(file, O_RDWR | O_APPEND | O_CREAT | O_NOFOLLOW | O_NONBLOCK, 0o644);
+     try {
+         const stat = await handle.stat();
+         if (!stat.isFile() || !(await confirmBound(fsApi, handle, expected))) {
+@@ -275,10 +318,10 @@ function copyWriteError(error) {
+  * errors, never "no candidate". The caller removes the staging file on
+  * anything but success.
+  */
+-export async function copyToStaging(fsApi, { source, opened, root, staging, artifact, signal, chunkBytes = CHUNK_BYTES, onBytes }) {
++export async function copyToStaging(fsApi, { source, opened, anchor, staging, artifact, signal, chunkBytes = CHUNK_BYTES, onBytes }) {
+     const { handle: src, stat } = opened;
+     const before = statIdentity(stat);
+-    const dst = await createBound(fsApi, root, staging);
++    const dst = await createBound(fsApi, anchor, staging);
+     try {
+         const hash = createDigest(artifact);
+         const buffer = Buffer.allocUnsafe(Math.min(chunkBytes, artifact.size));
+@@ -344,16 +387,19 @@ export async function publishVerified(fsApi, { root, staged, from, to, meta, rec
+ 
+ /**
+  * One streaming, cancellable walk of the shared roots that collects regular
+- * files of every wanted size (C12). Directory links are never followed; a
+- * directory swapped for a link during the walk is caught later, when the
+- * candidate's descriptor does not match its path. Returns a Map from size to
+- * [{ path, root }].
++ * files of every wanted size (C12). Each root is anchored first (F1); a root
++ * that is a link, or missing, is skipped. Directory links are never
++ * followed; a directory or root swapped for a link during the walk is caught
++ * when the candidate's descriptor does not match its anchored path. The
++ * signal is checked before every directory is opened and at every entry.
++ * Returns a Map from size to [{ path, anchor }].
+  */
+ export async function walkShared(fsApi, roots, sizes, signal) {
+     const found = new Map([...new Set(sizes)].map((size) => [size, []]));
+     let seen = 0;
+-    const walk = async (root, dir, depth) => {
++    const walk = async (anchor, dir, depth) => {
+         if (depth > WALK_MAX_DEPTH || seen >= WALK_MAX_ENTRIES) return;
++        throwIfAborted(signal);
+         let handle;
+         try {
+             handle = await fsApi.promises.opendir(dir);
+@@ -366,7 +412,7 @@ export async function walkShared(fsApi, roots, sizes, signal) {
+                 if (++seen > WALK_MAX_ENTRIES) return;
+                 const full = path.join(dir, entry.name);
+                 if (entry.isDirectory()) {
+-                    await walk(root, full, depth + 1);
++                    await walk(anchor, full, depth + 1);
+                 } else if (entry.isFile()) {
+                     let stats;
+                     try {
+@@ -374,7 +420,7 @@ export async function walkShared(fsApi, roots, sizes, signal) {
+                     } catch {
+                         continue;
+                     }
+-                    if (stats.isFile() && found.has(stats.size)) found.get(stats.size).push({ path: full, root });
++                    if (stats.isFile() && found.has(stats.size)) found.get(stats.size).push({ path: full, anchor });
+                 }
+             }
+         } finally {
+@@ -384,13 +430,8 @@ export async function walkShared(fsApi, roots, sizes, signal) {
+     };
+     for (const root of roots) {
+         throwIfAborted(signal);
+-        let stats;
+-        try {
+-            stats = await fsApi.promises.lstat(root);
+-        } catch {
+-            continue;
+-        }
+-        if (stats.isDirectory()) await walk(root, root, 0);
++        const anchor = await anchorRoot(fsApi, root, { untrusted: true });
++        if (anchor) await walk(anchor, anchor.path, 0);
+     }
+     return found;
+ }

@@ -28,5 +28,30 @@
       "Bash(podman ps:*)"
     ]
   },
-  "outputStyle": "default"
+  "outputStyle": "default",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion|ExitPlanMode",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR\"/PLOINKY_CLEANUP_MONITOR_codex/permission_event_bridge_codex/attention_hook_codex.mjs",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR\"/PLOINKY_CLEANUP_MONITOR_codex/permission_event_bridge_codex/attention_hook_codex.mjs",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
 }

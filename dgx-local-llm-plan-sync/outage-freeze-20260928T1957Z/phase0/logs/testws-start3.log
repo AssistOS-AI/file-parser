@@ -1,0 +1,32 @@
+Trying to pull docker.io/assistos/ploinky-box:latest...
+Getting image source signatures
+Copying blob sha256:e14d721092b255490d9b48101bcb15bae53f7064797acc092dfa9ba6b4be9d4e
+Copying blob sha256:0247ac906dc932888d695f6c5f6670c676c3b46fa0185723f5742c7e60c7a3ca
+Copying config sha256:740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+Writing manifest to image destination
+740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+[ploinky] Pulling Box image docker.io/assistos/ploinky-box:latest...
+Trying to pull docker.io/assistos/ploinky-box:latest...
+Getting image source signatures
+Copying blob sha256:e14d721092b255490d9b48101bcb15bae53f7064797acc092dfa9ba6b4be9d4e
+Copying blob sha256:0247ac906dc932888d695f6c5f6670c676c3b46fa0185723f5742c7e60c7a3ca
+Copying config sha256:740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+Writing manifest to image destination
+740bd90d924ed335be06de6276d66cddf33edcdbc1bfcff8c83d11e7b994bf28
+[ploinky] Creating Box container ploinky-box-gpu-test-workspace-90b386b1f08a...
+[ploinky] Starting Box container ploinky-box-gpu-test-workspace-90b386b1f08a; streaming startup logs...
+[ploinky-box] Starting runtime self-checks
+[ploinky-box] Validating the host-selected workspace root
+[ploinky-box] Preparing the mounted Ploinky workspace
+[ploinky-box] Validating runtime tools and identities
+[ploinky-box] Validating nested-container devices
+[ploinky-box] Validating nested rootless Podman networking
+[ploinky-box] Runtime self-checks passed
+PLOINKY_BOX_READY
+[ploinky] Verifying and installing Box dependencies...
+[ploinky] using .ploinky: /home/research/gpu-test-workspace/.ploinky
+Static: agent=AchillesIDE/gitAgent port=8080
+[start] Watchdog launched in background (pid 407); router generation reader is ready.
+❌ Error: start (workspace) failed: prepare agent enable batch: candidate generation rejected: agent 'local-llms/local-llm' has no unambiguous enabled instance identity
+Run ploinky diagnose from this workspace for prerequisite, storage, and security-profile diagnostics.
+ploinky: In-box start failed with status 1

@@ -1,0 +1,123 @@
+{"uid":1000,"platform":"linux","arch":"arm64","node":"v24.19.0"}
+TAP version 13
+# Subtest: 21. a Stop during acquisition planning stops the lookup after the pending read, and settles promptly
+ok 1 - 21. a Stop during acquisition planning stops the lookup after the pending read, and settles promptly
+  ---
+  duration_ms: 14.872231
+  type: 'test'
+  ...
+# Subtest: 21b. a Stop or drain during an EMPTY lookup still fails the Run with cancelled: no job, no admission verdict
+    # Subtest: stop
+    ok 1 - stop
+      ---
+      duration_ms: 7.879902
+      type: 'test'
+      ...
+    # Subtest: stop, disk below the model size
+    ok 2 - stop, disk below the model size
+      ---
+      duration_ms: 7.985859
+      type: 'test'
+      ...
+    # Subtest: drain
+    ok 3 - drain
+      ---
+      duration_ms: 3.953826
+      type: 'test'
+      ...
+    1..3
+ok 2 - 21b. a Stop or drain during an EMPTY lookup still fails the Run with cancelled: no job, no admission verdict
+  ---
+  duration_ms: 20.543661
+  type: 'test'
+  ...
+# Subtest: 21c. a Cancel during acquisition planning succeeds, empty or not; an idle Cancel is still not_downloading
+    # Subtest: empty, disk below the model size
+    ok 1 - empty, disk below the model size
+      ---
+      duration_ms: 5.531639
+      type: 'test'
+      ...
+    # Subtest: empty
+    ok 2 - empty
+      ---
+      duration_ms: 6.055633
+      type: 'test'
+      ...
+    # Subtest: nonempty
+    ok 3 - nonempty
+      ---
+      duration_ms: 3.013254
+      type: 'test'
+      ...
+    1..3
+ok 3 - 21c. a Cancel during acquisition planning succeeds, empty or not; an idle Cancel is still not_downloading
+  ---
+  duration_ms: 15.236519
+  type: 'test'
+  ...
+1..3
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 156.701009
+TAP version 13
+# [empty/ample disk/Stop] Run -> ERROR cancelled: The Run was stopped while it was looking for the model files.
+# [empty/ample disk/Stop] launches=0 network=0 phase=none
+# Subtest: Stop during an EMPTY lookup (ample disk): Run outcome
+ok 1 - Stop during an EMPTY lookup (ample disk): Run outcome
+  ---
+  duration_ms: 13.922743
+  type: 'test'
+  ...
+# [empty/disk below the model size/Stop] Run -> ERROR cancelled: The Run was stopped while it was looking for the model files.
+# [empty/disk below the model size/Stop] launches=0 network=0 phase=none
+# Subtest: Stop during an EMPTY lookup (disk below the model size): Run outcome
+ok 2 - Stop during an EMPTY lookup (disk below the model size): Run outcome
+  ---
+  duration_ms: 4.952605
+  type: 'test'
+  ...
+# [empty/Cancel] Run -> ERROR cancelled: The Run was stopped while it was looking for the model files.
+# [empty/Cancel] Cancel -> OK {}
+# Subtest: Cancel during an EMPTY lookup: Run and Cancel outcomes
+ok 3 - Cancel during an EMPTY lookup: Run and Cancel outcomes
+  ---
+  duration_ms: 6.521585
+  type: 'test'
+  ...
+# [nonempty/Cancel] Run -> ERROR cancelled: The Run was stopped while it was looking for the model files.
+# [nonempty/Cancel] Cancel -> OK {}
+# [nonempty/Cancel] opendir calls=1 launches=0
+# Subtest: Cancel during a NONEMPTY lookup: Run and Cancel outcomes
+ok 4 - Cancel during a NONEMPTY lookup: Run and Cancel outcomes
+  ---
+  duration_ms: 3.651538
+  type: 'test'
+  ...
+# [nonempty/Stop] Run -> ERROR cancelled: The Run was stopped while it was looking for the model files.
+# Subtest: Positive control: Stop during a NONEMPTY lookup reports cancelled (existing test 21 shape)
+ok 5 - Positive control: Stop during a NONEMPTY lookup reports cancelled (existing test 21 shape)
+  ---
+  duration_ms: 3.258543
+  type: 'test'
+  ...
+# Subtest: Positive control: Cancel with nothing running still reports not_downloading
+ok 6 - Positive control: Cancel with nothing running still reports not_downloading
+  ---
+  duration_ms: 1.631438
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 133.151801

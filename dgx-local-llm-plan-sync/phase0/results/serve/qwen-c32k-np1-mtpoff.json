@@ -1,0 +1,87 @@
+{
+ "bin": "l1/llama-b11159",
+ "model": "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+ "load_mode": "dio",
+ "ctx": 32768,
+ "np": 1,
+ "cold": true,
+ "extra": "",
+ "load_seconds": 6.31,
+ "load_delta_GiB": {
+  "MemFree": -23.49,
+  "MemAvailable": -23.36,
+  "Cached": 0.83
+ },
+ "after_load_GiB": {
+  "MemFree": 34.26,
+  "MemAvailable": 87.7,
+  "Cached": 51.05
+ },
+ "load_rate_GBps": 3.62,
+ "greedy": {
+  "content": "\n\n<think>\nHere's a thinking process:\n\n1.  **Analyze User Input:**\n   - Statement: \"The capital of France is Paris.\" (True, but irrelevant to the main task)\n   - Task 1: \"List the first ten prime numbers\"\n   - Task 2: \"Explain in two sentences why 1 is not a prime number.\"\n\n2.  **Task 1: First ten prime numbers**\n   - Primes are natural numbers greater than 1 that have exactly two distinct positive divisors: 1 and themselves.\n   - Let's list them: ",
+  "tokens_predicted": 128,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 28,
+   "prompt_ms": 182.619,
+   "prompt_per_token_ms": 6.522107142857143,
+   "prompt_per_second": 153.3246814405949,
+   "predicted_n": 128,
+   "predicted_ms": 1902.916,
+   "predicted_per_token_ms": 14.983590551181102,
+   "predicted_per_second": 66.73967742138906
+  }
+ },
+ "prefill": {
+  "tokens": 29491,
+  "seconds": 11.08,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 29491,
+   "prompt_ms": 10758.115,
+   "prompt_per_token_ms": 0.36479315723441047,
+   "prompt_per_second": 2741.279489947821,
+   "predicted_n": 16,
+   "predicted_ms": 270.738,
+   "predicted_per_token_ms": 18.0492,
+   "predicted_per_second": 55.40411763402256
+  },
+  "mem_GiB": {
+   "MemFree": 33.39,
+   "MemAvailable": 87.03,
+   "Cached": 51.25
+  }
+ },
+ "ok": true,
+ "mem": {
+  "samples": 216,
+  "seconds": 21.59,
+  "start_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 57.75,
+   "MemAvailable": 111.05,
+   "Cached": 50.22,
+   "Buffers": 1.79,
+   "Shmem": 0.01
+  },
+  "end_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 57.12,
+   "MemAvailable": 110.77,
+   "Cached": 50.56,
+   "Buffers": 1.79,
+   "Shmem": 0.01
+  },
+  "min_MemAvailable_GiB": 87.03,
+  "min_MemFree_GiB": 33.39,
+  "max_Cached_GiB": 51.25,
+  "min_Cached_GiB": 50.22,
+  "max_drop_MemAvailable_GiB": 24.03,
+  "max_psi_full_avg10": 0
+ },
+ "server_log_notes": [
+  "0.00.357.017 I srv    load_model: loading model 'models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf'",
+  "0.06.280.404 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 32768, kv_unified = 'false'"
+ ]
+}

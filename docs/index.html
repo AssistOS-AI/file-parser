@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>file-parser Documentation</title><link rel="stylesheet" href="styles.css"><script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'; mermaid.initialize({startOnLoad:true,theme:'neutral'});</script></head>
+<body>
+<div data-include="partials/header.html"></div>
+<main class="page"><article class="page__panel content">
+<h1>file-parser Documentation</h1>
+<p>file-parser converts a supplied document into Markdown for a Ploinky MCP caller.</p>
+<h2>Documentation Map</h2>
+<div class="table-wrap"><table class="documentation-map"><thead><tr><th scope="col">Guide</th><th scope="col">Reference</th></tr></thead><tbody><tr><td><a href="index.html">Overview</a><p>file-parser converts a supplied document into Markdown for a Ploinky MCP caller.</p></td><td><a href="wiki.html">Wiki</a><p>Project terminology and component responsibilities.</p></td></tr><tr><td><a href="operations.html">Operations</a><p>Integration, configuration, and verification paths.</p></td><td><a href="specsLoader.html?spec=matrix.md">Specifications</a><p>Requirements, boundaries, and main behavior.</p></td></tr></tbody></table></div>
+<p>Begin with Overview, follow the practical guidance, then use Wiki for project terms and Specifications for the detailed contracts.</p>
+<h2>Document conversion</h2><p>The <a href="wiki.html#definition-process-documents">process_documents</a> command accepts one file path, reads the document, and writes Markdown to standard output. It includes document metadata, text previews, and sampled spreadsheet rows. Warnings go to standard error. The command does not invoke the optional structured-extraction helper.</p>
+<h2>Supported inputs</h2><p>The loader accepts PDF, Word .doc and .docx, Excel .xls and .xlsx, and text files including .txt, .text, .log, and .md. A <code>type</code> hint identifies files without a useful extension. The caller must make the file readable in the agent runtime.</p>
+<h2>Repository boundaries</h2><p>The implementation belongs to <code>file-parser-agent/</code>. Other top-level directories in the workspace are independently versioned projects. Their runtime, deployment, and data-ownership contracts belong to their own documentation.</p>
+<p><a href="specsLoader.html?spec=DS001-coding-style.md">Coding style</a> defines source layout and the verification commands. <a href="wiki.html">Wiki</a> contains the canonical project terms.</p>
+</article></main>
+<div data-include="partials/footer.html"></div><script src="partials-loader.js"></script>
+</body></html>

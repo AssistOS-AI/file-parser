@@ -1,0 +1,93 @@
+{
+  "checkedAt": "2026-10-11T17:12:45.151Z",
+  "command": "node /tmp/verify-snapshot-recovery.mjs",
+  "scriptSha256": "3e68519a669b6c7a14ff23904a4ee1120c937c356061c12b1226e39d9f39b623",
+  "manifestSha256": "7c95813a5285ae088259aab2f4e60dda6542877a7c88339cd39b6eb2d58229f7",
+  "helperSha256": "9a62099314e65e4369a4f9fb85478e154957723901973f6f2f2c0f6f03fffcc2",
+  "workspace": "/Users/danielsava/work/file-parser",
+  "environment": {
+    "platform": "darwin",
+    "node": "v25.8.0",
+    "tar": "bsdtar 3.5.3 - libarchive 3.7.4 zlib/1.2.12 liblzma/5.4.3 bz2lib/1.0.8"
+  },
+  "scope": "Independent source-only recovery before deletion; Git history intentionally omitted; no cleanup helper execution, product test, live or deployment claims.",
+  "checks": [
+    {
+      "check": "immutable candidate and target identities",
+      "result": "PASS",
+      "observed": {
+        "manifestSha256": "7c95813a5285ae088259aab2f4e60dda6542877a7c88339cd39b6eb2d58229f7",
+        "helperSha256": "9a62099314e65e4369a4f9fb85478e154957723901973f6f2f2c0f6f03fffcc2",
+        "targets": 25
+      }
+    },
+    {
+      "check": "all artifact hashes sizes gzip integrity",
+      "result": "PASS",
+      "observed": {
+        "artifacts": 17
+      }
+    },
+    {
+      "check": "every source archive extracted and compared to manifests and originals",
+      "result": "PASS",
+      "observed": {
+        "uniqueSourceArchives": 14,
+        "originalDirectories": 22,
+        "files": 16245,
+        "symlinks": 12,
+        "emptyDirectories": 1,
+        "gitIdentities": 16
+      }
+    },
+    {
+      "check": "decompressed TAR payloads byte exact",
+      "result": "PASS",
+      "observed": {
+        "payloads": 3
+      }
+    },
+    {
+      "check": "full retained evidence unchanged",
+      "result": "PASS",
+      "observed": {
+        "retainedEntries": 1312,
+        "actualExecutionEntries": 931,
+        "calibrationSha256": "d0d7ea83f9ff2ac7ab4eb6474915c991e345f57acddd1416bb80152809cec8f2"
+      }
+    },
+    {
+      "check": "adversarial corrupted gzip rejected",
+      "result": "PASS",
+      "observed": {
+        "exitCode": 1,
+        "stderr": "gzip: invalid compressed data--crc error\ngzip: <scratch>/corrupt.gz: uncompress failed"
+      }
+    },
+    {
+      "check": "adversarial manifest byte and mode mismatch rejected",
+      "result": "PASS",
+      "observed": {
+        "rejected": 2
+      }
+    },
+    {
+      "check": "adversarial unsafe target rejected independently",
+      "result": "PASS",
+      "observed": {
+        "rejected": 8
+      }
+    },
+    {
+      "check": "final candidate and retained evidence unchanged",
+      "result": "PASS",
+      "observed": {
+        "manifestSha256": "7c95813a5285ae088259aab2f4e60dda6542877a7c88339cd39b6eb2d58229f7",
+        "originalTargetsStillPresent": 25
+      }
+    }
+  ],
+  "failure": null,
+  "scratchRemoved": true,
+  "verdict": "PASS"
+}

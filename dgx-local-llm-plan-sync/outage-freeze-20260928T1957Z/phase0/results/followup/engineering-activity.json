@@ -1,0 +1,78 @@
+{
+ "purpose": "Work engineering (the implementation session) ran on this host during the follow-up matrix, from its transcript's tool-call timestamps (local time, UTC+2). A run whose baseline-to-exit+10 s window overlaps an interval is not valid memory evidence. Other users and other sessions on the host are not listed here; harness v4 samples their memory instead.",
+ "date": "2026-09-28",
+ "intervals": [
+  {
+   "start": "20:20:29",
+   "end": "20:20:36",
+   "what": "grep -a over the llama.cpp release directory (reads 864M of library files into page cache)",
+   "weight": "light",
+   "est_GiB": 0.0
+  },
+  {
+   "start": "20:30:18",
+   "end": "20:33:00",
+   "what": "node --test, single test files one after another (C12 work), including controller tests",
+   "weight": "moderate",
+   "est_GiB": 0.3
+  },
+  {
+   "start": "20:35:26",
+   "end": "20:37:45",
+   "what": "node --test: C12 tests, two mutation runs, two full-suite runs (--test-concurrency=1), git commit and push",
+   "weight": "moderate",
+   "est_GiB": 0.3
+  },
+  {
+   "start": "21:08:14",
+   "end": "21:08:19",
+   "what": "node --test, 7 C12-related files, under flock -x (no run can overlap)",
+   "weight": "moderate",
+   "est_GiB": 0.3
+  },
+  {
+   "start": "21:14:37",
+   "end": "21:14:38",
+   "what": "node --test C12 recheck tests 15-21, under flock -x",
+   "weight": "light",
+   "est_GiB": 0.2
+  },
+  {
+   "start": "21:15:00",
+   "end": "21:28:29",
+   "what": "mutation checks of F1-F5 (5 short node --test runs) inside one flock -x hold; exact start is when the lock was granted",
+   "weight": "moderate",
+   "est_GiB": 0.3
+  },
+  {
+   "start": "21:28:30",
+   "end": "21:28:44",
+   "what": "full local-llm suite (317 tests, --test-concurrency=1), under flock -x, then git commit and push",
+   "weight": "moderate",
+   "est_GiB": 0.3
+  }
+ ],
+ "not_found": "No engineering command ran between 20:01:38 and 20:16:51, at 20:19:18 (start of the 120b cram1 r1 prefill excursion; the calls at 20:17:55 and 20:19:47 were a file edit and a tail), between 20:23:18 and 20:25:33 or between 20:25:33 and 20:30:18 except small file edits and greps, or during 17:34:22-17:40:43 (Phase 0 120b np4 run, which was engineering's only command then).",
+ "est_GiB_meaning": "Rough upper estimate of the memory the activity could hold (serial node tests about 0.1-0.3 GiB; file reads land in reclaimable page cache).",
+ "external_activity": [
+  {
+   "start": "20:42:16",
+   "end": "20:44:20",
+   "what": "Codex C12 recheck: full local-llm test suite (15.6 s) somewhere in this window",
+   "source": "orchestrator relay; conservative bounds, for correlation only"
+  },
+  {
+   "start": "20:44:20",
+   "end": "20:48:02",
+   "what": "Codex C12 recheck: fixture iterations; no test process remained at 20:48:19",
+   "source": "orchestrator relay; conservative bounds, for correlation only"
+  },
+  {
+   "start": "20:59:02",
+   "end": "20:59:38",
+   "what": "engineering controlled attribution check (2 GiB anonymous helper, under the lock, no GPU)",
+   "source": "attribution-check.json"
+  }
+ ],
+ "lock_note": "From 20:46:41 every serve run (harness v4+) holds /home/research/phase0/.memlock exclusively; entries marked \"under flock -x\" cannot overlap such a run."
+}

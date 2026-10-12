@@ -1,0 +1,62 @@
+{
+ "purpose": "Derived interpretation of raw results. The raw <run>.json files are unchanged and keep their original ok value.",
+ "annotated_at": "2026-09-28",
+ "criterion_correction": {
+  "from": "harness v1: the greedy smoke request had to produce exactly 128 tokens",
+  "to": "harness v3 (installed 2026-09-28 20:20:27, sha256 0733bf3d0f79053a9c2015f51293ca51d4c0c1f67a0c861a579945f69e62888a): greedy passes when stop_type is eos with 1..128 tokens, or limit with exactly 128; the stop reason and the completion (first 4000 chars) are recorded",
+  "unchanged": "prefill, parallel, coldparallel and longgen keep exact prompt_n and predicted_n per request, plus all-overlap and distinct slots; an EOS in the greedy smoke check never waives a short stress request",
+  "interim": "harness v2 (20:17:07 to 20:20:27, archived as serve_check2.v2.py.txt) accepted any 1+ greedy tokens without a stop reason; runs it produced are annotated the same way"
+ },
+ "runs": [
+  {
+   "run": "120b-c128k-np4-cram8192-r1",
+   "raw_sha256": "504e2775ad5d212809d9a9150135b17b87281e7476b4a80086e02bda1f6a67f5",
+   "harness_version": 1,
+   "original_ok": false,
+   "derived_ok": true,
+   "greedy": {
+    "status": 200,
+    "predicted_n": 101,
+    "stop_reason": null,
+    "stop_reason_basis": "not captured by v1; inferred EOS: HTTP 200, no stop strings in the request, 28+101 tokens far below the context, 101 < n_predict 128"
+   },
+   "stress_requests_ok": true,
+   "stress_requests": 13,
+   "failed_only_on": "greedy length",
+   "reason": "The only failing check was the greedy smoke request ending at an inferred EOS; every stress request had its exact lengths, overlap and distinct slots."
+  },
+  {
+   "run": "120b-c128k-np4-cram4096-r1",
+   "raw_sha256": "2303147489dfa4413c6013923ac6ea4a2f4094d215eb333af659c990137fee48",
+   "harness_version": 1,
+   "original_ok": false,
+   "derived_ok": true,
+   "greedy": {
+    "status": 200,
+    "predicted_n": 101,
+    "stop_reason": null,
+    "stop_reason_basis": "not captured by v1; inferred EOS: HTTP 200, no stop strings in the request, 28+101 tokens far below the context, 101 < n_predict 128"
+   },
+   "stress_requests_ok": true,
+   "stress_requests": 13,
+   "failed_only_on": "greedy length",
+   "reason": "The only failing check was the greedy smoke request ending at an inferred EOS; every stress request had its exact lengths, overlap and distinct slots."
+  },
+  {
+   "run": "120b-c128k-np4-cram1-r1",
+   "raw_sha256": "4653ac12a117702950275f5f5add7eab3b398984b554345638252bde3548490e",
+   "harness_version": 2,
+   "original_ok": true,
+   "derived_ok": true,
+   "greedy": {
+    "status": 200,
+    "predicted_n": 101,
+    "stop_reason": null,
+    "stop_reason_basis": "not captured by v2; inferred EOS as in the v1 runs (101 tokens, HTTP 200, no stop strings)"
+   },
+   "stress_requests_ok": true,
+   "stress_requests": 13,
+   "reason": "Raw ok=true came from the v2 rule (any 1+ greedy tokens); the stress requests pass on exact lengths, overlap and distinct slots on their own. drift=true in the raw result is kept and is evaluated separately."
+  }
+ ]
+}

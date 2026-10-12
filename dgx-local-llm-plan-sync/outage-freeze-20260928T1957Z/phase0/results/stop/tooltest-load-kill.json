@@ -1,0 +1,17 @@
+{
+ "when": "load",
+ "signal": "KILL",
+ "model": "gpt-oss-20b-MXFP4.gguf",
+ "ctx": 32768,
+ "np": 4,
+ "baseline_GiB": 110.1,
+ "baseline_spread_GiB": 0.161,
+ "drop_at_signal_GiB": 6.45,
+ "signal_to_exit_s": 0.415,
+ "exit_to_released_s": 0.0,
+ "signal_to_released_s": 0.415,
+ "exit_code": -9,
+ "max_fall_per_250ms_before_signal_GiB": 4.24,
+ "further_drop_after_signal_GiB": 6.57,
+ "ok": true
+}

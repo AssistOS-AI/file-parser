@@ -1,0 +1,13 @@
+#!/bin/sh
+# Owner rule (2026-09-28): no AI co-author or AI tool attribution in any commit.
+# Removes only whole signature lines (AI co-author trailers, "Generated
+# with/by <AI tool>" lines, the robot-emoji line); everything else is kept.
+msg="$1"
+tmp="$msg.no-ai-attribution"
+grep -v -i -E '^[[:space:]]*co-authored-by:.*(claude|anthropic|openai|codex|copilot|chatgpt|gpt-|gemini|noreply@anthropic\.com)|^[[:space:]]*(🤖[[:space:]]*)?generated (with|by) \[?(claude( code)?|codex|chatgpt|github copilot|copilot)\]?([[:space:]]*\(https?://[^)]*\))?[[:space:]]*\.?[[:space:]]*$|^[[:space:]]*🤖' "$msg" > "$tmp"
+if ! cmp -s "$msg" "$tmp"; then
+  echo "commit-msg hook: removed AI attribution line(s) (owner rule)" >&2
+fi
+cat "$tmp" > "$msg"
+rm -f "$tmp"
+exit 0

@@ -1,0 +1,5764 @@
+[
+  {
+    "path": ".",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".agents",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".agents/skills",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".agents/skills/achilles-specs",
+    "mode": 493,
+    "type": "symlink",
+    "target": "../../../../../.agents/skills/achilles-specs"
+  },
+  {
+    "path": ".agents/skills/article-build",
+    "mode": 493,
+    "type": "symlink",
+    "target": "../../../../../.agents/skills/article-build"
+  },
+  {
+    "path": ".agents/skills/detect-main-behaviors",
+    "mode": 493,
+    "type": "symlink",
+    "target": "../../../../../.agents/skills/detect-main-behaviors"
+  },
+  {
+    "path": ".agents/skills/gamp-specs",
+    "mode": 493,
+    "type": "symlink",
+    "target": "../../../../../.agents/skills/gamp-specs"
+  },
+  {
+    "path": ".agents/skills/node-coding-style",
+    "mode": 493,
+    "type": "symlink",
+    "target": "../../../../../.agents/skills/node-coding-style"
+  },
+  {
+    "path": ".agents/skills/review-specs",
+    "mode": 493,
+    "type": "symlink",
+    "target": "../../../../../.agents/skills/review-specs"
+  },
+  {
+    "path": ".github",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".github/workflows",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".github/workflows/release.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5685,
+    "sha256": "73f5f1b9381519d4d81d27c7989fa422b1df84af6e4b58a78591b254729fe52f"
+  },
+  {
+    "path": ".github/workflows/tests-docker.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1677,
+    "sha256": "1d7b95ff639fc16b4fd6cbf5668840d612f79f860ae070bbb198da3329b1ae51"
+  },
+  {
+    "path": ".github/workflows/tests-podman.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1821,
+    "sha256": "24a537fc02b43bff36b35190fa7be3c70380d2d23c08cc4e642c2866a2ac355c"
+  },
+  {
+    "path": ".github/workflows/verify-runtime-source-absence.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1254,
+    "sha256": "fdd2442a43a45bca757058d04af0c9b383087f98e01a79298235fac724987e43"
+  },
+  {
+    "path": ".gitignore",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2711,
+    "sha256": "d6aceafd58b2e9ac75fc128877903fbb38d31de8a7040034dc2fd6c4b4b1a0a3"
+  },
+  {
+    "path": ".gitmodules",
+    "mode": 420,
+    "type": "file",
+    "bytes": 155,
+    "sha256": "e999d35239abfaf81b2e55a501c1e111d76b2cb3bbce0390be37b234a3056422"
+  },
+  {
+    "path": ".idea",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".idea/.gitignore",
+    "mode": 420,
+    "type": "file",
+    "bytes": 98,
+    "sha256": "ca032d82aa302ebed293f50f36a6b022de8e8b2e16f6400076f2a70236f9bc1b"
+  },
+  {
+    "path": ".idea/modules.xml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 266,
+    "sha256": "b71f84dc8d5b93d7a619f09feb71f7893e4a020a6c9840b3a4d30e038f8f6cad"
+  },
+  {
+    "path": ".idea/ploinky.iml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 530,
+    "sha256": "984b6c40ada42b438aef48c43228e055bfc6b419f749d49d73222cdacd92bac1"
+  },
+  {
+    "path": ".idea/vcs.xml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 301,
+    "sha256": "ddeab8113cd0fa254dcb3916f6cd07173acabac90bca4267de11706a08bbaf5c"
+  },
+  {
+    "path": ".npmrc",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19,
+    "sha256": "f3fc23758ab91be5f94a8c5eaff433d1ccd6a206cf1d381d332eb63716009337"
+  },
+  {
+    "path": "AGENTS.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 297,
+    "sha256": "8ad63ead687e3de83d9b34c8817df9d37b8d9209c7a1e462fe7d6227212c605b"
+  },
+  {
+    "path": "Agent",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "Agent/client",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "Agent/client/AgentMcpClient.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 30989,
+    "sha256": "0d85bbc3b2adea4461ae1ebf1240d0813a4188e0e6db0f8ca48fe29124c59d22"
+  },
+  {
+    "path": "Agent/client/MCPBrowserClient.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 32616,
+    "sha256": "3627ac2607ca90492a6e4814305da6375ffed8bf173aea49f9a3f8df072f1654"
+  },
+  {
+    "path": "Agent/client/generatedRouterDescriptor.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18432,
+    "sha256": "901c870319653a3aef6513357da79d72f3aff5162e930ee655516eb4074e4741"
+  },
+  {
+    "path": "Agent/default_cli.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 364,
+    "sha256": "c6b021086169ed8a88bbe18e8a0765571fcd98ea9b85410908d0e968f4af835a"
+  },
+  {
+    "path": "Agent/lib",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "Agent/lib/agentAssertion.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6398,
+    "sha256": "a5881e4da81d1dad3c352d7652bed7d87da287b983883f47ff318e9a14099f03"
+  },
+  {
+    "path": "Agent/lib/edgeTopology.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3537,
+    "sha256": "e9b950293aa678d287c11edcbf04f39d5f6c9adac185f4f473cee65f779ea4b7"
+  },
+  {
+    "path": "Agent/lib/invocation-auth.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6259,
+    "sha256": "c7c04ca1998adfbb88c500cf21fea8d11c18385ab0a24116f3824caaa04c3059"
+  },
+  {
+    "path": "Agent/lib/invocationAuth.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11563,
+    "sha256": "944c6925f359357806da24e5b58f0effefcbaa987cdbcbac006cc059143210fb"
+  },
+  {
+    "path": "Agent/lib/jwtSign.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 99,
+    "sha256": "99359eead196bbcddcffa598dd18960c6706d06f255cd26d38abb2bd05b2a613"
+  },
+  {
+    "path": "Agent/lib/jwtVerify.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 192,
+    "sha256": "7c920aaed643df9ad3bd4d6057ee2f89b6ca2dbcd0d16feec22336c28b9a96e9"
+  },
+  {
+    "path": "Agent/lib/relayRequestAuth.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3284,
+    "sha256": "d740651330b12d636d9e9e5fc016b66c7f17c4bd71f2dd5c3748318d3956080b"
+  },
+  {
+    "path": "Agent/lib/relayTokenVerify.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4935,
+    "sha256": "5c40dd92e23bde3b5643777b9cc9e2c4799386468b985f62797db6c1abd3c261"
+  },
+  {
+    "path": "Agent/lib/requestHash.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7273,
+    "sha256": "919c300739b441e647c8e834026b30e761e129b99b949af33f120ec1d86263fa"
+  },
+  {
+    "path": "Agent/lib/requestSignedTokens.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3715,
+    "sha256": "20128652d9fcf8c4ab864beffec9c02ab33b58f157fc9a37b5296372227289b8"
+  },
+  {
+    "path": "Agent/lib/runtimeRelayProtocol.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4017,
+    "sha256": "b0b8c5f792914dd3ce86700b7089e65329d990149210c194e236c31da15a9e1f"
+  },
+  {
+    "path": "Agent/lib/toolEnvelope.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4780,
+    "sha256": "ed77bc5240abffc55a4d51dcdce2bc99a66bbcb6e67bec7c013a45556b9f320c"
+  },
+  {
+    "path": "Agent/lib/toolError.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1677,
+    "sha256": "9ec85fe31ff77a55d5be8a75f5bd37f4befdf2afc56a438a1bc5fd19dce71a6a"
+  },
+  {
+    "path": "Agent/server",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "Agent/server/AgentServer.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 62011,
+    "sha256": "2fba7236d4e1484ed87d4ed84671255b05b34c0021683e5408765b8083574aec"
+  },
+  {
+    "path": "Agent/server/AgentServer.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 779,
+    "sha256": "696920570cec4a93256f53ce2a138691519d69a89c3a13ea42475f3070bf2821"
+  },
+  {
+    "path": "Agent/server/HealthProbeRunner.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 14950,
+    "sha256": "cadad6304d64c7ffd1afa00343f46f31ca0da880bf33b1dbd0ed35a8b8516863"
+  },
+  {
+    "path": "Agent/server/RuntimeHttpRelay.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9975,
+    "sha256": "3abff2c99544852f42002de7a9cfb73b57c8f03b6a1a40fb1fd7832cd0865a9e"
+  },
+  {
+    "path": "Agent/server/TaskQueue.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19601,
+    "sha256": "1f077ce9a57e84878cec63bc02e7efe66d1bcd899cf982d2d079b29fca97ac24"
+  },
+  {
+    "path": "Agent/server/mcpToolBridge.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2080,
+    "sha256": "b7aca455f874ebf34d1fcd2bf164520bbd4c95f942c6d48556798167f13da1f8"
+  },
+  {
+    "path": "Agent/server/openAiDefaultResponder.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4520,
+    "sha256": "9838f3b18670b2d43f5af2f8a887713b524da3b039ecffb0c2e9ee20687c1685"
+  },
+  {
+    "path": "CLAUDE.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7885,
+    "sha256": "61eaa6760030037228803e42574388c66b08e94656a94bb541c426a47ae7e0c7"
+  },
+  {
+    "path": "README.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18696,
+    "sha256": "286cbae49757504953b8e4f3a2c0c26c7d3bc6fb666c05cc867a7ebee5608bd3"
+  },
+  {
+    "path": "bin",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "bin/p-cli",
+    "mode": 493,
+    "type": "file",
+    "bytes": 215,
+    "sha256": "de8212d05026837b3903d5131fca696d55f1650dc031b4183607c4a261935958"
+  },
+  {
+    "path": "bin/ploinky",
+    "mode": 493,
+    "type": "file",
+    "bytes": 147,
+    "sha256": "a285629f71e4eccbfc0cab6924854ce2566f1e3d83d80e0d73a4753534fcf2c8"
+  },
+  {
+    "path": "bin/ploinky-install-deps",
+    "mode": 493,
+    "type": "file",
+    "bytes": 163,
+    "sha256": "95ce4b8ad811c4f8d2987e54792529a624fd3e30721a696a1c4044a88431fc71"
+  },
+  {
+    "path": "bin/ploinky-local",
+    "mode": 493,
+    "type": "file",
+    "bytes": 763,
+    "sha256": "7999bbd8fcd8eedc1db9f93fbdafd30f0bd6b33c61fbeaf36f68741de1fd58f5"
+  },
+  {
+    "path": "bin/ploinky-shell",
+    "mode": 493,
+    "type": "file",
+    "bytes": 197,
+    "sha256": "61b7f76eea10f3876d58136b9b23db7bc449be22e2722fa22a38ea12bf4f5fa7"
+  },
+  {
+    "path": "bin/psh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 129,
+    "sha256": "11c6e7cc45fda4b99ab404c8a0a9a28f363603f1529c6970e0d611120796d176"
+  },
+  {
+    "path": "bin/runPlonkyTests.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 3173,
+    "sha256": "c1ceab5b655df196a2d3c307c6101e5d61a99df24def8ee977f898aa02ca05d4"
+  },
+  {
+    "path": "cli",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/commands",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/commands/cli.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 42398,
+    "sha256": "cb15b9cb76ad7a3fdaeb95573c45a40898dc70b7464847a54e46143514bdd2c1"
+  },
+  {
+    "path": "cli/commands/client.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 17021,
+    "sha256": "5f59f667243491c092e7f0c9615858f2a4db1d65d3434228cca6fb4c6998cc6a"
+  },
+  {
+    "path": "cli/commands/commandRegistry.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1278,
+    "sha256": "2c18d05a50f39793a04820dc2ead7ac8b525be18c8a70ebceb59fe381d2828b0"
+  },
+  {
+    "path": "cli/commands/depsCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13107,
+    "sha256": "ab43d281265230459b3f702997568ae9c22e1528f9e85f838abbfbd9076de8ad"
+  },
+  {
+    "path": "cli/commands/envVarCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4658,
+    "sha256": "ddfb9039c266e946bf9bafd0e57c913896f97b10eb70de53c9d77e8bc58b0010"
+  },
+  {
+    "path": "cli/commands/githubAuthCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 239,
+    "sha256": "e1bc4d982e7f83770028f47231feeccaa56c866e39a63b3045e573fc923c90ae"
+  },
+  {
+    "path": "cli/commands/help.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 50253,
+    "sha256": "e77c8f5e309e31c993614632ee67658f365f2546172746761ae0c2e9c2032388"
+  },
+  {
+    "path": "cli/commands/inputState.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1586,
+    "sha256": "23dc0933cf7c7f6b2ddb874d9cc16dd9535112f2e6fe7298d7f365cf7e9d8c34"
+  },
+  {
+    "path": "cli/commands/llmProviderUtils.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5903,
+    "sha256": "ace9e1222870b1d5f8d08e892eb25e266d89603eb549de49a1e611bebbce21a3"
+  },
+  {
+    "path": "cli/commands/llmSystemCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11429,
+    "sha256": "32d4073a6e499103289eba7f5cc7485c96deea40d3629f7908eeac38990d79b8"
+  },
+  {
+    "path": "cli/commands/logUtils.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2073,
+    "sha256": "6777c8e295544f378b24f0c67b8ec611ec071769ed10788cda7fd429a46d2e26"
+  },
+  {
+    "path": "cli/commands/multilineNavigation.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4528,
+    "sha256": "5357d0326029924437b9f557498e3a8adc4d69cb4cc22bf56b5722735ac541c9"
+  },
+  {
+    "path": "cli/commands/noWaitWorker.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 87478,
+    "sha256": "21a1e35d8d9f8318c62a322f78ae2d1812dc2f414f223387afcdac4e8237f98b"
+  },
+  {
+    "path": "cli/commands/ploinkyboot.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4452,
+    "sha256": "e1254603fd4f02b67e9e374ac494e105ff909e609c6baa366f5baa2d4010fc24"
+  },
+  {
+    "path": "cli/commands/profileCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9490,
+    "sha256": "0a12d34c63632d7a03a16d4f0260cddc1b141f87600fb061072e7492413d90aa"
+  },
+  {
+    "path": "cli/commands/repoAgentCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 22164,
+    "sha256": "0892558720c54abc8913dd4f843be9247557d4f05755238b9548349596a0e8ce"
+  },
+  {
+    "path": "cli/commands/sandboxCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1856,
+    "sha256": "1dfdb781fb88b4d029d9b0b1d8702202a3bf658c1932640e7ed450ac15948d33"
+  },
+  {
+    "path": "cli/commands/sessionControl.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5138,
+    "sha256": "274db931a512c41d3f3dc31d83793729e2db482b462ccff2efc4f774253abd65"
+  },
+  {
+    "path": "cli/commands/settingsMenu.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12903,
+    "sha256": "8e4e4346c033f66f71a48e07f8cfc3625f93d824bb1f3e2af4685744c8c60891"
+  },
+  {
+    "path": "cli/commands/skills.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16289,
+    "sha256": "4e837048c9c3d5b4bf36a0d615faa9262c00d96c49fdbdce803da8cc0d1ae0ce"
+  },
+  {
+    "path": "cli/commands/skillsCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1844,
+    "sha256": "d71be66da69e952f94f18687297aeefd84c8158351f2c333409e0684b987f591"
+  },
+  {
+    "path": "cli/commands/ssoCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3247,
+    "sha256": "71ffd470cc7b1c3e9af74994b2816a8b9bd704536ed44ea0bfde95d20b64177f"
+  },
+  {
+    "path": "cli/commands/updateService.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14342,
+    "sha256": "836cb0dc40595c332222a4efe353a5025b03791442a511ea0870b75cf5220902"
+  },
+  {
+    "path": "cli/commands/workspaceUtil.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 116985,
+    "sha256": "f8694ec4cff80a6e0fe0dec7c868242ac55c870f5f82355568e8d0afeadf619f"
+  },
+  {
+    "path": "cli/index.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1362,
+    "sha256": "687fd9cfdda9b9c421c6e75ed8aa2621781deb9cc58a136549bfdf71ec8ee4a2"
+  },
+  {
+    "path": "cli/main.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19328,
+    "sha256": "408da99f1ba7abf54b882b2bb2f1d0bc19532c8552171b77511cd5b3cc64c1f7"
+  },
+  {
+    "path": "cli/package.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 427,
+    "sha256": "a9212999d15ff7ac3b60575b5e21e4a98b918f3c2dcd60587a18d7d8225a1afd"
+  },
+  {
+    "path": "cli/sandbox",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/sandbox/agentRuntimeState.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3680,
+    "sha256": "9819352d5fe27efe585c4a0c3d3e9f1b4b3d0b0d88730420dd72b886c3c271e7"
+  },
+  {
+    "path": "cli/sandbox/bwrap",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/sandbox/bwrap/bwrapFleet.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14786,
+    "sha256": "bd22fdbeeb6f423707b1e1079fa768f1a5e015c0d67590eae6438dcf0abae688"
+  },
+  {
+    "path": "cli/sandbox/bwrap/bwrapHealthProbes.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 898,
+    "sha256": "2572b96c6b26895591640a5dab8689af1e6dd539122bcfb6d14cc6f5b440d006"
+  },
+  {
+    "path": "cli/sandbox/bwrap/bwrapServiceManager.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 47615,
+    "sha256": "64036ec6bea41cc23939725e744345144d8258facad3183d599f4d9398b346c6"
+  },
+  {
+    "path": "cli/sandbox/bwrap/index.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 356,
+    "sha256": "959f5f1dbafde8f738b35b8e8db1f6c5d3e275e4b2610991a0d0b6337a7a38f2"
+  },
+  {
+    "path": "cli/sandbox/coordinatedEdgeApply.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1628,
+    "sha256": "453d4824d658c4dd790d824b70088cb7258600b544f4d9555477cd99d167815d"
+  },
+  {
+    "path": "cli/sandbox/docker",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/sandbox/docker/agentCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2870,
+    "sha256": "ec3b0ded0470375293126d732c54b0520c0d5a2c8933747050bb32b144d93805"
+  },
+  {
+    "path": "cli/sandbox/docker/agentHooks.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3070,
+    "sha256": "3a6cdb250216a92ff0d266feeb44375d1b63518bf76681ccc27f2e76d5ac0f97"
+  },
+  {
+    "path": "cli/sandbox/docker/agentServiceManager.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 160487,
+    "sha256": "91908112a785ee91f5568f18a12d42426f58a4ec0ae271e79547130ba6dd33b9"
+  },
+  {
+    "path": "cli/sandbox/docker/common.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 29834,
+    "sha256": "cf91980cd65c9c0a156c5d893cdf99079eb20dc142fc44493dd16a2daa805eba"
+  },
+  {
+    "path": "cli/sandbox/docker/containerFleet.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19016,
+    "sha256": "49d749501f3e202f67bf177a817339997e5d23aa0d2274bd4c224606b04b09f1"
+  },
+  {
+    "path": "cli/sandbox/docker/containerRegistry.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4042,
+    "sha256": "9bc5ef9a90bc3013ba93f3b80a0c27146d0e80fc2f29e6816b8806b1401503ec"
+  },
+  {
+    "path": "cli/sandbox/docker/containerRuntimePolicy.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12298,
+    "sha256": "7ae9d029e4286027946a3bb877c2e87100a4e69ca642fff07f6585ccb1540f6d"
+  },
+  {
+    "path": "cli/sandbox/docker/containerSecurity.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1004,
+    "sha256": "59ba68f031a3d80cc8b44da131c65c37d41c6f26da77c000ee4fc274424b5f56"
+  },
+  {
+    "path": "cli/sandbox/docker/hardwareDetection.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6804,
+    "sha256": "043ce328616fc41fbd8d961a029925e5db56d2cf8f8de09fb0f90132824b31eb"
+  },
+  {
+    "path": "cli/sandbox/docker/healthProbes.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15460,
+    "sha256": "e46aaaf9d55c852073dbd28fe9908d842f2c5f0f29e7034b3b4469bc968efcaf"
+  },
+  {
+    "path": "cli/sandbox/docker/index.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1362,
+    "sha256": "ff40c8b14dba8a225a992b2e1f96341b353d056c91bae1fdeedc04e08a431092"
+  },
+  {
+    "path": "cli/sandbox/docker/interactive.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21888,
+    "sha256": "74decb5c793963b9bf4d49f3324c73dcfa368609a420730c4f7826fa3f78f3da"
+  },
+  {
+    "path": "cli/sandbox/docker/llmArchitectureCatalog.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 23786,
+    "sha256": "d92f06616c5f977a894c62e4be77f114a13e5fed47e34dd3740dbde183054c87"
+  },
+  {
+    "path": "cli/sandbox/docker/llmArchitectureSelector.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11749,
+    "sha256": "998992f6a6590c0f5a69a9e2a650c61d96fb672288400c5a3c2691abec23b546"
+  },
+  {
+    "path": "cli/sandbox/docker/llmRuntimeIntegration.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8534,
+    "sha256": "e8f4fb5da71a44c17c209c925968f79ca1638d82bfd80f819fe61e340344c225"
+  },
+  {
+    "path": "cli/sandbox/docker/shellDetection.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3243,
+    "sha256": "3e3dd0b2354adfe86baaf56c426a1ea554224c82929d1e120f0b16a9ae34ed5a"
+  },
+  {
+    "path": "cli/sandbox/docker/targetedContainerLifecycle.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9136,
+    "sha256": "961bc0d92cfe9e8b5a7ccc7787a8bb6fb91bd2268c853cab881837aebe819c89"
+  },
+  {
+    "path": "cli/sandbox/edgeGeneration.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 132808,
+    "sha256": "ef8c202f759d784c3c60bad2b0bc94e68446fb8399379f4430074bca213ac45a"
+  },
+  {
+    "path": "cli/sandbox/layerIdentification.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 923,
+    "sha256": "01fcdc1bc80000e6416677f817c5904f9d669c5994497268b5953bb110477f99"
+  },
+  {
+    "path": "cli/sandbox/networkContract.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8935,
+    "sha256": "e7b46d52bdf75cce92e581f79967a2d66c412e9c1a687ce6fafb2851579f1786"
+  },
+  {
+    "path": "cli/sandbox/networkLifecycle.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 67796,
+    "sha256": "a878463b51206e9f0bed43c3650e6dbb46f3be45265a496df05e2fd8aab6c8ef"
+  },
+  {
+    "path": "cli/sandbox/replCommandRunner.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 368,
+    "sha256": "24ecf95de946e6589ad4285f6ffc2e2369e1c7b7920d907bcc59743fd6b1707e"
+  },
+  {
+    "path": "cli/sandbox/routerAuthorityAttestation.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 27187,
+    "sha256": "60d29682cad40d9cc94d4eaf8728f21093866f8005d2dc58b8e525d42dca6488"
+  },
+  {
+    "path": "cli/sandbox/routerPort.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8563,
+    "sha256": "c6f6446741074533b783dde84b87c7e4a89e129bec11800c1ec568716097ca23"
+  },
+  {
+    "path": "cli/sandbox/runtimeCapabilities.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20939,
+    "sha256": "890789a2e1f0028c2a9719244f4774827bff3d4f3b0453f357eb9390bf42dadc"
+  },
+  {
+    "path": "cli/sandbox/runtimeCleanupReceipt.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4542,
+    "sha256": "ff5927817ffe43924bc950673e8285927b8cd0d1a8c3271ca891145106dfe2f0"
+  },
+  {
+    "path": "cli/sandbox/runtimeShell.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1950,
+    "sha256": "e7b51b290db0cb843efb4d893fa5ad35616efb607fef7ff430d424814c499760"
+  },
+  {
+    "path": "cli/sandbox/seatbelt",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/sandbox/seatbelt/index.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 224,
+    "sha256": "69adb13e1cf2805b8f8e0bd815bfaa9756c31436c2b4fdba2bf8ee94ef1235fb"
+  },
+  {
+    "path": "cli/sandbox/seatbelt/seatbeltProfile.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9966,
+    "sha256": "2a6dc8e526dae459218ed4647b8f1344b053e9dba31437b48c19ef90c3e7b45d"
+  },
+  {
+    "path": "cli/sandbox/seatbelt/seatbeltServiceManager.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 39520,
+    "sha256": "3c912450aba8136ffb503e055d32c8c02ca7c03250cadc0ff272895f5bf78e76"
+  },
+  {
+    "path": "cli/sandbox/startupConfigProviders.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15912,
+    "sha256": "82167d949537c457cec38d952dc09a47f1d3be6c289edb0ec287ff9390ad9f83"
+  },
+  {
+    "path": "cli/server",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/AgentClient.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3151,
+    "sha256": "fb9801879a2264917a637c59db46296365f068544d5e5733c029bbc26de76f32"
+  },
+  {
+    "path": "cli/server/RoutingServer.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 46036,
+    "sha256": "29442da0f6f9c77729dc5c37b020cd7f0746c37d86c0238b14d53c7b52f5e6ef"
+  },
+  {
+    "path": "cli/server/Watchdog.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 22224,
+    "sha256": "8bdbc45364cc627a124115b1a84ff26a2184bc392d24f705402e4fa584a762b1"
+  },
+  {
+    "path": "cli/server/adminControlSecurity.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4120,
+    "sha256": "f85d7837c28470ceb62bbffa1a8de4e4e971449f3ee26817a37bf2f9f7c6adca"
+  },
+  {
+    "path": "cli/server/agentCardFanout.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2753,
+    "sha256": "f88d749a08cb65d30da3eaf941d7fa8299c793d3db3638ebba01770c07fba5eb"
+  },
+  {
+    "path": "cli/server/agentOpenAiDelegation.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12353,
+    "sha256": "a5c2d3d0aa378f3cb34f52db4f94da85d821a225cca0455567ef293bdeb2d3d1"
+  },
+  {
+    "path": "cli/server/agentPortConvention",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/agentPortConvention/parseSelector.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4837,
+    "sha256": "ac1920ca9c85199e00e1a148e7a05c1268973bf8df5ac1a4f584144305915791"
+  },
+  {
+    "path": "cli/server/auth",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/auth/genericAuthBridge.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12898,
+    "sha256": "52b4ce2d21dc60508ce00eed33b02474c1250522dff4aa53af2f83b11067b969"
+  },
+  {
+    "path": "cli/server/auth/jwksCache.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1496,
+    "sha256": "6adb10ea4ca0ec65bf7a4da3b1f1acd11d13a1aaea7ee7900d19734fd4d21a7a"
+  },
+  {
+    "path": "cli/server/auth/jwt.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2064,
+    "sha256": "f44e29554518202076c380fa4d5687abb5a1e530b6a06b67cb9c3486a939ab9d"
+  },
+  {
+    "path": "cli/server/auth/localService.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21589,
+    "sha256": "8699a681e4cac4227136fc969eb78f268ed3ebdb0e1bcabd1c5742f7439e4052"
+  },
+  {
+    "path": "cli/server/auth/pkce.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 703,
+    "sha256": "eb9aeab0fedf90ad15df9454afda1a9f748f93d9fee886a758d042719cd2a9b2"
+  },
+  {
+    "path": "cli/server/auth/routerSettings.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1502,
+    "sha256": "902913da55012b93f346f9e013c3d4428084b58805a733d59ba78e061b24edd6"
+  },
+  {
+    "path": "cli/server/auth/service.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 188,
+    "sha256": "f66b7e190b349196b5d49ded597e184abc84b252863c6c0ca8afe286840bd57f"
+  },
+  {
+    "path": "cli/server/auth/sessionRevocations.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3834,
+    "sha256": "8d32f03fce9d92891bf799545cf7323a7c6d5ceb7fb9fcae233ce5aad826bedb"
+  },
+  {
+    "path": "cli/server/auth/sessionStore.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3679,
+    "sha256": "e8410bca3fc80635d9957d8133a38b6e695b3eaba45b70d35b8670424b5b3b4a"
+  },
+  {
+    "path": "cli/server/auth/utils.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 625,
+    "sha256": "88a358f193ff861da10b01f0cf40c54442699467cdcea057377182774e66d51e"
+  },
+  {
+    "path": "cli/server/authHandlers",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/authHandlers/appName.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 411,
+    "sha256": "183395250c70adfa2e93dc7c51a3e2d1baf70b760c09530257c792df09785fb0"
+  },
+  {
+    "path": "cli/server/authHandlers/authContext.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 37614,
+    "sha256": "d09d1a7df097fa0efacbbdb39e98f5da9b815291afd07fcd39f8b34ef4f0bbd1"
+  },
+  {
+    "path": "cli/server/authHandlers/authPages.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16659,
+    "sha256": "eca30aec291bd6566ab7f7de5a7dc2a336e91e2cdb90cebe481f17173279a09b"
+  },
+  {
+    "path": "cli/server/authHandlers/authRoutes.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 34112,
+    "sha256": "dc8409a140301e313e1eae51498569f5e63877f35f94e74b614e3c20bbfe8196"
+  },
+  {
+    "path": "cli/server/authHandlers/index.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 540,
+    "sha256": "5f2039b84b10c1ee3d93e25174459a3bc3661df1b8ded288c683017e60abf002"
+  },
+  {
+    "path": "cli/server/authHandlers/marketplaceRoutes.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21228,
+    "sha256": "6aad75ff5607ee3c9c9a6c84811ab0c7215855230895d67bf2987fb3f8ca169c"
+  },
+  {
+    "path": "cli/server/authHandlers/shared.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8219,
+    "sha256": "97ce6834f4b74811b64e427fc69887397d6b4134923772dfd56139b63871c54b"
+  },
+  {
+    "path": "cli/server/authHandlers/userAdminRoutes.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12487,
+    "sha256": "f2c656c3d23fc742fbc78de58aa159733fb7bd0c1bff35ee4dd42b6f70387508"
+  },
+  {
+    "path": "cli/server/browserMutationSecurity.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5377,
+    "sha256": "de2721714890e01d10237e09e870251b99d4d40e3d58e565960a6631f1978440"
+  },
+  {
+    "path": "cli/server/containerMonitor.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 60872,
+    "sha256": "492aa54e9b78ed4ae719cfe4fe8c83fa41d142fd639142d2040fc456dc9823ef"
+  },
+  {
+    "path": "cli/server/dashboard",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/dashboard/dashboard.css",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12875,
+    "sha256": "c6d51f79c653ce07c6842d9d0dd9f0e048314b44463b417157cf06989302d4ce"
+  },
+  {
+    "path": "cli/server/dashboard/dashboard.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10353,
+    "sha256": "18cff9a193864de5bba3ad0e57d30c8ede50a2d5dcf0e843631620c98d2ca2ce"
+  },
+  {
+    "path": "cli/server/dashboard/dashboard.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10297,
+    "sha256": "740566dd9e3d5bd858d49f4d723b4f44a1c9dc40459b9c9d4dd728d02ae6e5e8"
+  },
+  {
+    "path": "cli/server/edgeRoutePlan.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 26788,
+    "sha256": "690a89330a088d0ae9ab229bb5fc2cf8c0d36de07b2b964a4f8887066f25c53d"
+  },
+  {
+    "path": "cli/server/handlers",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/handlers/blobs.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16442,
+    "sha256": "2d5514a3a37bcc9e37169c96c354771cc9fcafd3f2a9e6e81b7bcbe0c3bd26c6"
+  },
+  {
+    "path": "cli/server/handlers/common.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5737,
+    "sha256": "e823714ad6aa73f43f853893f64e344ac4ee25b99ce69531b8c89be0802e576a"
+  },
+  {
+    "path": "cli/server/handlers/dashboard.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6141,
+    "sha256": "b9df7ac326effc8c79f5850216abf33830f085aebdd10fd1d446f5a6aef05ea6"
+  },
+  {
+    "path": "cli/server/handlers/status.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6054,
+    "sha256": "df975d3c4feae47969d0900344f1daddb6bf1295d15f564d06daef4ed119c301"
+  },
+  {
+    "path": "cli/server/handlers/uploadAdmission.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 17358,
+    "sha256": "1ba8585e69949ae1e15b8e5eea4cad1939c30c9f5f57a37e3820f3f052ae7df5"
+  },
+  {
+    "path": "cli/server/handlers/webchat",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/handlers/webchat/browserSession.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3191,
+    "sha256": "1fbfdb36b1523fe2e34429e705df4ebce0e6ce87008240726bbb2fdb60dfc5ce"
+  },
+  {
+    "path": "cli/server/handlers/webchat/index.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7054,
+    "sha256": "76df10d4cee5e266cca1618e46c4fa3e535a67d0b7c042d978685ce09cb124e0"
+  },
+  {
+    "path": "cli/server/handlers/webchat/launchOptions.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1795,
+    "sha256": "45e43c6654689afc293886eccc069a6d1885c847f0d4cfe6b446c55023599090"
+  },
+  {
+    "path": "cli/server/handlers/webchat/messageEnvelope.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6196,
+    "sha256": "318f150b1898122aaf329702ec281066d3e2801c90a39fbd59c378ed2d3fddfb"
+  },
+  {
+    "path": "cli/server/handlers/webchat/runtimeRoutes.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16758,
+    "sha256": "57f36bfc0f2551cb6b7c4192ac817f49f62a4d57f0ac8c57c2afcd2a5018672b"
+  },
+  {
+    "path": "cli/server/handlers/webchat/runtimeState.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 41356,
+    "sha256": "8bd0d8599db439c22ac65e1c11fa9f0ac484c30e8d7db4e7482a8ba79e449e68"
+  },
+  {
+    "path": "cli/server/handlers/webchat/taskRoutes.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 748,
+    "sha256": "6bd8c52aa7f52344ade4b4feb3c40de82b9ffe0c60a6acaf9160c4c34aac6ed3"
+  },
+  {
+    "path": "cli/server/handlers/webchat/uploads.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5989,
+    "sha256": "86d5d9d1bc5647c48b2e3801c18501e47f983a43374fabf3d745d1ff11e79d8e"
+  },
+  {
+    "path": "cli/server/handlers/webchat/workspaceDirectories.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3963,
+    "sha256": "33990c880ff1ea5ab3f5e8c3c1b653f156e4aa65624c025b76c712e56703331a"
+  },
+  {
+    "path": "cli/server/handlers/webchat/workspaceSuggestions.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10217,
+    "sha256": "eab83dd8183466c09f980505548c3f4094a9428be55b5d67caf9825b5b827606"
+  },
+  {
+    "path": "cli/server/httpRouteAuth.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5547,
+    "sha256": "6f979b12f09526edcc0d429a4f796db742c2e5f9fa34fdc74cdf01bd9231edae"
+  },
+  {
+    "path": "cli/server/internalAgentPath.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1433,
+    "sha256": "da04321d0a84fb289040ee069faa42d3a81736c9301982fb95795f61b33be239"
+  },
+  {
+    "path": "cli/server/listenerInterfaceClassifier.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13361,
+    "sha256": "67d283c25276ac3eda9bb51b63e81864c8bc0c1e0d55951dbd7549331c53f1d5"
+  },
+  {
+    "path": "cli/server/marketplaceEnableWorker.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3264,
+    "sha256": "1b958abb9479601cfdd8db54ed6dd998eae49aca3c9f3a626b3135c08910a60f"
+  },
+  {
+    "path": "cli/server/marketplaceEnableWorkerThread.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1168,
+    "sha256": "1e291747bd4d1c12f09ec4edb28137705c1b860b4d62bf614540d46bbe3ca162"
+  },
+  {
+    "path": "cli/server/mcp-proxy",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/mcp-proxy/index.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 34334,
+    "sha256": "5e0d34f5459293f5c955cc21e6590d130b730ffd42bfd081e930738983ce0c67"
+  },
+  {
+    "path": "cli/server/mcp-proxy/invocationMinter.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3445,
+    "sha256": "d8cf80bf228a51948bf5eadcc44ca2780cfabb8ddc8eb331244e9e009457bcbb"
+  },
+  {
+    "path": "cli/server/mcp-proxy/mcpDelegations.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7007,
+    "sha256": "8aed78cfcff7022a071fff60b313e6a96932d3486fab537e4cf966d79e157232"
+  },
+  {
+    "path": "cli/server/mcp-proxy/toolArguments.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1805,
+    "sha256": "82b9e2228f171d9f298722b1818c619de4e8459f2bf48f8f930c59d6b4fc8935"
+  },
+  {
+    "path": "cli/server/mcp-proxy/userDelegationGrant.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1185,
+    "sha256": "17fd704964948dfcf1b1687c6f4e8a8d145ac2bf70b417e0aa07bc36cffab73a"
+  },
+  {
+    "path": "cli/server/openAiAgentDiscovery.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9063,
+    "sha256": "1d65f188463904f31eabb6ea4f0a25c91bd867a4a41d37f42c5428ef41d58edb"
+  },
+  {
+    "path": "cli/server/policy",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/policy/Caller.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2052,
+    "sha256": "4e9bb9ea8d189b60c6ea2a366859e5b1a1bfe3991b5534519a58750a4149603e"
+  },
+  {
+    "path": "cli/server/policy/FileSystemPolicyAuditSink.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1118,
+    "sha256": "85fb14e399dd1038fa68bf15bdb802ee24dc15b64abdecf1acac3f6293a522ff"
+  },
+  {
+    "path": "cli/server/policy/FileSystemPolicyStateStore.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5343,
+    "sha256": "505b03033ac4628d76d3e28e2114f849b54cc95c6872a059dbb912a77176e2e2"
+  },
+  {
+    "path": "cli/server/policy/HttpRouteAccessDecision.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 724,
+    "sha256": "1e61e25cbc34e5bfe8a943ff1bdd82e2b5604b3563089f8e98ac2600e60d914c"
+  },
+  {
+    "path": "cli/server/policy/HttpRouteAccessPath.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4525,
+    "sha256": "ace9a8a704f65fdea58d438ee8683957e75338c18b7aedf69e131f7e18737010"
+  },
+  {
+    "path": "cli/server/policy/HttpRouteAccessPolicy.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6814,
+    "sha256": "70f43d7d563a560a7b572d7fb3258f9974883115b74c564019030fe121e3d709"
+  },
+  {
+    "path": "cli/server/policy/HttpRoutePolicyCompiler.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8312,
+    "sha256": "fad3fb67fe3aefe3e494b9004a229650bfe7d7c9b10ec88cf0af86acc9fe6ad7"
+  },
+  {
+    "path": "cli/server/policy/HttpRouteProviders.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8134,
+    "sha256": "8981805a211838f7b1cad4d4106fef2f50ea85614ba95c59d38c638ed5d3f557"
+  },
+  {
+    "path": "cli/server/policy/HttpShareAuthorizer.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4941,
+    "sha256": "de3268238b92dbed881e9e86100c9e935132abdaea1719da8ab971afa7d457ed"
+  },
+  {
+    "path": "cli/server/policy/InMemoryPolicyStateStore.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1448,
+    "sha256": "58f01470255d768bf5e58385500115c2b69ec5fe0c4ab3e40795ef54a69ac342"
+  },
+  {
+    "path": "cli/server/policy/McpToolPolicy.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8263,
+    "sha256": "104167ae8948fb32b3c4596984c0ceb1da29520023c2e325a1d2e22cab9cb097"
+  },
+  {
+    "path": "cli/server/policy/PolicyAuditLog.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 983,
+    "sha256": "ff455c86bd1325fb835992af6f96a976d6cdcdb9bf147f3a04c9889f27cb969a"
+  },
+  {
+    "path": "cli/server/policy/PolicyAuditSink.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 772,
+    "sha256": "c6d9e3c3a8d8dc1ce9d4b489edd0c7866ae42e3ebdac128a289b1dc3c4021330"
+  },
+  {
+    "path": "cli/server/policy/PolicyCommandInvoker.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4463,
+    "sha256": "709b3fbd7ea3b7622a0636849c8f55b171d8cf807dd86a23a0a5942e037cdb14"
+  },
+  {
+    "path": "cli/server/policy/PolicyCommandRegistry.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 525,
+    "sha256": "275c4ee343dfbf1d47cfc9c481ba8479c5549fcc24bac720a487c895e8fd9961"
+  },
+  {
+    "path": "cli/server/policy/PolicyStateRepository.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6303,
+    "sha256": "54e2778bbc3e25c22ce0fa69d5aa618b7218523e7f785f6edb0f08d5309b3388"
+  },
+  {
+    "path": "cli/server/policy/PolicyStateStore.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2099,
+    "sha256": "cb375293045e2c080ebecb8dc560a49842eb6e4476163f4ee56875b8956d834e"
+  },
+  {
+    "path": "cli/server/policy/commands",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/policy/commands/PolicyCommand.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 699,
+    "sha256": "ce92b789412a2149dc493619c9b6fa6bd3cedd1152c93e6c2fe7f944dc5e6918"
+  },
+  {
+    "path": "cli/server/policy/commands/httpRouteCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6069,
+    "sha256": "4556f63e02af914544b69aff2f5509c27e9b8c42c20cc97fd27fff44c8b7bd8d"
+  },
+  {
+    "path": "cli/server/policy/commands/mcpPolicyCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3279,
+    "sha256": "7dfb43ac2ba16e0766ab949c9d71fcb715f1eae12e15cb5c4a0087ed1696ab9b"
+  },
+  {
+    "path": "cli/server/policy/index.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2750,
+    "sha256": "1e875a9f4d6fc961bb26b59da904a7204b6375eac28a1ea5f1c37b973ad8d117"
+  },
+  {
+    "path": "cli/server/privateListenerSet.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12698,
+    "sha256": "1f4936d6c2ad27080d6b547cd77c3e25406c1ee8c612d25635a612d8af97eeca"
+  },
+  {
+    "path": "cli/server/privateRouter.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12331,
+    "sha256": "f4e28c0a78eae5430bb34273e3b6053b44797c49de4c17fca0daed96a699ad54"
+  },
+  {
+    "path": "cli/server/probeWorker.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 872,
+    "sha256": "4811cde35f9330dd96c63d56da9136fcd117180c312f486da7d82b07f4fbfbc5"
+  },
+  {
+    "path": "cli/server/proxy",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/proxy/RoutePlan.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2187,
+    "sha256": "0c74485efb5bc838dc10e320ec0868d013e1cd4d6e6de98350740c9d09139b0c"
+  },
+  {
+    "path": "cli/server/proxy/executeHttpPlan.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20713,
+    "sha256": "61dd0219e09569240cb415f03e4d662b907eb57c7bba32a60bf9cb2ce1bd0160"
+  },
+  {
+    "path": "cli/server/proxy/executeWebSocketPlan.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12237,
+    "sha256": "81c693bc6bf2dbe6177c2a9ce03cefdfbefa176b7e9129107e81da21b3c6f561"
+  },
+  {
+    "path": "cli/server/proxy/limits.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2181,
+    "sha256": "d9bbfe82e47f57e8e1f30698442c665ba8df0e364440dacfaba58df667f49c2d"
+  },
+  {
+    "path": "cli/server/proxy/recordProxyOutcome.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1780,
+    "sha256": "3ef0b3ce3d016f1fb479984b236b7de5ae073b51a4f50df0bea91811cd46bc35"
+  },
+  {
+    "path": "cli/server/proxy/sanitizeRequestHeaders.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3570,
+    "sha256": "75132b37854b33bc13ff67dbf27e51d958871d1a823676dd198f1330936db88b"
+  },
+  {
+    "path": "cli/server/proxy/sanitizeResponseHeaders.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2764,
+    "sha256": "fde0fea33497616baa03ce7b35963fcbe3377c656011bd83f1aa8ea76a4dccf9"
+  },
+  {
+    "path": "cli/server/routerAuthorityAttestationRegistry.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12829,
+    "sha256": "e7d4012e2a6af5b48ac24ebb2e8a6a01137b81c29884bf8ff86f5203b4c5211e"
+  },
+  {
+    "path": "cli/server/routerHandlers.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 49728,
+    "sha256": "990aca749cd2e914fe4c6f6bb993b95e59d9209e1c9ea6440ab041407dc95ee4"
+  },
+  {
+    "path": "cli/server/routingFile.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5491,
+    "sha256": "f251ec9a8d2102662134a4d19ca2005e77ac72b78dd5f2635164905d01075b52"
+  },
+  {
+    "path": "cli/server/routingState.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1835,
+    "sha256": "44dec9ef2a22fd3850eef3f0fdee487716a85ace070b227b8281e8252690e66a"
+  },
+  {
+    "path": "cli/server/runtimeRelay",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/runtimeRelay/RuntimeRelayManager.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18033,
+    "sha256": "1f7528992a5111abb927fa39c896f72f72c2feecc811c0e433e49cf62f7c9d2a"
+  },
+  {
+    "path": "cli/server/runtimeRelay/confinement.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3094,
+    "sha256": "ea668cfc526a3b133b5963ac2efab03976e77dde294f0191a28224270d56691d"
+  },
+  {
+    "path": "cli/server/runtimeRelay/protocol.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 132,
+    "sha256": "cece71a14a33df7ef08d1b7e501336abb6a6b01cac8b3ce94c3786d49a936ee9"
+  },
+  {
+    "path": "cli/server/runtimeRelay/relayRequestMinter.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5946,
+    "sha256": "46bb8d2487ebcd0533833c85fe9458aacc48da3e8472c9717539a35822ccef55"
+  },
+  {
+    "path": "cli/server/security",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/security/tokens",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/security/tokens/AgentAssertionService.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4206,
+    "sha256": "d1ebb97a1b3d1fe0c8333f6d7df8005ca805d7ea98a2da987c3f23bd3eef8452"
+  },
+  {
+    "path": "cli/server/security/tokens/JwsCodec.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 693,
+    "sha256": "20cb25f6b0b828cdfcecc41cee12a6f2fc2e02e25d6fe35c7966597e96f5a874"
+  },
+  {
+    "path": "cli/server/security/tokens/RouterRequestTokenService.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6872,
+    "sha256": "fbf38308982f8b5a355da64732c86162231561297c7b8a1d8e8e8e5a1410a003"
+  },
+  {
+    "path": "cli/server/security/tokens/SessionTokenService.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3596,
+    "sha256": "cd521e7cccb82fc13fd7afc0fa0b4745081c9ea285ea8acb46bc49ff645316d5"
+  },
+  {
+    "path": "cli/server/security/tokens/UserDelegationGrantService.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9093,
+    "sha256": "926f43ed581c72bbf94dff58beb936df7323ebd3f393ec2d678c28e6fd6e0af7"
+  },
+  {
+    "path": "cli/server/security/tokens/index.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 328,
+    "sha256": "fb2c37a2eb2ba1a3e5073fdef0ad81dbb63a49425ffa3e96d4e4f1b84bc4a8ee"
+  },
+  {
+    "path": "cli/server/security/userIdentityKey.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3379,
+    "sha256": "92e805edf9143e79ad191972283e7f9f32e152b80c5c9fb7970d57335c319af0"
+  },
+  {
+    "path": "cli/server/serverManager.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5319,
+    "sha256": "4a567b8ef69c312e4a7b633fed43a8d2c1dbd3893068ebba5443f68e6f9fbafc"
+  },
+  {
+    "path": "cli/server/sessionBinding.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 299,
+    "sha256": "7beeab41d50ce1a325213d1036cb4e460bc3b1f07c0735cd7bec7e7807f6c3c5"
+  },
+  {
+    "path": "cli/server/static",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/static/index.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 25101,
+    "sha256": "1f46c3fe73e222f1c5f6e913671283fd4cbd503e64808734ee1d4416b5d25c7c"
+  },
+  {
+    "path": "cli/server/status",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/status/status.css",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4297,
+    "sha256": "6338259acfeb75f55ce3556ab58767bc904f3cba93005f4bce27fea6a6680d71"
+  },
+  {
+    "path": "cli/server/status/status.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1571,
+    "sha256": "0bf1229a147cc32b9fff8ecc4b38b3d7cc2b14fb2e2f1f849596a05132a6e67a"
+  },
+  {
+    "path": "cli/server/status/status.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4111,
+    "sha256": "74aa9d9ed5a2ef52bd9aa3da3545c9c39b927dd25973431ff8c5f7f8ee302fba"
+  },
+  {
+    "path": "cli/server/userIdentityKeyRoute.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3936,
+    "sha256": "d312f4278fa3b88f7e074bb53055762c03f4ddbf81282c868cc5e95a16342213"
+  },
+  {
+    "path": "cli/server/utils",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/utils/agentReadiness.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 17850,
+    "sha256": "1809728c3cff7d93a9c4b9dcb620c744f199dfc39f9bdb863a470017a87297cb"
+  },
+  {
+    "path": "cli/server/utils/configCache.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4062,
+    "sha256": "9e6ec72f42af8a105072356b8109b39b432f6bbcb2eff60c4653302abd4e7322"
+  },
+  {
+    "path": "cli/server/utils/logger.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3863,
+    "sha256": "f2ee386b46c99706059afd8abdf220f84150ad9d8b7be278095b405621990515"
+  },
+  {
+    "path": "cli/server/utils/processLifecycle.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10450,
+    "sha256": "b09a76a30a50c3cda3e42849e80ef1ad5a012aef272643706d278c385553cf5d"
+  },
+  {
+    "path": "cli/server/utils/routeMounts.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 284,
+    "sha256": "09e50d1bb9c669024418761716f6ab4a6b9286dd9ed7eae1f4c4ac8a9a329959"
+  },
+  {
+    "path": "cli/server/utils/routerEnv.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 916,
+    "sha256": "f000da5f706f5ea926a49c25f1dfbd3d05209003e5e7d795737f8e5f438c629e"
+  },
+  {
+    "path": "cli/server/utils/ttyFactories.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7758,
+    "sha256": "d9c3be6beb0a4ef53068a35e1b1cea86ee6dbd16057d8fb0c3833bbce6115c52"
+  },
+  {
+    "path": "cli/server/utils/websocket.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9316,
+    "sha256": "df6ff8d52b49840eb9f2578056dd2eac8f5f6671e5bb8c53f17e62b7fa4f62d0"
+  },
+  {
+    "path": "cli/server/utils/workspacePaths.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2994,
+    "sha256": "1c17918c04e8137b6876aac2e52d1ff265fe7048e40459134578de159cb85cfc"
+  },
+  {
+    "path": "cli/server/webchat",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/webchat/autocompleteProviders",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/server/webchat/autocompleteProviders/slashCommands.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 23784,
+    "sha256": "5c3708472a18f8a864595bade4195fce47892ba59bfc03927d4cd82c952cb035"
+  },
+  {
+    "path": "cli/server/webchat/autocompleteProviders/workspacePaths.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6837,
+    "sha256": "9800f313a6b0163a79d4a6885ee0a349b4d373dbf230af112ae14e92ad4c4483"
+  },
+  {
+    "path": "cli/server/webchat/autocompleteState.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1517,
+    "sha256": "934819edb1d1a221b4025b49dda632607f69ea165109dbc7cfa91eaa574ec549"
+  },
+  {
+    "path": "cli/server/webchat/chat.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13683,
+    "sha256": "927afc43bec64fa0cc8b72f2dd22cf8fc1b09f1e0c2e199db9d89f5b0cba94b1"
+  },
+  {
+    "path": "cli/server/webchat/commandResolver.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7049,
+    "sha256": "fd8106ca9f5bb81ab488c518075e7c760e357f3f6165446f79bddbc126cd589a"
+  },
+  {
+    "path": "cli/server/webchat/composer.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8329,
+    "sha256": "dea7d86dff7947aae4bf78b95746b2b8bed328437b27ef0c604bfd3df2d1f508"
+  },
+  {
+    "path": "cli/server/webchat/composerAutocomplete.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21830,
+    "sha256": "46592ad41d3d3f7131f767c037e70ff4847f1360ddef6e09bcfbdcb9338a73d7"
+  },
+  {
+    "path": "cli/server/webchat/composerMentionHighlights.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5673,
+    "sha256": "4b4d06a8328c32c5337c519d8772a8c75d8556abda03c85e2fd036e601a900a8"
+  },
+  {
+    "path": "cli/server/webchat/domSetup.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13196,
+    "sha256": "056f07732176eebe7bb63fcef647329528470d3de337ccb9c26febc58c42c981"
+  },
+  {
+    "path": "cli/server/webchat/fileHelpers.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6539,
+    "sha256": "68fb3ee0e132b2c28f98ca501626bee3925d6d86437c12289149d2972952913c"
+  },
+  {
+    "path": "cli/server/webchat/headerMenu.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3686,
+    "sha256": "6be17117b3e395b048d7d867bede0065cdbef227a730293a56cac52702889ef9"
+  },
+  {
+    "path": "cli/server/webchat/index.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 22273,
+    "sha256": "018340602c4ddd38d76d2f60a4caa43d1ffdea37355fc7775da965f4ec242dfa"
+  },
+  {
+    "path": "cli/server/webchat/interactionPrompt.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8659,
+    "sha256": "43ac115a7abe1c144eed02059cf1330998a3f9d8e811c4ba6084e93bf972bd89"
+  },
+  {
+    "path": "cli/server/webchat/markdown.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15018,
+    "sha256": "6e447422e070141598ad5227d5669f79c255fe46df453b86d39893b6b247f742"
+  },
+  {
+    "path": "cli/server/webchat/messages.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 57459,
+    "sha256": "e82debce8c3068aae547ba2dd6f480eaab6f100b0693727dba7282dcdb548186"
+  },
+  {
+    "path": "cli/server/webchat/network.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 34338,
+    "sha256": "12e4e837afe790a6cbbfbc3b820b6834bdff42b7658afab5aac8e152d5f03dea"
+  },
+  {
+    "path": "cli/server/webchat/sessions.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6233,
+    "sha256": "5ff5c01fb3205d2687aabfd0248266213eb3c5722ac55d668dce62bab9b16467"
+  },
+  {
+    "path": "cli/server/webchat/sidePanel.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21500,
+    "sha256": "58ff9544eef5b9e00feb0cffe4d39584fd36265eef284cbf248d04fe37b7a1fe"
+  },
+  {
+    "path": "cli/server/webchat/skills.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13975,
+    "sha256": "f422fd8b0ef7541a1080629f16dfc8f4f90daaa08706ddd531b87002ddfe08ed"
+  },
+  {
+    "path": "cli/server/webchat/slashAutocomplete.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 917,
+    "sha256": "ff81bb062d9b2eeb2f6e423a005104efc551c852887ed60c849f39339c14be5e"
+  },
+  {
+    "path": "cli/server/webchat/task-view.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2610,
+    "sha256": "a36c5826ecd303b6636939084851f0f2823f3799fd655477385f72291d5586e0"
+  },
+  {
+    "path": "cli/server/webchat/taskCommandAutocomplete.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4761,
+    "sha256": "5e5dffd1ddec0caf9d91d9d67a9753c6c7e2cbecfd6b8b2cca1e7b8bc8ddbf47"
+  },
+  {
+    "path": "cli/server/webchat/taskLogFollow.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 733,
+    "sha256": "92c778cdd315f60c4221dced0850bd40925b09a7c52e211d63132425774f1594"
+  },
+  {
+    "path": "cli/server/webchat/taskPresentation.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12199,
+    "sha256": "78f9e0b32c29f3146bbf9703aa849c2e05c4421acd7333d58f163b0ff6959e96"
+  },
+  {
+    "path": "cli/server/webchat/taskView.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20262,
+    "sha256": "f6edc86114d181ef6ac5a149388d381a4a4fdc6f947e929c265c37e1646a12a1"
+  },
+  {
+    "path": "cli/server/webchat/taskViewTransport.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7861,
+    "sha256": "58d455dfe0c80311b4d242f00bb488ca9e5a581ff7a6ac24368e01786fd00e45"
+  },
+  {
+    "path": "cli/server/webchat/tasks.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10121,
+    "sha256": "88a15499a268eac1b517cbaf9091c0dbe2c33e784b72897daabfcef33b92cfbd"
+  },
+  {
+    "path": "cli/server/webchat/tty.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13364,
+    "sha256": "0f8949a5409ec485da54b69db2af8be201c0106b1e16f5e87cbcf891750efaae"
+  },
+  {
+    "path": "cli/server/webchat/upload.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 27191,
+    "sha256": "3d0514e0106ea897d7cddf9cd0c6ba64169704d789061361fc26d71a8fe9606c"
+  },
+  {
+    "path": "cli/server/webchat/uploadDestinationDialog.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12995,
+    "sha256": "76865b07013c976aab524e42e1474d7c2c6af688e5faa9b6128b3f67ca9d7f0c"
+  },
+  {
+    "path": "cli/server/webchat/uploadPaths.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6040,
+    "sha256": "ca0c3a95e5799c1719028843b696a0f7ae85a4483e6c0e21e76f72aba6c7cb23"
+  },
+  {
+    "path": "cli/server/webchat/webchat.css",
+    "mode": 420,
+    "type": "file",
+    "bytes": 88318,
+    "sha256": "bd7c2c8db3d8372e88748a63a88064b3ab20526ebea4fe42e1ecf34cf5c57cf2"
+  },
+  {
+    "path": "cli/server/webchat/workspaceFileIndex.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2590,
+    "sha256": "c7a75ff1ba5bee7d5c6a123d012cde61607dbae88085a0d87f2e4753ec4546de"
+  },
+  {
+    "path": "cli/server/webchat/workspaceFileLinks.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12630,
+    "sha256": "83a0b1f2c6584e71e7247345d074166032ecc0beb08daee2cea1d1979dfe631b"
+  },
+  {
+    "path": "cli/server/wsAgentRootProxy.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5494,
+    "sha256": "6e72a47d701d922c20089becd69275e399f33e081cc03f2c05583e8022c9ff67"
+  },
+  {
+    "path": "cli/shell.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 17920,
+    "sha256": "e6827cfce53b26f6705e0fdd5b0975c7bd61b75bdf25bb3d1b6473e6e097adc4"
+  },
+  {
+    "path": "cli/utils",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/utils/agentRegistry.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6874,
+    "sha256": "31ebd6c658b65bd42741087ac89b5daf4ad03f49969d59d5809af08a75e6e08b"
+  },
+  {
+    "path": "cli/utils/agents.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 53547,
+    "sha256": "8a64047c8d14d8ee3ae488202384c1625f3d575d2f24ec0c094e6d83cb71c7a1"
+  },
+  {
+    "path": "cli/utils/config.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4306,
+    "sha256": "d0a98c9d8cee201af916260793be037ec4e685738b205bac0b0b159dd11bc2ce"
+  },
+  {
+    "path": "cli/utils/dependencies",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/utils/dependencies/dependencyCache.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 34021,
+    "sha256": "a1c57330a2e5570e14a2b4761e192494500ba535c8087804648ac6a8565facb2"
+  },
+  {
+    "path": "cli/utils/dependencies/dependencyInstaller.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6170,
+    "sha256": "ebc3c9e2ebd2b62c91024041465e6153f42d8f3336b56b59ac54e3cdbb542f1a"
+  },
+  {
+    "path": "cli/utils/dependencies/dependencyRuntimeKey.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8499,
+    "sha256": "678b4f36c017830eadd701be171fc87d29b30cfc29e4c89a6c752ddae79d9c0e"
+  },
+  {
+    "path": "cli/utils/directCli.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 223,
+    "sha256": "1d7f5ab760ee16e55b320fd1922d53e2ea9ddd775c28946328474c0f9dfe548c"
+  },
+  {
+    "path": "cli/utils/repos.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 31976,
+    "sha256": "d2e70602870b81e0023a62145910a175770ec9842060e739d1989148eecccb4b"
+  },
+  {
+    "path": "cli/utils/runtime",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/utils/runtime/bootstrapManifest.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15950,
+    "sha256": "31c51d89313100698950f3e0affff214b4c5986f24b2e37a7ce91c61fdeff9a8"
+  },
+  {
+    "path": "cli/utils/runtime/lifecycleHooks.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 24760,
+    "sha256": "efec89e80be5a1e3d932e3d2278a966673dfa1e5081d211b6056423400940291"
+  },
+  {
+    "path": "cli/utils/runtime/maintenanceLocks.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13042,
+    "sha256": "ef2f6a2924daf753e131bda823b64be7d2435ed44904536d458675b7c17d70a7"
+  },
+  {
+    "path": "cli/utils/runtime/manifestStartup.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2389,
+    "sha256": "26278dc4297d75249ab45433db79af4fcf6fddd6b6d063fd8c9a02468de733bf"
+  },
+  {
+    "path": "cli/utils/runtime/manifestVolumePolicy.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4232,
+    "sha256": "45d92d5204798e1e47156558b5d17ac9be2eb8c8941cef2355717da15c3d01eb"
+  },
+  {
+    "path": "cli/utils/runtime/profileService.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20262,
+    "sha256": "8af630f55aaa7ce29a2a10d5450a697ed5bf9e1a712de1298556837bb5c8bfdf"
+  },
+  {
+    "path": "cli/utils/runtime/runtimeResourcePlanner.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6312,
+    "sha256": "916902e0ab9512a62690723a6e737fde4e152a5de20ad53e07644574390f3ff8"
+  },
+  {
+    "path": "cli/utils/runtime/runtimeStaging.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3143,
+    "sha256": "54bc9649ffdfeaed7deb5a968a2c29938f0eea5e1e405cd6bfc189b437bfbf63"
+  },
+  {
+    "path": "cli/utils/runtime/sandboxRuntime.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2817,
+    "sha256": "6331bba26c130ce3318c7a7931f6aebc870c3e86d770b315e5a37c390798c1c2"
+  },
+  {
+    "path": "cli/utils/runtime/startupReadiness.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3007,
+    "sha256": "e7d135467d6d953abfa0827cd9f1e81c9bed2c7a0121a5bd49db34ef42f86e6d"
+  },
+  {
+    "path": "cli/utils/security",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "cli/utils/security/agentIdentity.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 787,
+    "sha256": "9e31eb8b130da0e5861c05832810348e47edb340126c37ba63b76801f9c9b544"
+  },
+  {
+    "path": "cli/utils/security/agentIdentityEnv.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7397,
+    "sha256": "be704bab0660ecd03dbb503515c98ba21f2b72e0e6fd760fb55e6fccb403e5ed"
+  },
+  {
+    "path": "cli/utils/security/encryptedPasswordStore.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7874,
+    "sha256": "be1df5503487d41bbd38717f569eb8777e02120706c5502ce4da77decb56f5d5"
+  },
+  {
+    "path": "cli/utils/security/encryptedSecretsFile.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3916,
+    "sha256": "c798f4fcbb8ace48a29880ff511605e9f6c4db7d20e9cb9299d29cd685205e7a"
+  },
+  {
+    "path": "cli/utils/security/generatedRouterDescriptor.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18492,
+    "sha256": "588cd550b344477c118e6fb57cd682da13fc28d1cd8cb514208f7312e2beee33"
+  },
+  {
+    "path": "cli/utils/security/localAuthPasswords.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1710,
+    "sha256": "671ee01a6d86f8fda225e90d7e09d63131311e1e6f051caef22bdd6e60ac70c3"
+  },
+  {
+    "path": "cli/utils/security/masterKey.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12571,
+    "sha256": "c5406916a21f7402ff4236285615790802dda0ef73b80a5e359f01c815360216"
+  },
+  {
+    "path": "cli/utils/security/secretInjector.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6816,
+    "sha256": "7672620153b2625ec1f422fea89f5a28b80ab51f3fa75b0a68398e2e6b0ebe79"
+  },
+  {
+    "path": "cli/utils/security/secretVars.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 32606,
+    "sha256": "f913519ee411f5dd194ac04423ce90b1f8ce3fce4206e6f549f9032904106ff0"
+  },
+  {
+    "path": "cli/utils/security/sso.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6300,
+    "sha256": "4b4172797f70427d48eb257671bac3081a19bb64cf55fb3eb9680345812418a5"
+  },
+  {
+    "path": "cli/utils/security/subjectIdentityKey.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15481,
+    "sha256": "00bdcf667b8b1e408abdea86eac4ff5426d12607be31b654581d1d4e0157bb19"
+  },
+  {
+    "path": "cli/utils/status.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13432,
+    "sha256": "85aa6370d996602d4c3abdeeca75ba79a0356e8dc9fcff25ddac7140b52def4a"
+  },
+  {
+    "path": "cli/utils/utils.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8900,
+    "sha256": "84e8a0ba9da1fc10f192d634654e4e320a7078f6c75abf90effc3d49ecac8adf"
+  },
+  {
+    "path": "cli/utils/workspace.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2549,
+    "sha256": "befb203377aed4be027b98446a263616d3ebaf229a80b8c809a175db445ee019"
+  },
+  {
+    "path": "cli/utils/workspaceDependencyGraph.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19186,
+    "sha256": "9ab8e5b41b5d99e1fc8897c7cc2f479e9b8029f91b509b793f8ade6620a79b54"
+  },
+  {
+    "path": "cli/utils/workspaceStructure.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11435,
+    "sha256": "e6d1671961015329170b54605fbd2923ef31ae3a41155aa900bf7ec4d64ecc69"
+  },
+  {
+    "path": "container",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "container/README.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20738,
+    "sha256": "ced2743727f1196aafac5db97b4cfb408a442e073c300370eed6882004ec35c3"
+  },
+  {
+    "path": "container/listener-collector.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11285,
+    "sha256": "4862c5b73b65b2898307955cf85887e049ffdebdd30dfff0cc4c99366f6ab27c"
+  },
+  {
+    "path": "container/listener-inventory-tests.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 31204,
+    "sha256": "b55ca2b7c331c6c9fcbf7ed49345856c826b58f7d5f5f128a27e74e11767a560"
+  },
+  {
+    "path": "container/listener-inventory.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 26109,
+    "sha256": "ef2ef0bf9b05f0779d5327a374751f16a2ba5d566f977e83bf51aebb73ef5105"
+  },
+  {
+    "path": "container/listener-network-inventory.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7095,
+    "sha256": "a90b7de2413faf73eb1946217efc21ff1e2ba1eccecd81899692066c04c6026d"
+  },
+  {
+    "path": "container/profiles",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "container/profiles/full-explorer-listeners.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20542,
+    "sha256": "0ed55a6575c021435516905a5e600701c7b307bc8d548163c9629c18bf009b60"
+  },
+  {
+    "path": "container/profiles/routing-graph-listeners.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1297,
+    "sha256": "9c3b996d4f8015580c769cf23f0fe1a737d146bf9097c706f9af69b47e192ddd"
+  },
+  {
+    "path": "container/publish-spec.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6188,
+    "sha256": "08cfbdde1b325148e2f5ec8e73503a24ca331f5c26124a57d3da2aba074b5eb9"
+  },
+  {
+    "path": "container/spike",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "container/spike/ds004-q8",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "container/spike/ds004-q8/README.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8594,
+    "sha256": "7d2143b9f258696d187b8facc8a9e762309a0d9ac4676cc08986fbe33479d17d"
+  },
+  {
+    "path": "container/spike/ds004-q8/probe.py",
+    "mode": 493,
+    "type": "file",
+    "bytes": 14446,
+    "sha256": "0ea216c0942d0b0cbf042b9d14d845541a604b98322979c695d08945bcf55462"
+  },
+  {
+    "path": "container/spike/ds004-q8/run-spike.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 27905,
+    "sha256": "f6a694f45268d3f21aa7037978d8c0865595d52a395f077e56a29acfa270d1fc"
+  },
+  {
+    "path": "container/spike/ds004-q8/stage-source.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 31335,
+    "sha256": "29decb18c9164626a9b648f45bc9f51854cca0b35025395df3cdfd9c70b40bf0"
+  },
+  {
+    "path": "dashboard",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "dashboard/auth.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 930,
+    "sha256": "ed89c8eb516fcef41ff84a5c5379f478f9e41ed38f4684db8708010b79533d2e"
+  },
+  {
+    "path": "dashboard/common.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1325,
+    "sha256": "28af1f0c4be09daf65d71841dbe7c7f1227513a88e4a35c051ec3b4734172f66"
+  },
+  {
+    "path": "dashboard/configurations.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2519,
+    "sha256": "0403df8b5213477eee5547feba3f5683e498a30381920cfbfd400773998552e7"
+  },
+  {
+    "path": "dashboard/configurations.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1768,
+    "sha256": "0903c94b5ef234c218dd76d9dbd385a0f2982161cb4ca472513719e2912f89e2"
+  },
+  {
+    "path": "dashboard/landingPage.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4750,
+    "sha256": "8f0da2ef2645c9152df40b581a2f0d2ebe6419220b65a27bbafb8112911ea6e1"
+  },
+  {
+    "path": "dashboard/landingPage.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3567,
+    "sha256": "9313a94c15bcbdd788a3496d1962ffa38aa4ce75a4d665163ebed49437425dac"
+  },
+  {
+    "path": "dashboard/login.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2491,
+    "sha256": "07c720edd04cfd2d5238c45227db96970a2c18c89330a45644b3f037b3ba2052"
+  },
+  {
+    "path": "dashboard/observability.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4252,
+    "sha256": "6c481826da9a466f2a32ccbc5c53d56114b4c4f38a41064932d986fdf0f777ee"
+  },
+  {
+    "path": "dashboard/observability.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10525,
+    "sha256": "d8bfbca78fe54adfa7466ade785d1fa5177622b2054803a6f7dbadba96d69cf2"
+  },
+  {
+    "path": "dashboard/repositories.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2221,
+    "sha256": "14a78f8b2d6db7f78aee2758e36ee42ff16e49150836bdceff0d219667f52a2f"
+  },
+  {
+    "path": "dashboard/repositories.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2919,
+    "sha256": "017bc18c67f9bcf69cca8d56e09e7276b848f7ba9ea4b7b5dcb9deb82f9e5f10"
+  },
+  {
+    "path": "dashboard/styles.css",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14003,
+    "sha256": "4f7c7931633acdae072bcd1bf95fd3a57bfae17df4f3c2e7528653a89b1370d7"
+  },
+  {
+    "path": "dashboard/virtualHosts.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2935,
+    "sha256": "e40dfcaa180805a607275ec19b06968c7499a3292ddee7a56817b6c1836832bf"
+  },
+  {
+    "path": "dashboard/virtualHosts.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7083,
+    "sha256": "a2ec9111aa6f431fedb77bce82432ce6231a43755b559996765e6b4501b53750"
+  },
+  {
+    "path": "docs",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "docs/CNAME",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15,
+    "sha256": "227b96833091876a76635bb0233b4d4b93dd5ca7f04ddefaddb978b93c7c06a2"
+  },
+  {
+    "path": "docs/architecture.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 44083,
+    "sha256": "62556f811ed84ea6bee10434a873ea9af4ee1ca5f6cdd546c4ec9eb5551674b8"
+  },
+  {
+    "path": "docs/cli-reference.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 43639,
+    "sha256": "a6d87d001b5c9f62aaa614c34ce6c2171ba2a85c514bdba3bf18b355e7c2d16c"
+  },
+  {
+    "path": "docs/code-derived-agent-lifecycle.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 74499,
+    "sha256": "40236fdd1630d75b011f9c78ae985f30689fa5149f54a48fea0f11bcc8a81d63"
+  },
+  {
+    "path": "docs/http-route-access-security-model.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 37436,
+    "sha256": "e79eade3334eff58cff09005c15aae7ee4a6652813ea4c3403eaead1d1c76ca5"
+  },
+  {
+    "path": "docs/index.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 24564,
+    "sha256": "d875d8d3a3f7d62f0eb9c2d35fa7961e50c72435ab13a8fd40f507451e7829eb"
+  },
+  {
+    "path": "docs/interfaces.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14912,
+    "sha256": "f29bee297514c3717ba385b7971846f4810a949ff4041d227be3190644a9c1c3"
+  },
+  {
+    "path": "docs/operations.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13867,
+    "sha256": "d73d133e6e0dfab1055920be32b3be68cbf5c12d9d50f7046b331430a32a2630"
+  },
+  {
+    "path": "docs/partials",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "docs/partials/footer.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 406,
+    "sha256": "cafb8998c9f7da0a61d84db13513167350a1015eeee34bbc9daa2aa536f31237"
+  },
+  {
+    "path": "docs/partials/header.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 648,
+    "sha256": "9528da01b2df411bd8bbb595487fa56f1298935b1a9ab6a7b608bd94466d72da"
+  },
+  {
+    "path": "docs/partials-loader.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 984,
+    "sha256": "00b239e444d00ed434d17aced5b75561c7e9ae04e5173110aed16edbf5281f8d"
+  },
+  {
+    "path": "docs/ploinky-overview.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10897,
+    "sha256": "ed7c72ec40cf552ca2bc704c4b4c47e94fe7512f3df33ec5cb60c5533e033953"
+  },
+  {
+    "path": "docs/runtime.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 22273,
+    "sha256": "904d19d1edfe5f05c1f1595f3a750a9da411c30a5774dc4de8f8cb37b7c8fd3b"
+  },
+  {
+    "path": "docs/spec-agent.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 47893,
+    "sha256": "ebdba259e8d9a7a88cfb909a4c34451af9c48de25a94c43327c35d92ee29525e"
+  },
+  {
+    "path": "docs/spec-services.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 28334,
+    "sha256": "4170edc011773e8b3744d8b98b198ed2f2627126e77714bc6292ba786f886ef7"
+  },
+  {
+    "path": "docs/specs",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "docs/specs/DS000-vision.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3801,
+    "sha256": "60350ffb4aca9883315ef6a92e22d8dea4910cc42aea6299e09545defaa8b250"
+  },
+  {
+    "path": "docs/specs/DS001-coding-style.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4471,
+    "sha256": "83010891773879964a66fb7a2f1eb50ddbc9cb9915da2b428c62cd416b257e3c"
+  },
+  {
+    "path": "docs/specs/DS002-workspace-and-repository-model.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10439,
+    "sha256": "63ce3780de7574a2ceb20afcb58b651b6f5fb33b44d3ecf2df84d8e877c7058f"
+  },
+  {
+    "path": "docs/specs/DS003-agent-manifest-and-registry.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 41865,
+    "sha256": "66262068d745889e6462631ec83f298b0e9ba8fdf0ba8655debe0246ae369cbc"
+  },
+  {
+    "path": "docs/specs/DS004-runtime-execution-and-isolation.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 39120,
+    "sha256": "2734667c9c26a713dccd3e1b57815fe9668dff6d6b6dc384d6b370080fec7526"
+  },
+  {
+    "path": "docs/specs/DS005-routing-and-web-surfaces.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 69321,
+    "sha256": "4bef790815b71adecd08e7d090ce71a34b7715fa778a7a50e1190d2d6f0d7223"
+  },
+  {
+    "path": "docs/specs/DS006-auth-capabilities-and-secure-wire.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3998,
+    "sha256": "ce4a7535082816c1c52f9da17b5bcf25995e6862345e2cc0e27c77f7456b8f32"
+  },
+  {
+    "path": "docs/specs/DS007-dependency-caches-and-startup-readiness.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20187,
+    "sha256": "e7817a1b477db9d980f87dc98289731f45cdc79d2770b8dc4ab9245ae4fc34fc"
+  },
+  {
+    "path": "docs/specs/DS008-secrets-skills-and-llm-assistance.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8948,
+    "sha256": "730135d23311c583c0219bd8b7fd87bc5088d471f0ec42212bf4f46e4333e36d"
+  },
+  {
+    "path": "docs/specs/DS009-observability.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6784,
+    "sha256": "3d28988fa6b9d712a4fe67c195c10a230bf33bf05c9590aeeb80a943ffe146bc"
+  },
+  {
+    "path": "docs/specs/DS010-testing-and-verification.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9237,
+    "sha256": "3cc6ff051b22e8839f40f5cacea6ade9a5b496dc42b8b7f4ab8c6e898da1c1b8"
+  },
+  {
+    "path": "docs/specs/DS011-security-model.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 65141,
+    "sha256": "73a146b54e6201f6fd3419cf13cf9fdb8c7b42fe10b0cb710f6fe61770eb430e"
+  },
+  {
+    "path": "docs/specs/DS012-local-llm-agent-architecture-catalog.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15727,
+    "sha256": "eb9c92e8b57ffe060fd35069a9b1f4a5a59b33de8ce5a2a9148cf719bb6123d1"
+  },
+  {
+    "path": "docs/specs/DS013-per-agent-identity-and-request-signed-jwts.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 31641,
+    "sha256": "972451d4e6c632a8c7049ca10aca8595f0144621c87a4cc4e8c980440507bc45"
+  },
+  {
+    "path": "docs/specs/DS014-router-access-control-http-route-access-and-mcp-policy.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 17274,
+    "sha256": "e758d111dddf37a4df349efb0c444e56899b736eb86c14419178209310b3216a"
+  },
+  {
+    "path": "docs/specs/DS015-startup-config-providers.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7689,
+    "sha256": "e57c0bb0208610ce5d88cd3702079babd5bdb22b855017d92414aeaeff75ebc3"
+  },
+  {
+    "path": "docs/specs/matrix.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5185,
+    "sha256": "5f2c83070db9d87317d6c827568ef5e3f7090ab63f3f7f4f0abe8e1be8f9cdde"
+  },
+  {
+    "path": "docs/specs.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 22798,
+    "sha256": "8e8e837e2d0c35697fd9d158ef689cc20ae74ce589c387d2150a0fd724791512"
+  },
+  {
+    "path": "docs/specsLoader.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11227,
+    "sha256": "598623efa1cd92d84c667654cb54d9afe2b47f5c0e7f59ab481659d5400b33e8"
+  },
+  {
+    "path": "docs/style.css",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12118,
+    "sha256": "14f49c98f8783f1a91560046fd61173756c10cdf2212ebab1e019fe2b8990e7d"
+  },
+  {
+    "path": "docs/styles.css",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10101,
+    "sha256": "99b6b10a0880c7cda6beba339710985197c96ce97f8bdadbca1ddb0fead13d72"
+  },
+  {
+    "path": "docs/superpowers",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "docs/superpowers/plans",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-06-26-router-websocket-proxy.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 25360,
+    "sha256": "9b03bf65cbee6fd6eadd51546e938850ecb1264f8bfd164ba14096bcc708913a"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-03-ploinky-box.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 49015,
+    "sha256": "c8e4186e0aaa8e7edf774713bd5d8d14f197a29d4e1443d76add2972ca6f5a5d"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-06-ploinky-box-as-ploinky.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 38870,
+    "sha256": "2fbb630ad2469820037f8349c2f282bd298655bf671b7d4d4aeb2acf6240dd43"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-06-ploinky-box-cwd-instance-and-start-command.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 46397,
+    "sha256": "134a8d849a4c5f434630dd4d73225dc1150ef895abda42e85c351d6021d6aa0f"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-06-ploinky-box-node-rewrite.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 46242,
+    "sha256": "d622014f157560a3c5f1d32ade2c6095586e9195a8329383d888bf12418272db"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-07-ploinky-box-host-mounted-core.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 80607,
+    "sha256": "6247b4361cd1232f9efaaa4e052299b3d6f710aa76febcbe06318fda8d6f7026"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-08-remove-webmeet-ports-add-expose-alias.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14442,
+    "sha256": "30677a446aba236237bbaee7b638e5e94251c0f189dbbd7ad00e245717964294"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-09-graph-driven-box-publish-planning.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3625,
+    "sha256": "d32add146771fdf28a6efb9ac599e04ff6d4def52f378ffd963c713124353bff"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-09-web-publishing-agent.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 80614,
+    "sha256": "fb6aa62405bf6223f256babe87a436eeced3d02c4849d3f3a0a41a2baf6c44e0"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-10-simplified-runtime-supervisor-cli.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 159702,
+    "sha256": "411304a04970cbec95e91342b16ceebce357d5514cd048b8eb790735f4a7a4c0"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-11-ploinky-box-implementation-handoff.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 61654,
+    "sha256": "b508eea6be27eaba56002408ee140f4662f291a101d9d9b8da0cb6635fb076a1"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-11-ploinky-box-invariant-alignment.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 80795,
+    "sha256": "a4bcf90f6bf21fc3f8a40b17c1c4453c2bf62baf459c7d8848892f489dac5c85"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-07-28-ploinky-box-cloudflared-extraction-and-token-mode.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 25272,
+    "sha256": "7595863f2b8594a834134d1fe795146fca315db3953431a26c72bfb778e1cdba"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-08-07-ploinky-box-storage-separation.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 27393,
+    "sha256": "11f55665ea42cfca836722e30873c3f802de0fc42d06d27ea624cc154e12e56e"
+  },
+  {
+    "path": "docs/superpowers/plans/2026-08-07-ploinky-box-workspace-backed-persistence.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 27271,
+    "sha256": "74d61f6e2a753469db3eb7b8e3060ae14c6462c161a525d8fb22a77698df9092"
+  },
+  {
+    "path": "docs/superpowers/specs",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-07-03-ploinky-box-container-wrapper-design.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16030,
+    "sha256": "758e1e39cb34404388710a58509fb5855f50d732b6f201e6e3aedd28641c4ee1"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-07-06-ploinky-box-as-ploinky-design.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11207,
+    "sha256": "07dfd89fcd740c716b2b738f280120b076b8ea1c06f0ab8fd1b3480c8d779990"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-07-06-ploinky-box-node-rewrite-design.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16162,
+    "sha256": "7ede17edff8a766f8e56a43e5db2c0dfb973b8593e68c49722974006220cb01d"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-07-09-graph-driven-box-publish-planning-design.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3908,
+    "sha256": "16be9fd6b576ccc2a7446ad6af13bd5df57b3e429ccfcacb879bc4083346e874"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-07-09-web-publishing-agent-design.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 23155,
+    "sha256": "2af0d71090fd958217284cdafcf332263c85f75451c109abe24b891572c6034f"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-07-10-simplified-runtime-supervisor-cli-design.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18559,
+    "sha256": "d85bc23da5d9d42babeebe6268495b929d6e7bebf3177652b8492f7eed7c9705"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-07-11-mutable-runtime-image-hard-cut-design.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14734,
+    "sha256": "41d884f23f3db8bd3bb5a21488ca140e8d2fac076a9c91a29ce13db01d6b4b25"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-07-15-ploinky-box-edge-routing-and-publication-design.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 174026,
+    "sha256": "080055f6cc1ac688b7eb20f5d9b520393076e3d8d8b3bb5b251bc5f708777b09"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-07-15-ploinky-box-edge-routing-and-publication-review.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 45222,
+    "sha256": "8d4258e4ac8159770a10b01c15339ae86ce383430a7efb813d3414385c6b227c"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-07-15-ploinky-box-edge-routing-and-publication-verification.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16619,
+    "sha256": "8ac3cfc8d55454190371e0032d92d37daab6bd4f46fc3ddc503dd3e2295a0529"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-07-28-ploinky-box-cloudflared-module-design.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19175,
+    "sha256": "f6f83015c86da4718cd686a98c60f53688d9f8f3ec58cf273262fae318e4dd5e"
+  },
+  {
+    "path": "docs/superpowers/specs/2026-08-02-managed-image-user-constraint-removal.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6275,
+    "sha256": "7dda6c69de57e5983982cf22419954f1cd36225808480c937ee15229a27edd5e"
+  },
+  {
+    "path": "docs/webchat.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 29990,
+    "sha256": "62a0099c7ed7d00a3b812ca24ee73cb8117c47b621ef11620ce5f8be5fac2781"
+  },
+  {
+    "path": "fileSeziesCheck.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 4966,
+    "sha256": "652f9d4192d66b6eda1f7f570a00481e2e03e7692743e5a14f0c2c0c03292ed9"
+  },
+  {
+    "path": "fileSizesCheck.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 8912,
+    "sha256": "09bf3edf02b9e9d1f17e9f9617571108a38eb8714b4d06d05bcb88762a9f31ed"
+  },
+  {
+    "path": "globalDeps",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "globalDeps/package.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 326,
+    "sha256": "83bd62ad6e89c33f168257a4ae3e218621e4e22e3c54856390e25bab47ee1f79"
+  },
+  {
+    "path": "node_modules",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "node_modules/achillesAgentLib",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "package.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1043,
+    "sha256": "e246fcf0ea8a0af5659bc0d5548370e4bd1f813f5ba644566d1a5a920f8192d4"
+  },
+  {
+    "path": "ploinky-box",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/bin",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/bin/check-boundary.mjs",
+    "mode": 493,
+    "type": "file",
+    "bytes": 998,
+    "sha256": "7744d7831a074596cde96325c21550583e7bdc77475afbef1d995e3d24983c67"
+  },
+  {
+    "path": "ploinky-box/bin/ploinky-box.mjs",
+    "mode": 493,
+    "type": "file",
+    "bytes": 9502,
+    "sha256": "c909505910a9ad160fcffe75c4e87d36720f7e55cabdc5a2402c21cfa1cf9f14"
+  },
+  {
+    "path": "ploinky-box/boundary",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/boundary/checkBoundary.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11361,
+    "sha256": "317148bd909e672f34c99e5b8adf3e6ddf59b0282f4144c27e2bceb6bb32e4e9"
+  },
+  {
+    "path": "ploinky-box/boundary/fingerprint.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1924,
+    "sha256": "89596c91f8e37420c8c0e5604a5333981a67dad7a06e2a00cd994d99564a77ba"
+  },
+  {
+    "path": "ploinky-box/boundary/gitState.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2762,
+    "sha256": "99935f6e32002f6efd5617a93567c11684ff2e7f1e3443fea5f44ac8446ac70d"
+  },
+  {
+    "path": "ploinky-box/boundary/image-allowlist.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 227,
+    "sha256": "55ff568ecd32fe0fa7314638451324b135940f373e3a52bd5787b545f556a08c"
+  },
+  {
+    "path": "ploinky-box/boundary/ploinky-allowlist.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 768,
+    "sha256": "4951cccd9fb118ce535f2b088f5d0f1ac3531962a236b1abc85b522544d03586"
+  },
+  {
+    "path": "ploinky-box/cloudflared",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/cloudflared/cloudflareApi.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11476,
+    "sha256": "a0417e7db4ffc98037a24afbac790cbc46183f1b7fd015381a6e9d8d9d17f44a"
+  },
+  {
+    "path": "ploinky-box/cloudflared/connector.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10834,
+    "sha256": "05b82e053d62381f96e925bec168670a75758e9be9058bbcdffd8c4bc5bec5b4"
+  },
+  {
+    "path": "ploinky-box/cloudflared/index.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 444,
+    "sha256": "c4ad0b8f5c16ac86309616c216380d40aedb1f4de20fc16665b4a0269614f865"
+  },
+  {
+    "path": "ploinky-box/cloudflared/journal.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11709,
+    "sha256": "fe59287f6b2c3473ed1a208869b1a6849254bb05a0a09a8616025dd134599aed"
+  },
+  {
+    "path": "ploinky-box/cloudflared/managedTunnelRegistry.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12908,
+    "sha256": "18c3bb742c0c7786204e5945d87118a6366aa8273fd1e6ba23c89beccd059f78"
+  },
+  {
+    "path": "ploinky-box/cloudflared/publicationController.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 66773,
+    "sha256": "77d0753d5531cc8b4a9c19e06ca1447ecf9a630462965f1ee455c6fc1812ff63"
+  },
+  {
+    "path": "ploinky-box/cloudflared/publicationPlan.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 17184,
+    "sha256": "16d69486b0a91eed2a7d3cd5a366fe5bf35112216853406406cebdfeb19111e2"
+  },
+  {
+    "path": "ploinky-box/cloudflared/routerIntegration.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3369,
+    "sha256": "d5317ecde08bc9a9edd7afb68331898fd9512596068cc654eb2b8c096d2156e9"
+  },
+  {
+    "path": "ploinky-box/cloudflared/runtime.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21960,
+    "sha256": "ba23892e785ab65d73e79160ba759b5f1a5efc883e3d4db1492c26736dae7a15"
+  },
+  {
+    "path": "ploinky-box/cloudflared/status.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6600,
+    "sha256": "1d9dc55319c7725a7dd6851f966cdc29460c8ec86f3d75cdd74baa0ef9b21f12"
+  },
+  {
+    "path": "ploinky-box/command",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/command/execute.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1529,
+    "sha256": "0d9401d822e76903bdd2752ec78cc7f7879aa2380416936b2b0deeb004f4958e"
+  },
+  {
+    "path": "ploinky-box/command/hostUpdate.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1809,
+    "sha256": "29e953bfc642cee14fa118fc80ba3a2f015be8a155b206226ef3619735366228"
+  },
+  {
+    "path": "ploinky-box/command/parse.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7560,
+    "sha256": "b4c9b20e8c40bd8e33ccdbb6ac86dffe4af00cac5091563435038a9911959c94"
+  },
+  {
+    "path": "ploinky-box/command/route.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3566,
+    "sha256": "db5361a69326274a3700d8d794fd5584bbcde11c8e3aace217e0f1e5651e3781"
+  },
+  {
+    "path": "ploinky-box/constants.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2400,
+    "sha256": "2410feb24a7dc693a30912bbaa8c98c7a9bb901eeedd83da8873c99cedec4182"
+  },
+  {
+    "path": "ploinky-box/contract",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/contract/container.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12572,
+    "sha256": "6792188ea72f54dc05e09626d252be03a49997b7ef4ac0c2e1491e00a61d68d0"
+  },
+  {
+    "path": "ploinky-box/contract/image.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9620,
+    "sha256": "4e6f1504e8b5cff6425315bda1f6961d80837bb3bb4aaebc391ea7024b772ef7"
+  },
+  {
+    "path": "ploinky-box/dependencies.lock.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 328,
+    "sha256": "b376da45790800d6be65c1316f0993e29798dd1938705117d60991b1cd58dffb"
+  },
+  {
+    "path": "ploinky-box/edgeDesired.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6269,
+    "sha256": "9018955d173decc51fba523ec5731b99ada2ff2a62be60690d020d5374ca3d09"
+  },
+  {
+    "path": "ploinky-box/engine",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/engine/discovery.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15665,
+    "sha256": "19d9b4f86986aa84644d35a32affdd4ad8d75c1fd3091bb2d3bb4ed9cf46f32d"
+  },
+  {
+    "path": "ploinky-box/entrypoint",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/entrypoint/entrypoint.mjs",
+    "mode": 493,
+    "type": "file",
+    "bytes": 14872,
+    "sha256": "27832b6f8932b02c4b25bd1cd8f611a4f8971a640fb90671efaab773f34850bb"
+  },
+  {
+    "path": "ploinky-box/entrypoint/initialize-edge-routing.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1172,
+    "sha256": "d324d1f5d6b32fb1d7c74b38769530a876f143d9d9a334ac4590bd1009b7d04a"
+  },
+  {
+    "path": "ploinky-box/entrypoint/initialize-workspace.mjs",
+    "mode": 493,
+    "type": "file",
+    "bytes": 9018,
+    "sha256": "817244a22bf370518571a61af52b1199efbb0466a27d574d01ab2eef213d44c3"
+  },
+  {
+    "path": "ploinky-box/entrypoint/install-dependencies.mjs",
+    "mode": 493,
+    "type": "file",
+    "bytes": 12411,
+    "sha256": "fcb260c1aeb082ef48351954300312beee04336672325dfc4730a00887a0a5b3"
+  },
+  {
+    "path": "ploinky-box/entrypoint/ploinky-box-entrypoint",
+    "mode": 493,
+    "type": "file",
+    "bytes": 7875,
+    "sha256": "362283d07a7222a5d3593210bac65a0a97c586e2679fdec5f97b3e6c310fae62"
+  },
+  {
+    "path": "ploinky-box/entrypoint/storage.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11181,
+    "sha256": "5c0ec3032aea250ece26bda86baaa208ec6f7faddc68957f8a452ac7e2c14da5"
+  },
+  {
+    "path": "ploinky-box/entrypoint/transport.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9770,
+    "sha256": "17002da80d2d36c44bd86be2c17a9830d641f23aa0994e238c27917866cea078"
+  },
+  {
+    "path": "ploinky-box/errors.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 469,
+    "sha256": "452849f77627d46f6d70473182504a21facf4b2885710fd96f6b19df55006ec7"
+  },
+  {
+    "path": "ploinky-box/hostNetwork.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4318,
+    "sha256": "6073fd93de976bbf9291e949ac1269a818586b7dddafccabd3a90665e275b384"
+  },
+  {
+    "path": "ploinky-box/identity.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6952,
+    "sha256": "6fd8fa70f9db8779f2cba1a9209b3fed91792fcd1dc3f2b731fc9b9b554ec261"
+  },
+  {
+    "path": "ploinky-box/inbox",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/inbox/readStatus.mjs",
+    "mode": 493,
+    "type": "file",
+    "bytes": 5219,
+    "sha256": "6eda09c64b72cf13683f4084dd82d21e54a0d55619aefced8dfb9088e9d89677"
+  },
+  {
+    "path": "ploinky-box/lib",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/lib/boxMarker.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1203,
+    "sha256": "9a983d070d8a2b9de942724f5b4f135fd5dd149bf99a4da55ea5e3c39f408d9f"
+  },
+  {
+    "path": "ploinky-box/lifecycle",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/lifecycle/container.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7996,
+    "sha256": "b062ede4581041f8b938be70d990fa11fe2080a3af78ff84966c077a8812ebab"
+  },
+  {
+    "path": "ploinky-box/lifecycle/transactions.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13464,
+    "sha256": "9c761b130dd9ada6c598aa7ebdab4347a8b99cf3f5ba4e43d798e64946c3a3b7"
+  },
+  {
+    "path": "ploinky-box/locks.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9717,
+    "sha256": "ec06e2ae9d72a40122e9a872dec291328e1b3551d3e6c49201b218ed844ed766"
+  },
+  {
+    "path": "ploinky-box/ports.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5677,
+    "sha256": "c4c93caa1ca935aa485352ee6dd3037534a4a2fc1f7fcd7eb4e4b3e6dd4059af"
+  },
+  {
+    "path": "ploinky-box/process.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5618,
+    "sha256": "38ba44b3b24a4421147c827c2d4494f20551dc5c2882b8daf97f286e3d8cce33"
+  },
+  {
+    "path": "ploinky-box/smoke",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "ploinky-box/smoke/graph.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8368,
+    "sha256": "1fe5b654dea0a344aa67efbf45997afc19ed1622a5203c805a8537cc6c22f33d"
+  },
+  {
+    "path": "ploinky-box/supervisor.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 22848,
+    "sha256": "a0bf9c233390e5a76e43fa528b165a6957563f27d3d68e5fe65ae14617035b91"
+  },
+  {
+    "path": "ploinky-box/workspace-data.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12938,
+    "sha256": "f0ea1e74659039cbe4ff96889642fc0b228fa3f367f13d651ba92323cd6e5155"
+  },
+  {
+    "path": "test-table-rendering.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6334,
+    "sha256": "295bbf477c8251e5205280432585f35d4b90021344b4c6bed110d7940acb441f"
+  },
+  {
+    "path": "tests",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/branch_config.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 1225,
+    "sha256": "7ae6387548ef2c820cf557cd687583ef95da97b220f76e8a146fe178fe46e630"
+  },
+  {
+    "path": "tests/clean.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 1666,
+    "sha256": "e65d65343a82cdd7b0f56ffbbdcdc87b52b94a5e24a4614ca7d95c0bf9c5bea3"
+  },
+  {
+    "path": "tests/doDestroy.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 848,
+    "sha256": "7bc4477ab8118eff1d6e5ef9fde8dd924def5b871471e7e4c134b007c2b19a1e"
+  },
+  {
+    "path": "tests/doPrepare.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15823,
+    "sha256": "a66c46140f9cbd6734c1bbce828f4d8299285f8d8569593bf0125aadc15df608"
+  },
+  {
+    "path": "tests/doRestart.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1947,
+    "sha256": "ba251e5816a6342e4a9076d6e02793aac972ae7609e13c78b40def4441622844"
+  },
+  {
+    "path": "tests/doStart.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3331,
+    "sha256": "eb23de5d56407847ce3f5a23b007eafeae1a254af9999a0ffac9e0e00eb07f23"
+  },
+  {
+    "path": "tests/doStop.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1017,
+    "sha256": "db4e4ed5ff6fe7115b2ec9ebb7480dbf92d1f7608668c15b0e89b941ddc2fcf9"
+  },
+  {
+    "path": "tests/e2e",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/e2e/ploinkyBox",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/e2e/ploinkyBox/candidatePodmanProxy.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3763,
+    "sha256": "ef587f3563d66a87b8aaeb1eeff3bdeb1c875ef4c6739f39fa136e00064bdbeb"
+  },
+  {
+    "path": "tests/e2e/ploinkyBox/healthProbeCleanup.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12661,
+    "sha256": "32dbacd794faf8d3fb618148832cd3ddf6d592fb65bab956fc1a0df87b13fe30"
+  },
+  {
+    "path": "tests/e2e/ploinkyBox/nativeHelpers.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11896,
+    "sha256": "59948b93bd482fed6abcfa5a469023d9dcbb79ab09be2553d33aa43722c3d2e1"
+  },
+  {
+    "path": "tests/e2e/ploinkyBox/publicCli.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18833,
+    "sha256": "7562553a5ed8a0919494709bd851c27be846c9236f5b1e278fb9c9950ce37294"
+  },
+  {
+    "path": "tests/e2e/ploinkyBox/statusCommand.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5073,
+    "sha256": "f143a94b941befc4f76eea2cac8421df3e060e93b8f6b94d89f849e6698f559a"
+  },
+  {
+    "path": "tests/fixtures",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/box-policy-repo",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/box-policy-repo/README.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 330,
+    "sha256": "5972ffc5d4260d82e56efb9ff43cb0d7c951dcb4d72c1fe90309e2e881c1d9ee"
+  },
+  {
+    "path": "tests/fixtures/box-policy-repo/privilegedAgent",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/box-policy-repo/privilegedAgent/manifest.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 149,
+    "sha256": "2f4bd04221fffb277720d054d1572477cd0a0965c409a6c3794af437148bb9b6"
+  },
+  {
+    "path": "tests/fixtures/coral-agent",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/coral-agent/manifest.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 729,
+    "sha256": "b16ff2ab1faaf385b6fec6e671728a57bc93b4b192f129fd537062145ea46774"
+  },
+  {
+    "path": "tests/fixtures/lightweightCliBoundaryLoader.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1135,
+    "sha256": "2a54eae2876b0c5683e0c0e807c6075cefeb4e7e62e1edb6268dfb39d73c49ac"
+  },
+  {
+    "path": "tests/fixtures/marketplace-enable-callback-worker.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1215,
+    "sha256": "561212cc8fc6ec0505d7410d1e6cc0aba7f8f78c77c5414f5ad96dcb0ba4225f"
+  },
+  {
+    "path": "tests/fixtures/ploinky-box",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/ploinky-box/podman-info-storage-5.8.2.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1200,
+    "sha256": "eba8069ecd2bba1954276fde8a2bad8441aece81e2807f952114ef8b19aa9d64"
+  },
+  {
+    "path": "tests/fixtures/router-descriptor",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/fixtures/router-descriptor/invalid-source-vectors.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 737,
+    "sha256": "5e658413435ef98be4cf3ba0b841f45f0c961ca19e69b034123a0e814a298f7d"
+  },
+  {
+    "path": "tests/fixtures/router-descriptor/managed-attestation.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1583,
+    "sha256": "8c194e0fdb5bca1e8e5fbd9568ac4ae56346d48b8d11ee5f6c0da605fb2c9c33"
+  },
+  {
+    "path": "tests/fixtures/router-descriptor/managed-envelope.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1290,
+    "sha256": "5ef19b1f1774b594efb998c9d9b296465867964db59c2982cd3a00711241dcdc"
+  },
+  {
+    "path": "tests/fixtures/router-descriptor/public-attestation.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1632,
+    "sha256": "55df739058354dabc2af2eb06c334f602994bf9911e11df3b7ed1840d4318283"
+  },
+  {
+    "path": "tests/fixtures/router-descriptor/public-envelope.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1264,
+    "sha256": "7a968923defef58bfea1d3d9578c1858db0e676aa479160fc1fc36f00c079f15"
+  },
+  {
+    "path": "tests/fixtures/router-descriptor/public-environment.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2252,
+    "sha256": "55e845356303276bb107919a8f3b7ce8e471aa37629b8df41d73c8fa7a22967a"
+  },
+  {
+    "path": "tests/fixtures/router-descriptor/streaming-enabled-envelope.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1263,
+    "sha256": "9903c3d269c73b7ad16360c15090299aa78d26115db99ffa7d1b94de8514187e"
+  },
+  {
+    "path": "tests/fixtures/router-descriptor/vectors.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2118,
+    "sha256": "6cff2b6f067ca4768139e5482566430c45b1008c92687b1623b19131d0e18f98"
+  },
+  {
+    "path": "tests/helpers",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/helpers/generatedRouterRuntime.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2536,
+    "sha256": "6c1d43844988127b7c16dfaefc450b8a937b18a46e66a889297b6cf6ecc8dbab"
+  },
+  {
+    "path": "tests/helpers/ploinkyBoxPrivateRoutingProbe.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6220,
+    "sha256": "21818ea2f34854bcbeda2194963b1094d87a4de2a415c86cbe97e13cce099064"
+  },
+  {
+    "path": "tests/integration",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/integration/ploinkyBoxNative.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 38879,
+    "sha256": "c7771bc8889bad0e7ee6c3cf300614d40bc5da69f30d587dd5c31716a21f9825"
+  },
+  {
+    "path": "tests/integration/ploinkyBoxPrivateRouting.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9689,
+    "sha256": "0bafd73d1044163f99a7982faf931446d3203f4d025b855b8a750b8f34a0b096"
+  },
+  {
+    "path": "tests/integration/ploinkyBoxSmokeGraph.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10331,
+    "sha256": "efac8128cce77a1346efaa4a9d84ddadb4da1aa36bad7ec7cb1169ed71c174a8"
+  },
+  {
+    "path": "tests/integration/routerAuthorityAttestationFlow.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15453,
+    "sha256": "18357f3a98716f7ebbb0bb47a040b51b413f3b68c8adba592a3dc636a0d0de32"
+  },
+  {
+    "path": "tests/integration/routerAuthorityTopologyMatrix.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2770,
+    "sha256": "b2c7e655d4c435efdbc3109ce1ee0179e5634d9d82e7cd04b7b333a1dd9286e2"
+  },
+  {
+    "path": "tests/lib.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 39808,
+    "sha256": "4fc2ce86186785ab805e4cba71d831a12159bbfc2ebd3a090742d9a83414512e"
+  },
+  {
+    "path": "tests/release",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/release/verifyCopilot421Bundle.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16801,
+    "sha256": "583be697839a5e6c488fa573a5d64b2bcd3bd3e136a9fd4de05c73b3bc39d820"
+  },
+  {
+    "path": "tests/run-all.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 130,
+    "sha256": "1d8d9e27018269900c754c467238886e5982aadf0c0cdb2090d5936f750591b4"
+  },
+  {
+    "path": "tests/runFailingFast.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 6812,
+    "sha256": "e571a3fb58bd62d95da6f0c58b5907f04c41ea3dde86d47b889719bc70ac7a23"
+  },
+  {
+    "path": "tests/test-functions",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/test-functions/agent_blob_upload_and_download.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9351,
+    "sha256": "1c5ce0bab295bd27f4aaf4d56dcfa37cb4fa62b9744c8e5b9d843afe05f21941"
+  },
+  {
+    "path": "tests/test-functions/check_preinstall_run.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2377,
+    "sha256": "278c75dbbafbd392bf6b32ef39c74c96ffcba6fc9da9b27c7d4a0a3fc019e5aa"
+  },
+  {
+    "path": "tests/test-functions/cli_variable_commands.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3194,
+    "sha256": "7f6ef6450c80e066e671ebe3223481743f86809bbf1f5b38abc0f0bb0253ff23"
+  },
+  {
+    "path": "tests/test-functions/dashboard_tests.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1036,
+    "sha256": "68f110deccc312f00c15e9e9ecaf0ad088b3bee6466badaae9f7d64f61fc4fbc"
+  },
+  {
+    "path": "tests/test-functions/default_cli_tests.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 837,
+    "sha256": "4633833e60536b3cd8b15ba3105ae962d0d8da6e4bdcae288071097010195420"
+  },
+  {
+    "path": "tests/test-functions/demo_agent_dependency_tests.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1755,
+    "sha256": "fea5bee434c67309818d01edebe8f6176a168986e1cf3611d2c1f2ad0c77daf1"
+  },
+  {
+    "path": "tests/test-functions/demo_agent_dir_perm.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2490,
+    "sha256": "b17b216823f0213b7e75cd18d274cb29f9e3b3e5f958586f0d45010261110cba"
+  },
+  {
+    "path": "tests/test-functions/devel_agent_verification.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2139,
+    "sha256": "3e9c89c8af233d97fd65b819ce3fe09fa94375d27c10e80b516e2ab41491b850"
+  },
+  {
+    "path": "tests/test-functions/disable_repo_test.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1265,
+    "sha256": "e71ec2e851ac643dcc05e2ee5dfc76df1e53fbd97eb66f2fc32a7d133c101ba3"
+  },
+  {
+    "path": "tests/test-functions/dynamic_configuration_tests.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5847,
+    "sha256": "557282ef59ecfc7c2728973917d0380521b44eadd0e5192e40d30c0d6606207f"
+  },
+  {
+    "path": "tests/test-functions/enable_alias_tests.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 200,
+    "sha256": "d37cfdc2df5983423c24fcf8d8f2147c9289a535a94735e2a1f252ab8c9e5128"
+  },
+  {
+    "path": "tests/test-functions/global_agent_verification.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1548,
+    "sha256": "1bbc8a4988bb92f34c1fe84a2b53ac93288241435cdde18f6db2edd1f9c043c1"
+  },
+  {
+    "path": "tests/test-functions/health_probes_negative.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4461,
+    "sha256": "c9569a03f0e1040ced549f2156f86a5fababa71eb50d48ac8d89eebb8fa216f3"
+  },
+  {
+    "path": "tests/test-functions/install_command_verification.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 506,
+    "sha256": "dd80786fe88fc1e318c607da4ec919bf75bea5753d750cb8a45be4461709a430"
+  },
+  {
+    "path": "tests/test-functions/llm_cli_suggestions.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3592,
+    "sha256": "97a6491fa39386421856d85c73a16c482811034de7fd7d187f9463a8eb8e27ee"
+  },
+  {
+    "path": "tests/test-functions/logs_commands.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1662,
+    "sha256": "d34d30d3ae094a9a0e63369eb9ed4a0453d393ae1eb8453b6c76ab0504e2a2a9"
+  },
+  {
+    "path": "tests/test-functions/manifest_ports_test.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1364,
+    "sha256": "6a49553140cdb6e68a7ea2fc6edd9d536d89abce90233d6e8064ba90921aa336"
+  },
+  {
+    "path": "tests/test-functions/mcp_tests.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1541,
+    "sha256": "bcfce28f82dac0db66ac83c8670fef3aafc378ec8ffba16b0344c850ca57fa30"
+  },
+  {
+    "path": "tests/test-functions/openai_endpoints_tests.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3707,
+    "sha256": "2d1ff6d26d980e08cd374bdd4dd275b20f8fc85b8ffb6ee92d68f87d7af71ede"
+  },
+  {
+    "path": "tests/test-functions/postinstall_test.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 663,
+    "sha256": "515e22911cc84d44f1181e2be1b02315325ca32d763a118467a9f9cb4d149c34"
+  },
+  {
+    "path": "tests/test-functions/router_static_assets.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 589,
+    "sha256": "00ceca53dacb15ae571966011190e399085ca079beddab005db644fc03fa0a7a"
+  },
+  {
+    "path": "tests/test-functions/routingserver_aggregation_test.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 496,
+    "sha256": "dc54e7f5f3ad41c21f902778315ad6a2deb42524245e33a6eb70560d8f61eb63"
+  },
+  {
+    "path": "tests/test-functions/setup_keycloak_for_testing.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 22823,
+    "sha256": "2bcd650770c94d2dd948b3f7a4f34732117fcaa348f6903cd4824a5a0c56b785"
+  },
+  {
+    "path": "tests/test-functions/sso_test_suite.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 38076,
+    "sha256": "890db9d8b338b643fa7dbeec43d5d759a6c355f12df5aedf2ca650370feb6ea0"
+  },
+  {
+    "path": "tests/test-functions/test_sso_components.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 16100,
+    "sha256": "04073a0c55bdd1c979b26ad4a47b42be27b28c3bb556b43ba9d96ed9fd915bb7"
+  },
+  {
+    "path": "tests/test-functions/test_sso_params.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 647,
+    "sha256": "890334c8f1c782d3e39f8e5bb2a05d7622911e405fee516284148c9f65629d36"
+  },
+  {
+    "path": "tests/test-functions/volume_mount_tests.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 610,
+    "sha256": "2f291b6ec5d98715a42d67c67044221b4743ee7e880da2518128a8e0e310e06c"
+  },
+  {
+    "path": "tests/test-functions/watchdog_restart_services.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4656,
+    "sha256": "f17fdeb35cdc25ac5ff38b1d5f7d2a807d9623207fb644f78a982acb18fd9f21"
+  },
+  {
+    "path": "tests/test-functions/webchat_tests.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2442,
+    "sha256": "a6103e9103f132bc8e3c3df5f14ea41e6d267e62252452c8b80a6e000bad9378"
+  },
+  {
+    "path": "tests/test-functions/webmeet_tests.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 813,
+    "sha256": "74e4c1864af03dfe0bfa1ab41fa31652b800e8ceceeb87329958d607ae48965f"
+  },
+  {
+    "path": "tests/test-functions/workspace_dependency_startup_tests.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18121,
+    "sha256": "d27ddca87f4d25888e8f8351d95bec485bc5299c4d1a76d7e315789f7914c354"
+  },
+  {
+    "path": "tests/test-functions/workspace_status_command.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 502,
+    "sha256": "143a6fd9e42d2be84aee9c29d8a9842791129fce9c61122a77466b7d17827b80"
+  },
+  {
+    "path": "tests/testAgent",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/testAgent/manifest.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 735,
+    "sha256": "ab68c9d43e475c9e867fc3a03c3d2248e0f9db484c0d13ebb735af94cbfabb83"
+  },
+  {
+    "path": "tests/testAgent/mock_shell.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 38,
+    "sha256": "33bbc6a6c7ffc245866c836475c9742a6accc8915fdd47dca4eabeaa3ccc026d"
+  },
+  {
+    "path": "tests/testAgent/server.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1127,
+    "sha256": "bcf7bb062aa394f4d23598e0de5e2bdee1934cbdf6512709816f166fd712b062"
+  },
+  {
+    "path": "tests/testAgent/start_script.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 878,
+    "sha256": "52a555a069049e0e7ff2df44bacd6d80f8a04b275be573b0c739864ce3fd9a7d"
+  },
+  {
+    "path": "tests/testAgent/testSSOParams.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 360,
+    "sha256": "fb6c320f6704b5759f671df51c7add6291a763585be1a7535254601854c13c47"
+  },
+  {
+    "path": "tests/test_all.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 11272,
+    "sha256": "6f03ccb293b3362ef36fea752cacb3591e5efee635221166a0acc0ba6bf843c5"
+  },
+  {
+    "path": "tests/testsAfterDestroy.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2213,
+    "sha256": "b0d97b53659f9a0516a4440d0ddc452e395fbe97ddfcc9f006d972a5a6d73033"
+  },
+  {
+    "path": "tests/testsAfterPrepare.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1525,
+    "sha256": "1c945012c6cb7e30f4e343bb32afd79523a1b59a07386b0d0dd46d6405a805af"
+  },
+  {
+    "path": "tests/testsAfterRestart.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1839,
+    "sha256": "6621f9f227d79c5fd12e41e950945fff80bfcfbb47a1aca1783b69c7224ba3b5"
+  },
+  {
+    "path": "tests/testsAfterStart.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11360,
+    "sha256": "e292d4b4f33d251e97c982e8e74636892e479ddea05924673ae5c120e76c3aba"
+  },
+  {
+    "path": "tests/testsAfterStartAgain.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1825,
+    "sha256": "ccf6e12f45d093febf1cf1659977af334ff702009f64e957c4c7b0dee4dd6fd1"
+  },
+  {
+    "path": "tests/testsAfterStop.sh",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1083,
+    "sha256": "9e5a6f9387ccd6e52c10c02c3e10e65e002bf9a8d3d1f61a11b35e167172cd7c"
+  },
+  {
+    "path": "tests/unit",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "tests/unit/adminControlSecurity.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5483,
+    "sha256": "c11fee322d88cdc8d2d1ceb5f4d011e616de2932835b4db734a2eb3b6fb9de2b"
+  },
+  {
+    "path": "tests/unit/agentApiRouting.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4158,
+    "sha256": "909ac6c4694d9697e750ec5cc69e2075aad2fc4a2fb11b3b4ccd0a46785db0a0"
+  },
+  {
+    "path": "tests/unit/agentAssertion.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6544,
+    "sha256": "f609a88ac1f946c2591d5e5a38cd76da1a2d826b703cea2410effaaf84818258"
+  },
+  {
+    "path": "tests/unit/agentAssertionService.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1112,
+    "sha256": "5c67f5e88fe0d02ffb100f6148d8b863113029a99cbc182da40bbb182cd93f9f"
+  },
+  {
+    "path": "tests/unit/agentCardFanout.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3382,
+    "sha256": "fa196af2d830693c6a926ac1712f54436cc0811d099615b752f0f08692034ef6"
+  },
+  {
+    "path": "tests/unit/agentClientSessionLifecycle.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3653,
+    "sha256": "d4c93422095c30c4453e978c321351977418dacb3043f21f67f2962814c1607d"
+  },
+  {
+    "path": "tests/unit/agentCommands.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 762,
+    "sha256": "bd5eb17e4deee51eabdc1e183d7ea9653004bac4ec49b1be72b2593f57f3b226"
+  },
+  {
+    "path": "tests/unit/agentDisableGeneration.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10224,
+    "sha256": "615edae053a4921f329660ca10e43315ef44f3033031acfed9ae0a7a71bb3472"
+  },
+  {
+    "path": "tests/unit/agentEnableBatch.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11349,
+    "sha256": "e26fe71077ae772877c87f784305a268d6e5962699513279469436ab808302cf"
+  },
+  {
+    "path": "tests/unit/agentEnvInjection.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10230,
+    "sha256": "6baa13fd03f0caaf58b03deed890aa3bfa369354fd76ffef71336252a8a17bed"
+  },
+  {
+    "path": "tests/unit/agentLookup.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4497,
+    "sha256": "d7cccffaca8c73688f3e905db019d3a277458336006130469ec6446e8b085670"
+  },
+  {
+    "path": "tests/unit/agentMcpClient.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20153,
+    "sha256": "884fd1ee237992421167b88a4c23d1168d07d069d7bd9de578bc93f9d4a1d140"
+  },
+  {
+    "path": "tests/unit/agentMcpClientMarketplace.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5707,
+    "sha256": "adbbaee0f682962addd62824e9f08c0b937124121fb53bcd046eff04df5eda40"
+  },
+  {
+    "path": "tests/unit/agentMcpClientTaskObserver.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1148,
+    "sha256": "1ffc49cfedd077f00f25c3bb9ef34a4ade369e84eec867b865c55129776ffa0b"
+  },
+  {
+    "path": "tests/unit/agentOpenAiDelegation.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 24856,
+    "sha256": "7845e0c952b6a2e9da8a34c4d77112fe978c3626c0a812434258cbc592147804"
+  },
+  {
+    "path": "tests/unit/agentPortSelector.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3116,
+    "sha256": "5a33919ae15749f4c14cad5924e1533d062d8909a754145ecb477320cbf138ce"
+  },
+  {
+    "path": "tests/unit/agentPortTransport.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 22151,
+    "sha256": "b556bc84b496f0510738f4f2bc00e8e74c892e99e1291905d3f7762fb13085b5"
+  },
+  {
+    "path": "tests/unit/agentReadiness.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16118,
+    "sha256": "602e0eb28149db29fb9d3c1e258b019541993645f6a8aa27c372ed1a82b91617"
+  },
+  {
+    "path": "tests/unit/agentRegistry.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3773,
+    "sha256": "5eeb8709bba70c496439b8e743c713ab1ea9be22df32e1da8d2c0c61f68f28c1"
+  },
+  {
+    "path": "tests/unit/agentReplacementIdentity.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11626,
+    "sha256": "17fedbe950bcdb92a240bc7f7dd8c87e1f37bfe95b15b8082f4bb0a3c75e47fd"
+  },
+  {
+    "path": "tests/unit/agentRuntimeState.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4028,
+    "sha256": "74e7d6ae0586a1bbe875a10f17d51aee2091232a1518e1b22d029576556f3142"
+  },
+  {
+    "path": "tests/unit/agentServerOpenAiDefault.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19466,
+    "sha256": "d8ef17c1f8f191325619e221d4973af949c523822ae3bdb4a2c9b0d5fbc1b74d"
+  },
+  {
+    "path": "tests/unit/agentServerSessionLifecycle.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13466,
+    "sha256": "856982cf934cb478c7380e6671ea6291401385721679bf807e1aef63aac9bedb"
+  },
+  {
+    "path": "tests/unit/agentServiceManager.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21945,
+    "sha256": "d3ee0a402637d7c630823ba9b8d5fbe69bb22c43aa6c23181994a5f115ee4709"
+  },
+  {
+    "path": "tests/unit/agenticDepthGuard.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 715,
+    "sha256": "f538af153d2bb51f9254a8862b268db27df91f8aa21fa8c152affd61c229294c"
+  },
+  {
+    "path": "tests/unit/agentlibBranchResolve.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1606,
+    "sha256": "5f5936c46a5a0a3044ef1616f6dd40baee61e162c05244702bd35874a924c527"
+  },
+  {
+    "path": "tests/unit/agentlibRefOverride.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2542,
+    "sha256": "beb5726d7edf35ab642fcacdedf6bbede8dd5c4562221fc6f4b6b7f1081d1e8a"
+  },
+  {
+    "path": "tests/unit/authReturnTarget.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4861,
+    "sha256": "f4a401000cafd6ddd5ec25c5951033e892fbe3624beba24542e6ac55110f0ba8"
+  },
+  {
+    "path": "tests/unit/boxPolicyFixture.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6336,
+    "sha256": "52944ba67b8da27109b4cee0d62c317a816d45417d506fa317fcef447cf34432"
+  },
+  {
+    "path": "tests/unit/branchAwareStart.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 34885,
+    "sha256": "572ebb86468fde03de210b48c2d4e4e732b831a81d5f9e7a5ac63d689a39bacc"
+  },
+  {
+    "path": "tests/unit/browserMutationSecurity.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7314,
+    "sha256": "aafa6a1551d3fe1e41ef6b6bf012777fbd76c2f765425392bf62f60a96a98c8c"
+  },
+  {
+    "path": "tests/unit/bwrapArgs.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9833,
+    "sha256": "a796cc908ab6bf211a20a36cdd9dba002010c877460520756513994d17ec989c"
+  },
+  {
+    "path": "tests/unit/cliExitCodes.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8393,
+    "sha256": "72fa7bdf775d681d141b3b42f048de6303f3fe8a3614d3f6ba66f5d8e94730df"
+  },
+  {
+    "path": "tests/unit/cliLifecycleInactivation.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4762,
+    "sha256": "75497379ace83ebdaa8f9f2fa95258daf8eb1c0bee4437a7e3b082b89a2fae2f"
+  },
+  {
+    "path": "tests/unit/cliStatusEntrypoint.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3110,
+    "sha256": "1532f07863f4fdf3c0011710e4644b283a3df52fdee19f031befce9e2f7e75cc"
+  },
+  {
+    "path": "tests/unit/clientLocalSession.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2086,
+    "sha256": "b5e0d2c77ae756e34cfc9f334f6a4dcb8d2d65826d2e212bc7bad37e36016fec"
+  },
+  {
+    "path": "tests/unit/cloudflarePublicationController.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 57773,
+    "sha256": "f8a3624b5afbf20f9b8869aa8de6ed8554384cedd97152b370d73e486fe93a4d"
+  },
+  {
+    "path": "tests/unit/cloudflarePublicationInfrastructure.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 26030,
+    "sha256": "0aade2b072c8ebb2b8b25e7cfb0a4efa1278c77c12c9024f1a0230c60ccc2c32"
+  },
+  {
+    "path": "tests/unit/cloudflarePublicationPlan.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14597,
+    "sha256": "03a4b9d63ba6753711a87697f34ac1758ac638ddbddb577fc74cf824fca78c0d"
+  },
+  {
+    "path": "tests/unit/cloudflarePublicationRuntime.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 38786,
+    "sha256": "cd1ea6fcbb2646ba1bc448aafbd7c9c218e9c949039ab3626561008edd1de1b7"
+  },
+  {
+    "path": "tests/unit/cloudflaredRouterIntegration.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6167,
+    "sha256": "5a560b89a95c142c8694026e880f5e3cecbeb4dde34b38405287c6459db421de"
+  },
+  {
+    "path": "tests/unit/commandRegistry.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 775,
+    "sha256": "f06dc8e6a293d40c43904304d7f8f0a1d9613e469cac659509b65f0311e610bd"
+  },
+  {
+    "path": "tests/unit/composer.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4124,
+    "sha256": "8fb1a0a7f771a4000179500e75225fc8fb9669647cc8d58330c78cb8c5e0b780"
+  },
+  {
+    "path": "tests/unit/composerAutocomplete.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9239,
+    "sha256": "de8851e6e51c65c819d1fca4cff2fcd24dd0e73c893f95c692b1dbac8e802964"
+  },
+  {
+    "path": "tests/unit/config.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3502,
+    "sha256": "9a345e2a0154b518784baadd978a3532c52f1df06e450123e1b95375d3f0ff75"
+  },
+  {
+    "path": "tests/unit/containerFleetExactRemoval.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6137,
+    "sha256": "dfd3f0f19584b4c7a5ecd56657afa8e0da3e87ee0eaa941e533ac90e56eae0e3"
+  },
+  {
+    "path": "tests/unit/containerMonitorAdmission.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5443,
+    "sha256": "80f7ff5f027b60e210de05bb0194901e1a1d67e74d700fdbf10b64509ed24dfa"
+  },
+  {
+    "path": "tests/unit/containerMonitorMaintenance.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1662,
+    "sha256": "45950d7862cda993359e032844cf3a001da80b75515fa378df560459b312c078"
+  },
+  {
+    "path": "tests/unit/containerMonitorProbeOverlap.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16863,
+    "sha256": "8682960e65714d17c69ea80e98c66867bea401a4213337e2c5471e6a8c7c3061"
+  },
+  {
+    "path": "tests/unit/containerMonitorPublication.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 22813,
+    "sha256": "b468be8446e53613a97e04945db2d1dcd8290cf3a537f085deaaf6c8fc23f0c0"
+  },
+  {
+    "path": "tests/unit/containerRunningSnapshot.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6109,
+    "sha256": "3df774581acffc0b1a31f1d297783eb0dcecf74fbed239bebfd83ba47baac03f"
+  },
+  {
+    "path": "tests/unit/containerRuntime.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 37955,
+    "sha256": "88b7501c2f38b51b662effcc984ef671e35da9dcccb056133446def7d9a96e47"
+  },
+  {
+    "path": "tests/unit/containerRuntimePolicy.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5382,
+    "sha256": "7b35394f99c8c380eb2cc31f9874bef92d26a0959d27cf9a690f19aaf37c9789"
+  },
+  {
+    "path": "tests/unit/containerSecurity.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1945,
+    "sha256": "fff0f542a2211293368f15f31c8bd61fa3cd748fb7acb3e078b30eb732c0d7e2"
+  },
+  {
+    "path": "tests/unit/copilot421ReleaseBundle.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12336,
+    "sha256": "8666a2fdff807d24796b88f4c1188a90e72e516b7a3da56209c71d853c5332ca"
+  },
+  {
+    "path": "tests/unit/coralAgentManifest.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11649,
+    "sha256": "a962d404e4b1665e4c4eb9eb875e2a0394c7ba36df8c9326fa9bb9b86f49980b"
+  },
+  {
+    "path": "tests/unit/dashboardClientRoutes.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4135,
+    "sha256": "e42205bc0e4792881c34d75dcf462409dc2dca4d238b4b169367e22a7f07c964"
+  },
+  {
+    "path": "tests/unit/dependencyCache.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14975,
+    "sha256": "9d48ea69657e5e848094ab5de2c92a21467bdb06a2ef0a2ddac68c49b5fbf1a2"
+  },
+  {
+    "path": "tests/unit/dependencyRuntimeKey.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6315,
+    "sha256": "41f3603e6325487fb7e56562dac1620a6cabf8e2648dc5bb3a54827df2f15993"
+  },
+  {
+    "path": "tests/unit/depsInvalidation.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8155,
+    "sha256": "0b81b35a334ebf5580a7d8c6d222871411ebba8284ca45f00ea863130f9286a2"
+  },
+  {
+    "path": "tests/unit/destroyPreservesData.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1688,
+    "sha256": "aaf0f1b4248c3213b8200608c30fa637859b13b75afd5a0a5f599cf16ea6f935"
+  },
+  {
+    "path": "tests/unit/directCliDispatch.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2133,
+    "sha256": "07928808ec3e38f148987aa12944bb732aaf1f9b8f167741d6049a7adc70c6df"
+  },
+  {
+    "path": "tests/unit/ds004Q8SpikeContract.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 34329,
+    "sha256": "f4ffd1ab049e4de40822acbbd03588903315798a7b207a9770bec3b4d2407dc7"
+  },
+  {
+    "path": "tests/unit/edgeDesiredApplyCli.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1198,
+    "sha256": "286ac2f1b096fd8b782d94aa844fad999ab4cf8cef15acb70e439f2c359b9fad"
+  },
+  {
+    "path": "tests/unit/edgeDialLease.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5146,
+    "sha256": "9e0d513239b3332891a258817aef9dacf5403c542f0a16dbe7f5a3f79e15a46b"
+  },
+  {
+    "path": "tests/unit/edgeGenerationHardCut.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 51554,
+    "sha256": "b69a542535407dd65b74118fee1c4f3c5c01bb7b64ae79f6c54e2510a26b198f"
+  },
+  {
+    "path": "tests/unit/edgeRoutePlanInterface.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2412,
+    "sha256": "bab6ff0b91ff62f161b73d59c6d60946f1470aae0fc72313c8e3fa70a77307a1"
+  },
+  {
+    "path": "tests/unit/edgeTopologyWatcher.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3045,
+    "sha256": "93301258ab1ba009bdd0cee468a73d9e601ed42a13ffebedc54b74b92ebc4ef7"
+  },
+  {
+    "path": "tests/unit/enableAgentStartup.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5479,
+    "sha256": "603465d23bdb1c2cb8309a69d57b95ce284fbc74eb77dbef3e88abf23abd8c34"
+  },
+  {
+    "path": "tests/unit/encryptedPasswordStore.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4652,
+    "sha256": "0b0b4b6da63e77f661e41c85faba19a524d07d9de05903de5ad5c7ef0b497f7d"
+  },
+  {
+    "path": "tests/unit/encryptedSecretsFile.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3993,
+    "sha256": "613f95cf92a6383ec13cd43c4924c1c0d0f3b325dd6ceba1ab937b3e1ef05385"
+  },
+  {
+    "path": "tests/unit/generatedRouterDescriptor.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 17664,
+    "sha256": "d868dff204cd7b5354bbd9f76ec2148413df01d10d6173217d5f46c65dbf3810"
+  },
+  {
+    "path": "tests/unit/generatedSecretEnv.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9811,
+    "sha256": "9f0fa54eb67ba263a9594abd067cfaf85f84ea8d976c1a67dd18afd2a11f0936"
+  },
+  {
+    "path": "tests/unit/genericAuthBridge.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6668,
+    "sha256": "402bc06c31262e7e3b55dc0cc60cad29844aa35f14791189e1bae461fdf0e678"
+  },
+  {
+    "path": "tests/unit/globalCacheAgentlibRef.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2117,
+    "sha256": "dfadd94bc5a0b52f0fac865fbe6350c0967c284f58dc020aff6883e805bcd75c"
+  },
+  {
+    "path": "tests/unit/guestAuthRoutes.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 45622,
+    "sha256": "c4c7b1d1bd0ec0bcc46ffc6593c9035c4c5893fc55aa680b5936b9416985d226"
+  },
+  {
+    "path": "tests/unit/hardwareDetection.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3352,
+    "sha256": "6cfbda69f1056fbe44b390d6436992f42ef83264930eb509d306b14dd51f3951"
+  },
+  {
+    "path": "tests/unit/healthProbes.test.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21059,
+    "sha256": "88e9233afab2dd1596140810ff776a995da0609af8258ec1d3d3ad6b5115828b"
+  },
+  {
+    "path": "tests/unit/helpLayers.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5204,
+    "sha256": "f10ed53757285eafbbf3695bfc8c6828ea8e90eed7b13649f75f8dfe01ef05df"
+  },
+  {
+    "path": "tests/unit/httpRouteAccessPath.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3220,
+    "sha256": "fcadabda570cf0edc9f5585fd29dd347aab0cef315e561535213836df3ce986d"
+  },
+  {
+    "path": "tests/unit/httpRouteAccessPolicy.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15389,
+    "sha256": "909657c331c6238bb18eedaf7907d13d2c857ac0d319c79ce0c7bdeb82d3a343"
+  },
+  {
+    "path": "tests/unit/inputState.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4309,
+    "sha256": "958d8d9df2c154f7e6da57f4c96ce30e0a2fc8e812b0bb783f793a1d51893b68"
+  },
+  {
+    "path": "tests/unit/internalAgentPath.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1441,
+    "sha256": "c921a04e4bc1a9fb7dc0fce7cf71c2642a62d51bb5e3bffb0307b25c2472e28b"
+  },
+  {
+    "path": "tests/unit/invocationAuth.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9392,
+    "sha256": "9824b97cbc4e95a08867fb44108e88594039ea02c393f9e43769e6398cc9708a"
+  },
+  {
+    "path": "tests/unit/invocationAuthInfo.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7756,
+    "sha256": "6329a4f253888a9c316c4c647e637c4ff950921cc44405a79b72fe1d359ccb8a"
+  },
+  {
+    "path": "tests/unit/jwsCodec.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1018,
+    "sha256": "fa1f8b5adbfef804c619f539eb2737f80ba35d998ac28ee5742f36864caedd6d"
+  },
+  {
+    "path": "tests/unit/jwtAuth.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5298,
+    "sha256": "0f5b244e2b43cd691cca16f260e40089ab3b97b64bf5cd2cc593fa09e0705dc1"
+  },
+  {
+    "path": "tests/unit/layerIdentification.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1030,
+    "sha256": "b5e49bfe174c4e3f9c6c3725d1b1180e548a07fc76d2a8271834abf363db9b10"
+  },
+  {
+    "path": "tests/unit/lifecycleHostHookEnv.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10646,
+    "sha256": "6dd767fb9ba60c54de83ee57e63c5f79f1702c5c97bdd11a44369c89687e5bdf"
+  },
+  {
+    "path": "tests/unit/listenerInterfaceClassifier.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 17048,
+    "sha256": "273127851a327292784549081ee64ff756fc946574ecc0616e2ccb7c2e704b6c"
+  },
+  {
+    "path": "tests/unit/llmArchitectureCatalog.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8181,
+    "sha256": "a3829d0e089d1490309715f270d9a3de6afde89058a52bf768dd61ab5c03f26b"
+  },
+  {
+    "path": "tests/unit/llmArchitectureSelector.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11065,
+    "sha256": "215f158dc101609eefce00bff07ce82ef7caf54e5a489c386a06494b7f558b9a"
+  },
+  {
+    "path": "tests/unit/llmRuntimeIntegration.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7938,
+    "sha256": "90a1d587f45731f07559d7f2d882681d39fa8ed5637dfdc8ef86c3b562789f96"
+  },
+  {
+    "path": "tests/unit/llmSystemCommands.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1359,
+    "sha256": "a0dc9313761364388ba5d6b37e5c3869dc78b6752c06c8e075dca0f3bf7bf165"
+  },
+  {
+    "path": "tests/unit/localAuthCredentials.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4599,
+    "sha256": "d8f3aa4b8eb6e305669f28a3de9dd82f36fe7713e3dc9d3e2b5afb3c7ef4e129"
+  },
+  {
+    "path": "tests/unit/localAuthLoginPage.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4101,
+    "sha256": "759d84c8f3bd4a4fc15dcc7d9cf04d7286726719dc3ab7cce3775df16f9eec8b"
+  },
+  {
+    "path": "tests/unit/maintenanceLocks.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11535,
+    "sha256": "c69e87af7d84b33e3e7a618c409d96f4b9f846f50a388abb1d708657e004739d"
+  },
+  {
+    "path": "tests/unit/managedContainerLabels.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4219,
+    "sha256": "0a103b2d3178b6e346738a18b52b03e2d39ec0a2c8f0fb67bebd513357a5a8c7"
+  },
+  {
+    "path": "tests/unit/manifestImageResolution.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2114,
+    "sha256": "f70454ccf8d4cee702d00d31816db116f4f007f1feb88de1120941c4f57ccc56"
+  },
+  {
+    "path": "tests/unit/manifestStartup.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3447,
+    "sha256": "9e53533f87aa902d49be95f9e43cf92b20a2778bae8e1b9a2c1a7454b69254ce"
+  },
+  {
+    "path": "tests/unit/marketplaceAgentAssertion.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4871,
+    "sha256": "f4e4bcec315bdb1244a32749578f48397c4bd53600dad4ced33f74507a114c4b"
+  },
+  {
+    "path": "tests/unit/marketplaceEnableWorker.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3947,
+    "sha256": "02410e4c3943dba986cb0477fcd8c002b9dae98c7b36774c02780c099f6cc055"
+  },
+  {
+    "path": "tests/unit/masterKey.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11428,
+    "sha256": "621b847324abeea195195793b8366ed397c763b06234a26725c44e86402f422c"
+  },
+  {
+    "path": "tests/unit/mcpBrowserClient.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19518,
+    "sha256": "185fb69b419d92fbd40297d0ca712bb93777871f655cf08916b015c8d9a261a5"
+  },
+  {
+    "path": "tests/unit/mcpDelegations.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7182,
+    "sha256": "228a92de54794daaa19567dc4a8f5475746d14487c3f8a3684d024e3017f0d02"
+  },
+  {
+    "path": "tests/unit/mcpProxyDelegation.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18075,
+    "sha256": "71abd83d72e44e528082b09641908dc6e07bbb94fbb9da902167d86b4171900c"
+  },
+  {
+    "path": "tests/unit/mcpToolArguments.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2958,
+    "sha256": "cd52c49b563a823d4eb04f7a4d26f8d72ab83032f6e516e54f1302bf112c7052"
+  },
+  {
+    "path": "tests/unit/mcpToolBridge.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2021,
+    "sha256": "cc0798409d22a8a1c4478a5e44285a1b756755cdb46f48708cc68c805dad7e5e"
+  },
+  {
+    "path": "tests/unit/mcpToolPolicy.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10372,
+    "sha256": "bc3a3863b8503ceca75fcf855574b917d8e0190f461a8b2270437dc327061608"
+  },
+  {
+    "path": "tests/unit/networkContract.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5433,
+    "sha256": "8797b71b360736f1cc5abf1a9aefbe4826570b7d8061bba694820e846dd46578"
+  },
+  {
+    "path": "tests/unit/networkHardCutSourceAbsence.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2362,
+    "sha256": "4f20b2e6547d7ab636d38f176e50dc0bea83ee752e69faf49a9108897b9a29db"
+  },
+  {
+    "path": "tests/unit/networkLifecycle.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 50524,
+    "sha256": "085583dc212545f836fcda0862c357909d098945d319aafd755a6cbbab31161c"
+  },
+  {
+    "path": "tests/unit/noNodeDependencyStartup.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1147,
+    "sha256": "1a178d75e1c4d671edee517cc82058b1c67398ac4160d0e92338c01f05d07183"
+  },
+  {
+    "path": "tests/unit/noWaitWorker.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 91234,
+    "sha256": "7c324e4c79031056274bf17289e3e45263643cf182dc9ef7e6b204b811b7b666"
+  },
+  {
+    "path": "tests/unit/openAiAgentDiscovery.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13787,
+    "sha256": "82c57c5996adb8b325f4d93696ffa215594eb1f7beec6146392a9f783beaea08"
+  },
+  {
+    "path": "tests/unit/openAiChatConfig.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1686,
+    "sha256": "7bf0e62b01f29121c9d5b47c208a277a130fd36485d4e1cec6bf2450117aa7ff"
+  },
+  {
+    "path": "tests/unit/openAiDefaultResponder.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6939,
+    "sha256": "c4fa9b849419f4cf6dd607e2a79d8df7f23c57bc55a60e6c83f7142ddc1b975c"
+  },
+  {
+    "path": "tests/unit/paramParser.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2200,
+    "sha256": "b37958652753070a1b33add981c10f10cc6ba430d60b0d5433ccf2047d20c95d"
+  },
+  {
+    "path": "tests/unit/perAgentSecret.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3285,
+    "sha256": "0a2910d0a3a193cdccb35a4d5b40d60928489b5221cbec423b23d779f86372da"
+  },
+  {
+    "path": "tests/unit/ploinkyBoot.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 389,
+    "sha256": "7cc55ebbcb83d3f755c7d7a8f28a7c44ae02bc4b12ae91eff3d62e0d42f5885c"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxArguments.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6762,
+    "sha256": "b3f04b1ca1d1dc1c01be421b74e68b31595688ca4f035b2f8d0283a1e867ff74"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxAuthority.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2156,
+    "sha256": "deedf5370c83ad7d1fabd8d45c8d81f951adb4250875ea12f7010784dafd53e3"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxBoundary.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12024,
+    "sha256": "7e8b8d5b57c98dde93f0bddf1039a99c4d1298b8a1cb4708707c395db508dc26"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxCli.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 17093,
+    "sha256": "03d61f3e9fb6317c3cb5506626aa0328c74f9782090636e8741fa57ddbd9da5d"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxDependencies.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11921,
+    "sha256": "2d356023c317ad946b0952449b06452975f4509d7ed002b0fae6ed2d860735f8"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxDiscovery.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13835,
+    "sha256": "021bd9f2fe951f69f1ae49a4a71cc7b3f31b08f55625ee2379cca69674526590"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxEdgeDesired.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6309,
+    "sha256": "5aeb63e8a67031053ab4ecfabb1ef7fdc472699c086cb12b82cd1b147b9f9e70"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxEdgeInitialization.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3295,
+    "sha256": "6bdf5e3c5293f3372ac3acce6e6b2ccb03401732f3f2b331395f163f0f5fb157"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxEntrypoint.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21886,
+    "sha256": "ada3d47cd158b318396126939e106f547f58da8b84068357e721930b30612155"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxHostNetwork.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3206,
+    "sha256": "6f3d95164d6e46aa9e52bb0270adf90f9e34cdc4d9971e5466b1cdf377767b0c"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxHostUpdate.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5241,
+    "sha256": "0645c52fc84465a844e08fc3ad357877c51f9d287ce43be091ef8c6f4b929b61"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxIdentity.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6854,
+    "sha256": "aafcc96f79a43e6503d97162f0503266c2ff5bb6ff986303fa4e9c6980ab1560"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxImageContract.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6600,
+    "sha256": "34767dee4ad66b37e3162b42244198261e4a78eccceaa0c70369c09f822487c0"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxInbox.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7138,
+    "sha256": "67736761c36f927694da4770a8fc44e0f581e88615138b92fe06ca12a82d8b1a"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxLocks.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5716,
+    "sha256": "abf9fec89720e6c9ab6fecefb0823860d703ad8f267f7af5cbd637c5a05c4589"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxMarker.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1590,
+    "sha256": "2b690c5ec246f77f8dfb854e7ea07b5fb5c4a01bc72406d5ea8c58420cb32145"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxNativeCleanup.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6843,
+    "sha256": "881853fe572727c83702e1e82e0cc9a0f1807039a172bfa8c17c84130e3c6b87"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxPackaging.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6175,
+    "sha256": "1d7abe8ade0519eee1c6e0a840734197500bd5f51134b77e322d993c0e621fbb"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxPorts.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6624,
+    "sha256": "26035032ed4b870ef6f6702c4140b6f743ce51614a57a8703ab358224c681aaf"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxProcess.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1553,
+    "sha256": "f809f22b2e0f693bc5e018429ccd487f7b168f92ee91173dbfa9ad6fadc59e9c"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxSafetyMatrix.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13886,
+    "sha256": "92ea72cef668423638a98e464ac147b0eb1081d023d24d8d38a71110e0c22cd8"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxSmokeInputs.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8396,
+    "sha256": "e261d2c8f00376cba088b0fe0a6dcb54724e6193988017a302e52b31dc9dd468"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxStorage.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12957,
+    "sha256": "ef59f4cfdf7d6bb8148eb28dff4567627a8d9d3b0eec0644e4fcac240e4d97de"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxSupervisor.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 33394,
+    "sha256": "e14903e74148f7b36a2cf295996cd9e171e453d5114693b2d48224621dafa3da"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxTransactions.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 35912,
+    "sha256": "02db344eb25271ec81d88eb095d21b40a49090d517fd9789a9ccf91e588468ad"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxWorkspaceData.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12741,
+    "sha256": "0d53d5e402fbcefa51232f4285bef15bc0a0bd4511b09628a4f5265eb6f56e50"
+  },
+  {
+    "path": "tests/unit/ploinkyBoxWorkspaceInitializer.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6603,
+    "sha256": "f7cae95539357b9ffd577eafbd951712eba1ef23a05080a8666bfdd2f3b06354"
+  },
+  {
+    "path": "tests/unit/podmanStaging.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 24038,
+    "sha256": "e155331661a62a18a335527930360e9190ba193e4ca5a8bd16ff6cad387db1bf"
+  },
+  {
+    "path": "tests/unit/policyAuditLog.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1067,
+    "sha256": "a3de22f314b4199000a9293e0ba37461b94d7a0ef19d11003c8b003d5c8c8788"
+  },
+  {
+    "path": "tests/unit/policyCommandInvoker.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11168,
+    "sha256": "f6c86a1d006d985d1b4693b7e00b3e2292ffacb32c2139b7b25ac4e30cd3756a"
+  },
+  {
+    "path": "tests/unit/policyStateRepository.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7948,
+    "sha256": "d3c3d3ceb8209f5d2595510d7a841cd5838c29e16fca31911791253c9b6e78ea"
+  },
+  {
+    "path": "tests/unit/policyStateStore.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5330,
+    "sha256": "8aac70edf4987853dab08dd4391081e48601bde0c9a21c220309d72137183704"
+  },
+  {
+    "path": "tests/unit/privateListenerSet.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7979,
+    "sha256": "738f845af8073d5425ade83192bedbbb16da803e9eb3853e67e277d35ee65b80"
+  },
+  {
+    "path": "tests/unit/privateRouter.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8799,
+    "sha256": "2b85c268f5b1829500033e7b38215713ac5c72c524467095b6754898c6598aca"
+  },
+  {
+    "path": "tests/unit/profileSystem.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 23163,
+    "sha256": "cb86cf5b4c8ce85ea3c099659707dc112f1e34106b5c188e7c11e533390e3b97"
+  },
+  {
+    "path": "tests/unit/proxyHeaders.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3013,
+    "sha256": "e8adfc38d1f9a7c040685da5c16c7ba411df8cb4148ec00be34e9922a778b718"
+  },
+  {
+    "path": "tests/unit/proxyLimits.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1566,
+    "sha256": "c530cd7686ce289583a7652dc462a8fa3a2a54ec864c00061a826f465604664c"
+  },
+  {
+    "path": "tests/unit/reinstallReadiness.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3634,
+    "sha256": "46164726f0331e5651f8dbbeaf86cfc55bd5702fe9a1dffa00d705c9f755ce61"
+  },
+  {
+    "path": "tests/unit/relayRequestAuth.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 37568,
+    "sha256": "f287906317d7f032062b4afe7803713558be4f15dc8322b8070961c12d9bb48f"
+  },
+  {
+    "path": "tests/unit/repoDiscovery.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11632,
+    "sha256": "36fbec920403daaed506cebaceb01476951c0fa66cffd94127b2db5050d88aa6"
+  },
+  {
+    "path": "tests/unit/requestHash.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5091,
+    "sha256": "b12e9032ad235d748bc3575c34b163b05ccead809587eb9c02567cc331122fe3"
+  },
+  {
+    "path": "tests/unit/routeModeTransitions.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1808,
+    "sha256": "c360d28e2597b10a5c7e62ea04a035d55cc4b700a21acaacf31dc69119866b92"
+  },
+  {
+    "path": "tests/unit/routeMounts.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 568,
+    "sha256": "9a2839c3db382e130e2933fdeefabd936c78286868133cf80379d54182ab90d0"
+  },
+  {
+    "path": "tests/unit/routerAuthorityAttestationRegistry.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11377,
+    "sha256": "ef8e9401aec58050e78ff6355d6d787d53782484e786b7c1c6fbcca512bd3c85"
+  },
+  {
+    "path": "tests/unit/routerAuthorityProducer.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7448,
+    "sha256": "98c978c81fc9095b9454a71a63dd6ad86b3f0dc55c145c3494ffb80010e67798"
+  },
+  {
+    "path": "tests/unit/routerListener.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3487,
+    "sha256": "43f25babba2393ea88a891e2375d5b1e6f439a3b9147f17a6f75ac96190a8e0b"
+  },
+  {
+    "path": "tests/unit/routerPort.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7528,
+    "sha256": "0c4d080e04179e773a4698234b87b2d226824e01d5528695862a08ff857f4e2f"
+  },
+  {
+    "path": "tests/unit/routerRequestJwt.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9967,
+    "sha256": "1c86e1ae3ce2435327d44642ee8747ff0124330992ad6e716f17101e77767958"
+  },
+  {
+    "path": "tests/unit/routerRequestTokenService.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3043,
+    "sha256": "303b24425b9f24da1ebf6f17849b74eb5a087e0a9bd4246cd65be62b19857d3d"
+  },
+  {
+    "path": "tests/unit/runtimeCapabilities.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8207,
+    "sha256": "f2fd645391ca8d1d9f252ec1124c372fa5bc59a3e617d4cc9cdd98a6abfcf19f"
+  },
+  {
+    "path": "tests/unit/runtimeCleanupReceipt.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2906,
+    "sha256": "caccd1c12ec69d6c342b277cc37a52758847909d20efc320e88e2a7a1e981558"
+  },
+  {
+    "path": "tests/unit/runtimeDocumentation.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3791,
+    "sha256": "7863de52d34fb82ccb05beb2ff5692fa0d82d6999f70c601187ef105cbdb7910"
+  },
+  {
+    "path": "tests/unit/runtimeRemovalSnapshot.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 659,
+    "sha256": "e08137cdd79bc52c66ea295c6d695bf9cc5c1bee55b38bd5ca6d538c008d394e"
+  },
+  {
+    "path": "tests/unit/runtimeResourcePlanner.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5573,
+    "sha256": "538ec4d3aa3b11cc1403352e7816e5a6267285f323993a5edd8b35535096b652"
+  },
+  {
+    "path": "tests/unit/runtimeShell.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5464,
+    "sha256": "9facba0eee417c3355a884e2383d767f614ec3cef3ada9290cf0f26aecaa3273"
+  },
+  {
+    "path": "tests/unit/runtimeSourceAbsence.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7929,
+    "sha256": "5c5ee251b092147285b7031fe58a89503d02ffea2b99d890064adebaf2f355ef"
+  },
+  {
+    "path": "tests/unit/sandboxProcessOwnership.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6893,
+    "sha256": "797b9b520e2dc50142716d2fbde2a3eac9d310bad6d12e87c4b3b8bb66593c76"
+  },
+  {
+    "path": "tests/unit/sandboxRuntime.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 32828,
+    "sha256": "e05bf111b305973e5d0276873a052752be830cebf021f3edfb4eedb7ea355561"
+  },
+  {
+    "path": "tests/unit/seatbeltProfile.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10216,
+    "sha256": "04514bfc71a3125ff2f1ae8b8ac50cf559ac152e890f6deb84ee63377f71cf7b"
+  },
+  {
+    "path": "tests/unit/seatbeltServiceManager.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2713,
+    "sha256": "2fed8a59367770dcad1394f2eed3b4aa883837145bb05430702374d919ee1e2c"
+  },
+  {
+    "path": "tests/unit/sessionTokenService.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2177,
+    "sha256": "d6c9b65067706d8587caba97f24679a311b13df731be46c1bbdae771f594d37c"
+  },
+  {
+    "path": "tests/unit/settingsMenuGeneratedKeySafety.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 649,
+    "sha256": "5c145ac43cd4304b65c3587072cc0c0f6f39c91755f6fa7cceae9e52534a7212"
+  },
+  {
+    "path": "tests/unit/skillsManifest.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15953,
+    "sha256": "fa0ada77cc2f4569d51f3fd8fadc0d45fd01e7cd2eca365e02f4541216dcccc3"
+  },
+  {
+    "path": "tests/unit/skillsRefresh.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 29392,
+    "sha256": "3326ea3686906cc410097a0944c82d99dca5e3ce9d4f560e0dcb31c3594667cf"
+  },
+  {
+    "path": "tests/unit/slashAutocomplete.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19810,
+    "sha256": "895008886b60af22945a94ef934f597cc5411fb8b3eb3525572b58f7ce0e4c13"
+  },
+  {
+    "path": "tests/unit/speechFeatureRemoval.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5915,
+    "sha256": "43ed41eda1ace7d73c61031a6792a8e815e5c06a783b9bc5783d8ef11e46f61f"
+  },
+  {
+    "path": "tests/unit/ssoService.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2037,
+    "sha256": "e50f4969dfe3f2a907f0936735a6319f28eb89794543ed402637771b109ec1c0"
+  },
+  {
+    "path": "tests/unit/startupConfigProviders.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14133,
+    "sha256": "ec7fe85f4537f0f99317a4222edd7c125982212ce445d0e328c742abf90e3966"
+  },
+  {
+    "path": "tests/unit/startupReadiness.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3627,
+    "sha256": "99b19a981b3719598d7132846c0dad2beda229d40362d540f20e5a75d0bfa376"
+  },
+  {
+    "path": "tests/unit/subjectIdentityKey.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14383,
+    "sha256": "afc408d8810aeec1fdba39bc875b639655cad1023af27d4fb8e7f98ddd3aa291"
+  },
+  {
+    "path": "tests/unit/targetedContainerLifecycle.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4734,
+    "sha256": "312b44ed608d3cba5f2bd1aae1b2304c2aa524ad022cd54215ffa6ef83ea0e29"
+  },
+  {
+    "path": "tests/unit/taskQueue.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12778,
+    "sha256": "99203da0801197da10c205cf4b9e8315e2fc3150f9bf0b49ff50627d7e4e21cf"
+  },
+  {
+    "path": "tests/unit/toolError.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3033,
+    "sha256": "6d6da9b5a1c4cf6385691592aa7ea8f20edfc532cf421e259a2bd032f36503fd"
+  },
+  {
+    "path": "tests/unit/transcriptFeatureRemoval.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3563,
+    "sha256": "efe5577ebe248b8dff58e021e6d2b06eae613367e41ee1bca31f2c70b1cd4912"
+  },
+  {
+    "path": "tests/unit/updateService.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12758,
+    "sha256": "4990335a1576eb885c4c83cae4ae76de7bf8ef9b28d3312f98143cf54733260b"
+  },
+  {
+    "path": "tests/unit/uploadAdmission.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 17347,
+    "sha256": "d3a6952567f39298ef55c3f446dcf5c750998f8ee83d1b99969be832aefaaf55"
+  },
+  {
+    "path": "tests/unit/userAdminRoutes.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18429,
+    "sha256": "d99adfaca86cbe9faa9594bb50fb38e24a623b4a7730d08be5f5fd305463ea16"
+  },
+  {
+    "path": "tests/unit/userDelegationGrant.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9477,
+    "sha256": "e2d20e57706324f2345464ed7a13f573a36c766529cf59560ee4133bc78b65df"
+  },
+  {
+    "path": "tests/unit/userDelegationGrantService.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 915,
+    "sha256": "717b15035527933e5835aff89073f2dd3a5445c4c15f8555cf0bbe4f541035ae"
+  },
+  {
+    "path": "tests/unit/userIdentityKey.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13281,
+    "sha256": "c3e47262564afd45614dba16dab8504473ef694b11e1cfdc41ad65b2c2c643af"
+  },
+  {
+    "path": "tests/unit/userSessionJwt.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5043,
+    "sha256": "0f192b892ff0dd4ae63ed40b7a442ec5197aacbe8d4e2608dbed2b17c0b1327d"
+  },
+  {
+    "path": "tests/unit/watchdog.test.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6934,
+    "sha256": "e548fbb50dc0f9e83669855f651884efe1593eb6bcd909d2449e4e56a80ac594"
+  },
+  {
+    "path": "tests/unit/webchatBrowserMutationProof.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5341,
+    "sha256": "2d6d3d3298457911731bd2ffd4537f8e662453466a07175024868b9c4f8adb8b"
+  },
+  {
+    "path": "tests/unit/webchatChildProcess.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3242,
+    "sha256": "d36f4f1118ea65c086605e554dd576ba9a42dc9f4b5bd86c3d3bae6c7027c3f9"
+  },
+  {
+    "path": "tests/unit/webchatEnvelope.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6653,
+    "sha256": "95fda65bb165e90d9fc73309c6df6c1f38e48cda23cec440dd0b512854c2ce39"
+  },
+  {
+    "path": "tests/unit/webchatFolderSessions.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10525,
+    "sha256": "9e5983125d1ad7b0fea1eb19f0b7151c63596734c4041d58bd609d6e88d9ab4b"
+  },
+  {
+    "path": "tests/unit/webchatHeaderMenu.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4848,
+    "sha256": "1b55f98bc44d5c4cd15b0ae21e79a9e29cbcd11c36f5b36dadc754e0c73610e8"
+  },
+  {
+    "path": "tests/unit/webchatInteraction.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20581,
+    "sha256": "90760eee18994b39b34ee5bc190cba8e8b7eebc56af18220bfbe343da24f6194"
+  },
+  {
+    "path": "tests/unit/webchatLinkOverflow.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1584,
+    "sha256": "55805e4f2b6f4ba205f9a9ee29f559c366161a78369771bae34fcd5a016fa0fc"
+  },
+  {
+    "path": "tests/unit/webchatReferences.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5121,
+    "sha256": "da0eb48b6b778a13489dcb99f99b5a1722a0959f0fd003243e91c8355f98b738"
+  },
+  {
+    "path": "tests/unit/webchatRuntimeState.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21227,
+    "sha256": "758bd1ecdb434684c37d4c10eb03b1f3c0804717e9df27f2db53cdf275ac15f5"
+  },
+  {
+    "path": "tests/unit/webchatSessionApi.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6670,
+    "sha256": "d80557f5d7009caf9e8dc7594959831e7fe616871349b549103a250b12e4ddb1"
+  },
+  {
+    "path": "tests/unit/webchatSessionsUi.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5233,
+    "sha256": "88211c3fd4e545077e8d9f310b10f47bb3e6dc97752e4e93330f2243d530eae9"
+  },
+  {
+    "path": "tests/unit/webchatSkillsUi.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6865,
+    "sha256": "f5b665b195aade9f6a7f7f7c66b86d0c8b89a2fb21656f3465490a789beb3c81"
+  },
+  {
+    "path": "tests/unit/webchatSlashCommandsSecurity.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3586,
+    "sha256": "2a0aa15f275507674c36b28b977c4d5b549252a29c4dfa596f9b1830079de2cf"
+  },
+  {
+    "path": "tests/unit/webchatSuggestionsFiles.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16921,
+    "sha256": "f38f2ec795698ae39e2ea9f512822bbc9b5c0f065f355f8dd0988badb238095a"
+  },
+  {
+    "path": "tests/unit/webchatTaskControl.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13761,
+    "sha256": "86a2099961f88cc07019867484f865fd4e2570c5eccdd3ea0e48e01849684f0d"
+  },
+  {
+    "path": "tests/unit/webchatTaskItems.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1574,
+    "sha256": "d346ae562d3ea1d694aca139d35656658ab87f1ffa769b24f784ff56e7e9ce21"
+  },
+  {
+    "path": "tests/unit/webchatTaskLogFollow.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1405,
+    "sha256": "d56c62d65b721e4ce615bfd5ad517be35be130c88983d71daebbbfd83e659039"
+  },
+  {
+    "path": "tests/unit/webchatTaskPresentation.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11905,
+    "sha256": "c472ac5262ce68b4bff26c8119f9f18084890f164889feae8ce2ddfb0ec829f5"
+  },
+  {
+    "path": "tests/unit/webchatTaskStore.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3135,
+    "sha256": "f9f05876731ce8a159f6079ea7f95257e91e070bf6e803da96e1c13e84c1be85"
+  },
+  {
+    "path": "tests/unit/webchatTaskView.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 26316,
+    "sha256": "64252c32539781e822df45e90c53dbfd2eb34dda79093b68a842a057f27f6385"
+  },
+  {
+    "path": "tests/unit/webchatTaskViewStandalone.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7573,
+    "sha256": "96ad506a55ef7322ee1f7c94e580f39de1e8d4b95644d29970073d186c7f1240"
+  },
+  {
+    "path": "tests/unit/webchatUploadDestination.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1885,
+    "sha256": "e44c7fd82116892e402f9aeb2eb557c2b73e4c16d5e618775ebd73c8d26f8d65"
+  },
+  {
+    "path": "tests/unit/webchatUploadPaths.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14076,
+    "sha256": "990805ad9f84bfcdf91e6b875057cff2352bc36fc90f0a12a14113f2cacffef7"
+  },
+  {
+    "path": "tests/unit/webchatWorkspaceBanner.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2219,
+    "sha256": "17ce402c96f641b9b3f9993a1440fe840b4b78b57f58a21f6cb82dd5b049a5b8"
+  },
+  {
+    "path": "tests/unit/webchatWorkspaceFileIndex.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1898,
+    "sha256": "727e3b6e0c90b25cfce2709f3f3a830c020c21fa1be81d86c92b6fc8595188f1"
+  },
+  {
+    "path": "tests/unit/webchatWorkspaceFileLinks.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 9219,
+    "sha256": "03e471204a04e1fbf73bdc9c1fbc868cc7bdd2273dbe3804bac91b914888340b"
+  },
+  {
+    "path": "tests/unit/wildcardDemo.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6134,
+    "sha256": "565bef71aef7e07d63f382d1e673945cd819269b06c3326d46c0adff7671595e"
+  },
+  {
+    "path": "tests/unit/wildcardEnv.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14512,
+    "sha256": "a02fa8bd19f31282c53a50f6f006351bfdeaacb3286ed98aab3ad13b4973369f"
+  },
+  {
+    "path": "tests/unit/wildcardEnvIntegration.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16639,
+    "sha256": "b03fdd2528ae685141bf38a0755c43339bcf6dedb3b4bfb98dd4bd12b9a9d0f9"
+  },
+  {
+    "path": "tests/unit/workspaceDependencyGraph.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 95403,
+    "sha256": "e5145162a1dad7deceb9eca173eed08bdf88eb7e2f998c304579cdea74984b2b"
+  },
+  {
+    "path": "tests/unit/workspaceStaticFiles.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3491,
+    "sha256": "7d42a7e68d19ed2b6a5fcf922c0a83876cc61c055e04aab3cf206b8a7e780c47"
+  },
+  {
+    "path": "webLibs",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "webLibs/qrLib",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "webLibs/qrLib/README.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13227,
+    "sha256": "9b32e24901afcd138eb1a8a665dae245266324c619f51f53b1b4094bc66597de"
+  },
+  {
+    "path": "webLibs/qrLib/qr.min.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 35874,
+    "sha256": "d2959bdd6173f435c8b12b0092be84cdcf852ec899fc1140f61c170ac986992d"
+  },
+  {
+    "path": "webLibs/webskel",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "webLibs/webskel/webskel.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 33359,
+    "sha256": "cb9394d2536ba081726c5bc9a7d2fee12f1acd19226110bec4d0c96793892ed2"
+  },
+  {
+    "path": "webLibs/webskel/webskel.umd.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 22170,
+    "sha256": "e82e07914f6690e41d6c177f98d4d1af7beb05bf84b055ef777a068157f635a1"
+  }
+]

@@ -1,0 +1,807 @@
+806 src/runtime/backends/builtin/ploinky-agent-openai.backend.mjs
+     1	/**
+     2	 * Ploinky agent OpenAI backend module (`adapter_key = ploinky-agent-openai`).
+     3	 *
+     4	 * Calls a discovered Ploinky agent's `/v1/chat/completions` THROUGH the Ploinky
+     5	 * router, authenticating with an HTTP Agent Assertion that Soul Gateway signs
+     6	 * with its own injected `PLOINKY_AGENT_SECRET`. Providers for these agents are
+     7	 * written by the agent-discovery reconciler with `auth_strategy = 'none'`: no
+     8	 * upstream credential is leased; this backend self-signs every call.
+     9	 *
+    10	 * ── Why this backend owns its HTTP transport (documented decision) ──────────
+    11	 *
+    12	 * Soul Gateway's convention is that request-time LLM inference goes through
+    13	 * `achillesAgentLib` and LLM `execute()` paths do not add ad-hoc upstream HTTP.
+    14	 * That rule targets VENDOR LLM inference (OpenAI, Anthropic, Gemini, …). This
+    15	 * backend is NOT vendor inference: it is internal agent-to-agent transport
+    16	 * through the Ploinky router (the router's default responder returns an agent
+    17	 * capability message, not vendor completion), analogous to the router's own
+    18	 * discovery / delegation calls.
+    19	 *
+    20	 * The assertion's `rch` must bind the EXACT outbound body bytes via
+    21	 * `computeRchHttp`, byte-for-byte matching what the router + AgentServer
+    22	 * recompute. The Achilles execution path (`createAchillesExecutionHandle` →
+    23	 * `callLLMStreaming`) serializes the body internally, so it cannot expose the
+    24	 * exact bytes for signing. This backend therefore owns serialization, signing,
+    25	 * and the `node:http`/`node:https` POST so the bytes it hashes are the bytes it
+    26	 * sends. The response parser accepts both non-streaming OpenAI JSON and SSE,
+    27	 * then emits the gateway's normalized-stream contract.
+    28	 */
+    29	
+    30	import { request as httpsRequest } from 'node:https';
+    31	import { request as httpRequest } from 'node:http';
+    32	import {
+    33	    ProviderAuthError,
+    34	    ProviderRateLimitError,
+    35	    ProviderQuotaError,
+    36	    ProviderContentPolicyError,
+    37	    ProviderModelNotFoundError,
+    38	} from '../../../core/errors.mjs';
+    39	import { HTTP_STATUS } from '../../../core/constants.mjs';
+    40	import {
+    41	    classifyTransportOrServerError,
+    42	    getProviderErrorType,
+    43	    getProviderStatus,
+    44	} from '../error-helpers.mjs';
+    45	import {
+    46	    signOpenAiAgentAssertion,
+    47	    signOpenAiModelsAssertion,
+    48	    readAgentSecretBuffer,
+    49	} from '../ploinky/agent-assertion.mjs';
+    50	import { loadVerifiedPloinkyRouterDescriptor } from '../../../ploinky/router-descriptor.mjs';
+    51	
+    52	const PROVIDER_LABEL = 'ploinky-agent-openai';
+    53	
+    54	// ── Manifest ────────────────────────────────────────────────────────
+    55	
+    56	const manifest = {
+    57	    key: 'ploinky-agent-openai',
+    58	    kind: 'external_api',
+    59	    // No upstream credential is leased; the backend self-signs each call with
+    60	    // the injected PLOINKY_AGENT_SECRET. Providers are reconciled with
+    61	    // auth_strategy='none' and route here by adapter_key.
+    62	    authStrategy: 'none',
+    63	    supportsStreaming: true,
+    64	    supportsTools: true,
+    65	    supportedFormats: ['openai_chat'],
+    66	    displayName: 'Ploinky Agent (OpenAI-compatible)',
+    67	    // Discovered + reconciled automatically; never picked from the dropdown.
+    68	    hidden: true,
+    69	};
+    70	
+    71	// ── Config resolution ───────────────────────────────────────────────
+    72	
+    73	/**
+    74	 * Read the Ploinky agent identity/transport config the backend needs to sign
+    75	 * and route. The Ploinky runtime injects these into the process environment, so
+    76	 * `process.env` is the source of truth (the same pattern other backends use for
+    77	 * runtime-injected values). `envOverride` exists purely so tests can drive the
+    78	 * backend without mutating the global environment.
+    79	 *
+    80	 * @param {object} [envOverride]
+    81	 * @returns {{ routerUrl: string, agentId: string, secretHex: string }}
+    82	 */
+    83	function readPloinkyPrincipalConfig(envOverride) {
+    84	    const env = envOverride || process.env;
+    85	    return {
+    86	        routerUrl: String(env.PLOINKY_ROUTER_URL || '').trim(),
+    87	        agentId: String(env.PLOINKY_AGENT_ID || '').trim(),
+    88	    };
+    89	}
+    90	
+    91	function readPloinkySecret(envOverride) {
+    92	    const env = envOverride || process.env;
+    93	    return String(env.PLOINKY_AGENT_SECRET || '').trim();
+    94	}
+    95	
+    96	async function resolveVerifiedRouter(ctx, providerRecord) {
+    97	    const runtime = await loadVerifiedPloinkyRouterDescriptor({
+    98	        env: ctx?.routerDescriptorEnv || process.env,
+    99	        loadVerifier: ctx?.loadDescriptorVerifier,
+   100	    });
+   101	    const configuredOrigin = String(ctx?.env?.PLOINKY_ROUTER_URL || '').trim();
+   102	    const providerOrigin = String(providerRecord?.baseUrl || providerRecord?.base_url || '').trim();
+   103	    for (const [label, origin] of [
+   104	        ['PLOINKY_ROUTER_URL', configuredOrigin],
+   105	        ['provider base_url', providerOrigin],
+   106	    ]) {
+   107	        if (origin && origin.replace(/\/+$/, '') !== runtime.physicalOrigin) {
+   108	            throw new Error(`${label} disagrees with the verified Router physical origin`);
+   109	        }
+   110	    }
+   111	    return runtime;
+   112	}
+   113	
+   114	/**
+   115	 * Pull the route key and target subject id from provider metadata. The
+   116	 * discovery reconciler writes both: `routeKey` is the route name the URL
+   117	 * addresses (and the value the router checks the assertion's `targetAgent`
+   118	 * against); `subjectId` (`agent:<repo>/<agent>`) is informational here.
+   119	 *
+   120	 * @param {object} providerRecord
+   121	 * @returns {{ routeKey: string, subjectId: string }}
+   122	 */
+   123	function readProviderMetadata(providerRecord) {
+   124	    const metadata = providerRecord?.metadata || {};
+   125	    return {
+   126	        routeKey: String(metadata.routeKey || '').trim(),
+   127	        subjectId: String(metadata.subjectId || '').trim(),
+   128	    };
+   129	}
+   130	
+   131	// ── Request body assembly ───────────────────────────────────────────
+   132	
+   133	/**
+   134	 * Build the OpenAI chat-completions request payload from the normalized request
+   135	 * and the resolved model. Mirrors the parameter passthrough of the OpenAI
+   136	 * backend so a Ploinky agent sees the same request shape any OpenAI-compatible
+   137	 * vendor would.
+   138	 *
+   139	 * @param {object} normalizedReq
+   140	 * @param {string} modelId
+   141	 * @param {object} settings
+   142	 * @returns {object}
+   143	 */
+   144	function buildPayload(normalizedReq, modelId, settings, { stream = false } = {}) {
+   145	    const payload = {
+   146	        model: modelId,
+   147	        messages: normalizedReq.messages || [],
+   148	        stream,
+   149	    };
+   150	
+   151	    if (normalizedReq.max_tokens != null)
+   152	        payload.max_tokens = normalizedReq.max_tokens;
+   153	    if (normalizedReq.temperature != null)
+   154	        payload.temperature = normalizedReq.temperature;
+   155	    if (normalizedReq.top_p != null) payload.top_p = normalizedReq.top_p;
+   156	    if (normalizedReq.stop != null) payload.stop = normalizedReq.stop;
+   157	    if (normalizedReq.tools && normalizedReq.tools.length > 0)
+   158	        payload.tools = normalizedReq.tools;
+   159	    if (normalizedReq.tool_choice != null)
+   160	        payload.tool_choice = normalizedReq.tool_choice;
+   161	    if (normalizedReq.response_format != null)
+   162	        payload.response_format = normalizedReq.response_format;
+   163	    if (settings && settings.extra_body)
+   164	        Object.assign(payload, settings.extra_body);
+   165	
+   166	    return payload;
+   167	}
+   168	
+   169	function modelSupportsStreaming(model) {
+   170	    return (
+   171	        model?.supportsStreaming === true ||
+   172	        model?.supports_streaming === true ||
+   173	        model?.capabilities?.supportsStreaming === true ||
+   174	        model?.capabilities?.supports_streaming === true
+   175	    );
+   176	}
+   177	
+   178	// ── Backend module ──────────────────────────────────────────────────
+   179	
+   180	export const backendModule = {
+   181	    manifest,
+   182	
+   183	    async init() {
+   184	        // No shared resources to warm.
+   185	    },
+   186	
+   187	    async shutdown() {
+   188	        // No resources to release.
+   189	    },
+   190	
+   191	    validateProviderRecord(providerRecord) {
+   192	        if (!providerRecord) {
+   193	            throw new Error('Ploinky agent provider requires a record');
+   194	        }
+   195	        const { routeKey } = readProviderMetadata(providerRecord);
+   196	        if (!routeKey) {
+   197	            throw new Error(
+   198	                'Ploinky agent provider requires metadata.routeKey'
+   199	            );
+   200	        }
+   201	        // base_url carries the router origin; the reconciler sets it to
+   202	        // PLOINKY_ROUTER_URL. Accept it but do not require it — the backend
+   203	        // falls back to the injected PLOINKY_ROUTER_URL when absent.
+   204	    },
+   205	
+   206	    validateModelRecord(modelRecord) {
+   207	        if (!modelRecord.providerModelId && !modelRecord.modelKey) {
+   208	            throw new Error(
+   209	                'Ploinky agent model requires providerModelId or modelKey'
+   210	            );
+   211	        }
+   212	    },
+   213	
+   214	    async discoverModels(ctx) {
+   215	        const runtime = await resolveVerifiedRouter(ctx, ctx?.providerRecord);
+   216	        const { routeKey, subjectId } = readProviderMetadata(
+   217	            ctx?.providerRecord
+   218	        );
+   219	        if (!routeKey) {
+   220	            throw new Error(
+   221	                'Ploinky agent model discovery requires provider metadata.routeKey'
+   222	            );
+   223	        }
+   224	        const { agentId } = readPloinkyPrincipalConfig(ctx?.env);
+   225	        if (runtime.agentPrincipal !== agentId) {
+   226	            throw new Error('PLOINKY_AGENT_ID disagrees with the verified Router descriptor');
+   227	        }
+   228	        if (!agentId) {
+   229	            throw new Error(
+   230	                'Ploinky agent model discovery requires PLOINKY_AGENT_ID'
+   231	            );
+   232	        }
+   233	        const secret = readAgentSecretBuffer(readPloinkySecret(ctx?.env));
+   234	        if (!secret) {
+   235	            throw new Error(
+   236	                'Ploinky agent model discovery requires a hex PLOINKY_AGENT_SECRET'
+   237	            );
+   238	        }
+   239	
+   240	        const { assertion } = signOpenAiModelsAssertion({
+   241	            targetAgent: routeKey,
+   242	            secret,
+   243	            self: agentId,
+   244	        });
+   245	        const url = runtime.resolveOperation(`/${routeKey}/v1/models`);
+   246	        const parsed = await requestJson(url, 'GET', {
+   247	            Authorization: `Bearer ${assertion}`,
+   248	            Accept: 'application/json',
+   249	            Host: runtime.requestAuthority,
+   250	        }, null, ctx?.signal);
+   251	        return normalizeModelsResponse(parsed, {
+   252	            providerMetadata: ctx?.providerRecord?.metadata || {},
+   253	            subjectId,
+   254	            routeKey,
+   255	        });
+   256	    },
+   257	
+   258	    async execute(ctx) {
+   259	        const {
+   260	            request: normalizedReq,
+   261	            resolvedModel,
+   262	            providerRecord,
+   263	            signal,
+   264	        } = ctx;
+   265	
+   266	        const runtime = await resolveVerifiedRouter(ctx, providerRecord);
+   267	        const { routeKey, subjectId } = readProviderMetadata(providerRecord);
+   268	        if (!routeKey) {
+   269	            throw new Error(
+   270	                'Ploinky agent backend requires provider metadata.routeKey'
+   271	            );
+   272	        }
+   273	        const { agentId } = readPloinkyPrincipalConfig(ctx.env);
+   274	        if (runtime.agentPrincipal !== agentId) {
+   275	            throw new Error('PLOINKY_AGENT_ID disagrees with the verified Router descriptor');
+   276	        }
+   277	        if (!agentId) {
+   278	            throw new Error(
+   279	                'Ploinky agent backend requires PLOINKY_AGENT_ID'
+   280	            );
+   281	        }
+   282	        const secret = readAgentSecretBuffer(readPloinkySecret(ctx.env));
+   283	        if (!secret) {
+   284	            throw new Error(
+   285	                'Ploinky agent backend requires a hex PLOINKY_AGENT_SECRET'
+   286	            );
+   287	        }
+   288	
+   289	        const modelId = resolvedModel.providerModelId || resolvedModel.modelKey;
+   290	        const settings = providerRecord.settings || {};
+   291	        const payload = buildPayload(normalizedReq, modelId, settings, {
+   292	            stream: modelSupportsStreaming(resolvedModel),
+   293	        });
+   294	
+   295	        // Serialize ONCE. The exact Buffer we hash is the exact Buffer we send;
+   296	        // nothing re-serializes between signing and the POST.
+   297	        const bodyBytes = Buffer.from(JSON.stringify(payload));
+   298	
+   299	        const { assertion } = signOpenAiAgentAssertion({
+   300	            body: bodyBytes,
+   301	            targetAgent: routeKey,
+   302	            secret,
+   303	            self: agentId,
+   304	        });
+   305	
+   306	        const url = runtime.resolveOperation(`/${routeKey}/v1/chat/completions`);
+   307	        const headers = {
+   308	            'Content-Type': 'application/json',
+   309	            Authorization: `Bearer ${assertion}`,
+   310	            Host: runtime.requestAuthority,
+   311	        };
+   312	
+   313	        const stream = makeOpenAiCompletionStream(url, headers, bodyBytes, signal, {
+   314	            requestId: ctx.requestId,
+   315	            model: modelId,
+   316	            subjectId,
+   317	        });
+   318	
+   319	        return {
+   320	            accountId: null,
+   321	            stream,
+   322	            abort: async () => {},
+   323	        };
+   324	    },
+   325	
+   326	    classifyError(error, _ctx) {
+   327	        const status = getProviderStatus(error);
+   328	        const body = error.body || {};
+   329	        const errorType = getProviderErrorType(error);
+   330	
+   331	        if (status === HTTP_STATUS.UNAUTHORIZED) {
+   332	            return new ProviderAuthError(
+   333	                PROVIDER_LABEL,
+   334	                'Agent assertion rejected by router'
+   335	            );
+   336	        }
+   337	        if (status === HTTP_STATUS.FORBIDDEN) {
+   338	            return new ProviderAuthError(PROVIDER_LABEL, 'Access denied');
+   339	        }
+   340	        if (status === HTTP_STATUS.NOT_FOUND) {
+   341	            const model =
+   342	                body.error?.param === 'model'
+   343	                    ? body.error?.message
+   344	                    : 'unknown';
+   345	            return new ProviderModelNotFoundError(PROVIDER_LABEL, model);
+   346	        }
+   347	        if (status === HTTP_STATUS.TOO_MANY_REQUESTS) {
+   348	            if (
+   349	                errorType === 'insufficient_quota' ||
+   350	                errorType === 'billing_hard_limit_reached'
+   351	            ) {
+   352	                return new ProviderQuotaError(PROVIDER_LABEL);
+   353	            }
+   354	            return new ProviderRateLimitError(PROVIDER_LABEL);
+   355	        }
+   356	        if (status === HTTP_STATUS.BAD_REQUEST) {
+   357	            if (errorType === 'content_policy_violation') {
+   358	                return new ProviderContentPolicyError(PROVIDER_LABEL);
+   359	            }
+   360	        }
+   361	        if (status >= HTTP_STATUS.INTERNAL_SERVER_ERROR && status < 600) {
+   362	            return classifyTransportOrServerError(PROVIDER_LABEL, error, status);
+   363	        }
+   364	
+   365	        return classifyTransportOrServerError(PROVIDER_LABEL, error);
+   366	    },
+   367	};
+   368	
+   369	// ── URL assembly ────────────────────────────────────────────────────
+   370	
+   371	/**
+   372	 * Build the router URL `<base>/<routeKey>/v1/chat/completions`, tolerating a
+   373	 * trailing slash on the base origin.
+   374	 *
+   375	 * @param {string} baseUrl
+   376	 * @param {string} routeKey
+   377	 * @returns {URL}
+   378	 */
+   379	export function buildRouterUrl(baseUrl, routeKey) {
+   380	    const origin = String(baseUrl).replace(/\/+$/, '');
+   381	    const key = String(routeKey).replace(/^\/+|\/+$/g, '');
+   382	    return new URL(`${origin}/${key}/v1/chat/completions`);
+   383	}
+   384	
+   385	export function buildModelsUrl(baseUrl, routeKey) {
+   386	    const origin = String(baseUrl).replace(/\/+$/, '');
+   387	    const key = String(routeKey).replace(/^\/+|\/+$/g, '');
+   388	    return new URL(`${origin}/${key}/v1/models`);
+   389	}
+   390	
+   391	function normalizeModelsResponse(parsed, meta = {}) {
+   392	    const rows = Array.isArray(parsed)
+   393	        ? parsed
+   394	        : (Array.isArray(parsed?.data) ? parsed.data : []);
+   395	    return rows
+   396	        .map((row) => normalizeModelDescriptor(row, meta))
+   397	        .filter(Boolean);
+   398	}
+   399	
+   400	function agentPathFromSubjectId(value) {
+   401	    const text = String(value || '').trim();
+   402	    return text.startsWith('agent:') ? text.slice('agent:'.length) : text;
+   403	}
+   404	
+   405	function discoveredAgentModelKey(providerMetadata, subjectId, providerModelId) {
+   406	    const repo = String(providerMetadata?.repo || '').trim();
+   407	    const agent = String(providerMetadata?.agent || '').trim();
+   408	    const model = String(providerModelId || '').trim();
+   409	    if (repo && agent && model) {
+   410	        return `${repo}/${agent}/${model}`;
+   411	    }
+   412	    const subjectPath = agentPathFromSubjectId(subjectId);
+   413	    return subjectPath && model ? `${subjectPath}/${model}` : undefined;
+   414	}
+   415	
+   416	function normalizeModelDescriptor(row, meta) {
+   417	    if (!row || typeof row !== 'object') {
+   418	        return null;
+   419	    }
+   420	    const modelId = String(row.modelId || row.providerModelId || row.id || '').trim();
+   421	    if (!modelId) {
+   422	        return null;
+   423	    }
+   424	    const providerMetadata = meta.providerMetadata || {};
+   425	    const metadata = {
+   426	        ...(row.metadata && typeof row.metadata === 'object' ? row.metadata : {}),
+   427	        discoverySource: 'ploinky-agent-discovery',
+   428	        subjectId: meta.subjectId || providerMetadata.subjectId || null,
+   429	        routeKey: meta.routeKey || providerMetadata.routeKey || null,
+   430	        repo: providerMetadata.repo || null,
+   431	        agent: providerMetadata.agent || null,
+   432	    };
+   433	    return {
+   434	        modelId,
+   435	        providerModelId: String(row.providerModelId || modelId),
+   436	        modelKey: discoveredAgentModelKey(
+   437	            providerMetadata,
+   438	            meta.subjectId || providerMetadata.subjectId || null,
+   439	            row.providerModelId || modelId
+   440	        ),
+   441	        displayName: row.displayName || row.name || modelId,
+   442	        contextWindow: row.contextWindow ?? row.context_window ?? row.contextLength ?? null,
+   443	        maxOutputTokens: row.maxOutputTokens ?? row.max_output_tokens ?? row.maxCompletionTokens ?? null,
+   444	        supportsTools: row.supportsTools ?? row.supports_tools ?? row.capabilities?.supportsTools ?? true,
+   445	        supportsStreaming: row.supportsStreaming ?? row.supports_streaming ?? row.capabilities?.supportsStreaming ?? true,
+   446	        supportsVision: row.supportsVision ?? row.supports_vision ?? row.capabilities?.supportsVision ?? false,
+   447	        pricing: row.pricing || {},
+   448	        pricingMode: row.pricingMode,
+   449	        inputPricePerMillion: row.inputPricePerMillion,
+   450	        outputPricePerMillion: row.outputPricePerMillion,
+   451	        requestPriceUsd: row.requestPriceUsd,
+   452	        isFree: row.isFree,
+   453	        capabilities: row.capabilities || {},
+   454	        tags: Array.isArray(row.tags) ? row.tags : [],
+   455	        metadata,
+   456	    };
+   457	}
+   458	
+   459	// ── OpenAI response streaming ────────────────────────────────────────
+   460	
+   461	/**
+   462	 * An agent can only report a failure in-band once HTTP 200 has been sent:
+   463	 * AgentServer flushes the SSE headers before a command handler starts, and a
+   464	 * handler that exits cleanly may still print an error body. Such a payload has
+   465	 * an `error` member and no `choices`. It must surface as a thrown, classifiable
+   466	 * error rather than as a completion without content.
+   467	 *
+   468	 * @param {*} parsed
+   469	 * @returns {boolean}
+   470	 */
+   471	function isInBandError(parsed) {
+   472	    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return false;
+   473	    if (parsed.error === undefined || parsed.error === null || parsed.error === false) return false;
+   474	    return !Array.isArray(parsed.choices) || parsed.choices.length === 0;
+   475	}
+   476	
+   477	/**
+   478	 * Build the error thrown for an in-band agent failure. The shape matches the
+   479	 * HTTP error branch (`status` plus the parsed `body`), so `classifyError` maps
+   480	 * it the same way. A numeric `error.status` or `error.code` in the HTTP error
+   481	 * range selects the status; anything else is a bad-gateway failure.
+   482	 *
+   483	 * @param {object} parsed
+   484	 * @returns {Error}
+   485	 */
+   486	function inBandAgentError(parsed) {
+   487	    const detail = parsed.error;
+   488	    const info = detail && typeof detail === 'object' ? detail : { message: String(detail) };
+   489	    const declared = [info.status, info.code, parsed.status].find(
+   490	        (value) => Number.isInteger(value) && value >= 400 && value <= 599
+   491	    );
+   492	    const message = typeof info.message === 'string' && info.message ? info.message : 'unspecified agent error';
+   493	    const err = new Error(`Ploinky agent OpenAI in-band error: ${message}`);
+   494	    err.status = declared || HTTP_STATUS.BAD_GATEWAY;
+   495	    err.body = { ...parsed, error: info };
+   496	    return err;
+   497	}
+   498	
+   499	/**
+   500	 * Error for an SSE response that ended without `[DONE]` and without any
+   501	 * `finish_reason`: the agent stopped mid-answer, so the text received so far
+   502	 * is not a completed response.
+   503	 *
+   504	 * @returns {Error}
+   505	 */
+   506	function truncatedStreamError() {
+   507	    const err = new Error('Ploinky agent OpenAI stream ended before completion');
+   508	    err.status = HTTP_STATUS.BAD_GATEWAY;
+   509	    err.body = {
+   510	        error: {
+   511	            type: 'stream_truncated',
+   512	            message: 'The agent stream ended without [DONE] or a finish_reason',
+   513	        },
+   514	    };
+   515	    return err;
+   516	}
+   517	
+   518	async function* makeOpenAiCompletionStream(url, headers, payload, signal, meta) {
+   519	    const response = await doRequest(url, 'POST', headers, payload, signal);
+   520	
+   521	    if (response.statusCode >= 400) {
+   522	        const body = await collectBody(response);
+   523	        let parsed = {};
+   524	        try {
+   525	            parsed = JSON.parse(body);
+   526	        } catch {
+   527	            /* not JSON */
+   528	        }
+   529	        const err = new Error(
+   530	            `Ploinky agent OpenAI error: ${response.statusCode}`
+   531	        );
+   532	        err.status = response.statusCode;
+   533	        err.body = parsed;
+   534	        throw err;
+   535	    }
+   536	
+   537	    const contentType = String(response.headers?.['content-type'] || '');
+   538	    if (!contentType.includes('text/event-stream')) {
+   539	        const body = await collectBody(response);
+   540	        let parsed;
+   541	        try {
+   542	            parsed = JSON.parse(body || '{}');
+   543	        } catch (err) {
+   544	            const parseError = new Error(
+   545	                `Ploinky agent OpenAI returned invalid JSON: ${err.message}`
+   546	            );
+   547	            parseError.status = HTTP_STATUS.BAD_GATEWAY;
+   548	            parseError.body = {};
+   549	            throw parseError;
+   550	        }
+   551	        if (isInBandError(parsed)) throw inBandAgentError(parsed);
+   552	        yield* completionJsonToEvents(parsed, meta);
+   553	        return;
+   554	    }
+   555	
+   556	    const state = {};
+   557	
+   558	    for await (const event of parseSSE(response)) {
+   559	        if (event.data === '[DONE]') {
+   560	            yield {
+   561	                type: 'done',
+   562	                data: {
+   563	                    finish_reason: state.lastFinishReason || 'stop',
+   564	                    model: state.model || meta.model || null,
+   565	                },
+   566	            };
+   567	            return;
+   568	        }
+   569	
+   570	        let parsed;
+   571	        try {
+   572	            parsed = JSON.parse(event.data);
+   573	        } catch {
+   574	            continue;
+   575	        }
+   576	
+   577	        // Checked before `message_start`, so a failure reported as the first
+   578	        // frame never looks like the beginning of an answer.
+   579	        if (isInBandError(parsed)) throw inBandAgentError(parsed);
+   580	
+   581	        if (!state.started) {
+   582	            state.started = true;
+   583	            state.model = parsed.model || meta.model || null;
+   584	            yield {
+   585	                type: 'message_start',
+   586	                data: {
+   587	                    id: parsed.id || meta.requestId || null,
+   588	                    model: state.model,
+   589	                    role: 'assistant',
+   590	                },
+   591	            };
+   592	        }
+   593	
+   594	        for (const choice of parsed.choices || []) {
+   595	            const delta = choice.delta || {};
+   596	
+   597	            if (delta.content) {
+   598	                yield { type: 'text_delta', data: { text: delta.content } };
+   599	            }
+   600	
+   601	            if (delta.tool_calls) {
+   602	                for (const tc of delta.tool_calls) {
+   603	                    yield {
+   604	                        type: 'tool_call_delta',
+   605	                        data: {
+   606	                            index: tc.index ?? 0,
+   607	                            id: tc.id || undefined,
+   608	                            name: tc.function?.name || undefined,
+   609	                            arguments: tc.function?.arguments || undefined,
+   610	                        },
+   611	                    };
+   612	                }
+   613	            }
+   614	
+   615	            if (choice.finish_reason) {
+   616	                state.lastFinishReason = choice.finish_reason;
+   617	            }
+   618	        }
+   619	
+   620	        if (parsed.usage) {
+   621	            yield {
+   622	                type: 'usage',
+   623	                data: {
+   624	                    input_tokens: parsed.usage.prompt_tokens || 0,
+   625	                    output_tokens: parsed.usage.completion_tokens || 0,
+   626	                    total_tokens: parsed.usage.total_tokens || 0,
+   627	                },
+   628	            };
+   629	        }
+   630	    }
+   631	
+   632	    // The response ended without `[DONE]`. A `finish_reason` means the answer
+   633	    // itself completed and only the terminator is missing, so it still counts.
+   634	    // Without one the agent stopped mid-answer (for example a command handler
+   635	    // that died after writing partial output), which must not pass as success.
+   636	    if (!state.lastFinishReason) throw truncatedStreamError();
+   637	    yield {
+   638	        type: 'done',
+   639	        data: {
+   640	            finish_reason: state.lastFinishReason,
+   641	            model: state.model || meta.model || null,
+   642	        },
+   643	    };
+   644	}
+   645	
+   646	function* completionJsonToEvents(parsed, meta) {
+   647	    const choice = Array.isArray(parsed?.choices) ? parsed.choices[0] || {} : {};
+   648	    const message = choice.message || {};
+   649	    const content = typeof message.content === 'string' ? message.content : '';
+   650	    const model = parsed?.model || meta.model || null;
+   651	
+   652	    yield {
+   653	        type: 'message_start',
+   654	        data: {
+   655	            id: parsed?.id || meta.requestId || null,
+   656	            model,
+   657	            role: message.role || 'assistant',
+   658	        },
+   659	    };
+   660	
+   661	    if (content) {
+   662	        yield { type: 'text_delta', data: { text: content } };
+   663	    }
+   664	
+   665	    if (Array.isArray(message.tool_calls)) {
+   666	        for (let index = 0; index < message.tool_calls.length; index += 1) {
+   667	            const toolCall = message.tool_calls[index] || {};
+   668	            yield {
+   669	                type: 'tool_call_delta',
+   670	                data: {
+   671	                    index,
+   672	                    id: toolCall.id || undefined,
+   673	                    name: toolCall.function?.name || undefined,
+   674	                    arguments: toolCall.function?.arguments || undefined,
+   675	                },
+   676	            };
+   677	        }
+   678	    }
+   679	
+   680	    if (parsed?.usage) {
+   681	        yield {
+   682	            type: 'usage',
+   683	            data: {
+   684	                input_tokens: parsed.usage.prompt_tokens || 0,
+   685	                output_tokens: parsed.usage.completion_tokens || 0,
+   686	                total_tokens: parsed.usage.total_tokens || 0,
+   687	            },
+   688	        };
+   689	    }
+   690	
+   691	    yield {
+   692	        type: 'done',
+   693	        data: {
+   694	            finish_reason: choice.finish_reason || 'stop',
+   695	            model,
+   696	        },
+   697	    };
+   698	}
+   699	
+   700	// ── HTTP helpers (node:http / node:https only) ──────────────────────
+   701	
+   702	function doRequest(url, method, headers, body, signal) {
+   703	    return new Promise((resolve, reject) => {
+   704	        const isHttps = url.protocol === 'https:';
+   705	        const reqFn = isHttps ? httpsRequest : httpRequest;
+   706	
+   707	        const opts = {
+   708	            hostname: url.hostname,
+   709	            port: url.port || (isHttps ? 443 : 80),
+   710	            path: url.pathname + url.search,
+   711	            method,
+   712	            headers: { ...headers, 'Content-Length': Buffer.byteLength(body) },
+   713	            signal,
+   714	        };
+   715	
+   716	        const req = reqFn(opts, (res) => resolve(res));
+   717	        req.on('error', reject);
+   718	        req.write(body);
+   719	        req.end();
+   720	    });
+   721	}
+   722	
+   723	async function requestJson(url, method, headers, body, signal) {
+   724	    const payload = body == null ? null : Buffer.from(body);
+   725	    const response = await doRequest(url, method, headers, payload || Buffer.alloc(0), signal);
+   726	    const text = await collectBody(response);
+   727	    if (response.statusCode >= 400) {
+   728	        const err = new Error(`Ploinky agent models error: ${response.statusCode}`);
+   729	        err.status = response.statusCode;
+   730	        try {
+   731	            err.body = JSON.parse(text);
+   732	        } catch {
+   733	            err.body = {};
+   734	        }
+   735	        throw err;
+   736	    }
+   737	    try {
+   738	        return JSON.parse(text || '{}');
+   739	    } catch (err) {
+   740	        throw new Error(`Ploinky agent models returned invalid JSON: ${err.message}`);
+   741	    }
+   742	}
+   743	
+   744	function collectBody(res) {
+   745	    return new Promise((resolve, reject) => {
+   746	        const chunks = [];
+   747	        res.on('data', (c) => chunks.push(c));
+   748	        res.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+   749	        res.on('error', reject);
+   750	    });
+   751	}
+   752	
+   753	// Server-sent event lines end with LF or CRLF, and one space after a field
+   754	// name is optional: `data: [DONE]` and `data:[DONE]` are the same field.
+   755	function withoutCarriageReturn(line) {
+   756	    return line.endsWith('\r') ? line.slice(0, -1) : line;
+   757	}
+   758	
+   759	function sseField(line, name) {
+   760	    if (!line.startsWith(`${name}:`)) return null;
+   761	    const value = line.slice(name.length + 1);
+   762	    return value.startsWith(' ') ? value.slice(1) : value;
+   763	}
+   764	
+   765	async function* parseSSE(res) {
+   766	    let buffer = '';
+   767	    // One streaming decoder for the whole response, so a multi-byte UTF-8
+   768	    // character split across two network chunks is not corrupted.
+   769	    const decoder = new TextDecoder('utf-8');
+   770	
+   771	    for await (const chunk of res) {
+   772	        buffer += typeof chunk === 'string' ? chunk : decoder.decode(chunk, { stream: true });
+   773	
+   774	        const lines = buffer.split('\n');
+   775	        buffer = lines.pop(); // keep incomplete line
+   776	
+   777	        let currentEvent = {};
+   778	        for (const rawLine of lines) {
+   779	            const line = withoutCarriageReturn(rawLine);
+   780	            const data = sseField(line, 'data');
+   781	            if (data !== null) {
+   782	                currentEvent.data = data;
+   783	                yield currentEvent;
+   784	                currentEvent = {};
+   785	                continue;
+   786	            }
+   787	            const event = sseField(line, 'event');
+   788	            if (event !== null) {
+   789	                currentEvent.event = event;
+   790	            } else if (line === '') {
+   791	                if (currentEvent.data != null) {
+   792	                    yield currentEvent;
+   793	                    currentEvent = {};
+   794	                }
+   795	            }
+   796	        }
+   797	    }
+   798	
+   799	    buffer += decoder.decode();
+   800	    const data = sseField(withoutCarriageReturn(buffer), 'data');
+   801	    if (data !== null) {
+   802	        yield { data };
+   803	    }
+   804	}
+   805	
+   806	export default backendModule;

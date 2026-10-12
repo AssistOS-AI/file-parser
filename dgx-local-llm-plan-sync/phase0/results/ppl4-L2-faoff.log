@@ -1,0 +1,15 @@
+0.00.941.473 W load: setting token '<|message|>' (200008) attribute to USER_DEFINED (16), old attributes: 8
+0.00.941.480 W load: setting token '<|start|>' (200006) attribute to USER_DEFINED (16), old attributes: 8
+0.00.941.480 W load: setting token '<|constrain|>' (200003) attribute to USER_DEFINED (16), old attributes: 8
+0.00.942.101 W load: setting token '<|channel|>' (200005) attribute to USER_DEFINED (16), old attributes: 8
+0.00.945.892 W load: special_eog_ids contains both '<|return|>' and '<|call|>', or '<|calls|>' and '<|flush|>' tokens, removing '<|end|>' token from EOG list
+0.03.969.649 I cmn          init: llama threadpool init, n_threads = 10
+0.04.022.380 I 
+0.04.022.455 I system_info: n_threads = 10 (n_threads_batch = 10) / 20 | CUDA : ARCHS = 1210 | USE_GRAPHS = 1 | FA_QUANTS = q4_0-q4_0,q8_0-q8_0,f16-f16,bf16-bf16 | BLACKWELL_NATIVE_FP4 = 1 | CPU : NEON = 1 | ARM_FMA = 1 | FP16_VA = 1 | MATMUL_INT8 = 1 | SVE = 1 | DOTPROD = 1 | SVE_CNT = 16 | OPENMP = 1 | REPACK = 1 | 
+0.04.022.468 I perplexity: tokenizing the input ..
+0.04.101.722 I perplexity: tokenization took 79.249 ms
+0.04.101.777 I perplexity: calculating perplexity over 4 chunks, n_ctx=2048, batch_size=2048, n_seq=1
+0.05.769.194 I perplexity: 1.67 seconds per pass - ETA 0.10 minutes
+[1]15.5223,[2]9.0560,[3]6.6297,[4]6.1332,
+0.09.344.342 I Final estimate: PPL = 6.1332 +/- 0.23224
+

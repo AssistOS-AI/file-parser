@@ -1,0 +1,19 @@
+dialog.modal.local-llm-settings-dialog {
+    --modal-width: 520px;
+    --modal-max-width: 520px;
+    width: min(520px, calc(100vw - 48px));
+    max-width: min(520px, calc(100vw - 48px));
+}
+
+local-llm-settings .local-llm-launcher-body {
+    display: grid;
+    gap: var(--space-md);
+}
+
+@media (max-width: 720px) {
+    dialog.modal.local-llm-settings-dialog {
+        width: 100vw;
+        max-width: 100vw;
+        margin: 0;
+    }
+}

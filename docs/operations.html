@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>file-parser Documentation</title><link rel="stylesheet" href="styles.css"><script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'; mermaid.initialize({startOnLoad:true,theme:'neutral'});</script></head>
+<body>
+<div data-include="partials/header.html"></div>
+<main class="page"><article class="page__panel content">
+<p class="breadcrumb"><a href="index.html">Overview</a></p>
+<h1>Operations</h1>
+<h2>Run the tool</h2><p>Install the declared dependencies from <code>file-parser-agent/</code>. Its <code>package.json</code> declares <code>mammoth</code>, <code>pdf-parse</code>, <code>word-extractor</code>, and <code>xlsx</code>. Run the entry point from that directory with a JSON object on standard input.</p><pre><code>cd file-parser-agent
+printf '%s' '{"file":"tests/fixtures/sample.txt"}' | WORKSPACE_PATH="$PWD" node src/tools/process-documents.mjs</code></pre>
+<p>The tool also accepts the object beneath <code>input</code>, <code>arguments</code>, or <code>args</code>. The public MCP descriptor requires <code>file</code> and exposes optional <code>type</code>. The process accepts <code>fileType</code> as an alias and an <code>options</code> object for direct invocation.</p>
+<h2>Paths and output limits</h2><p>For the command, <a href="wiki.html#definition-workspace-path">relative paths</a> resolve from <code>WORKSPACE_PATH</code> when set, otherwise from the process working directory. A library caller can supply <code>options.workspaceRoot</code>, which takes precedence over that environment variable. The command does not pass a workspace-root option to the loader. The example sets <code>WORKSPACE_PATH</code> to its working directory so an inherited value cannot redirect the fixture lookup. Absolute paths are retained. The caller and runtime determine filesystem access; this resolver does not enforce a sandbox boundary.</p><p><code>maxPreviewChars</code> is clamped to at least 500 and maps to the preview limit. <code>tableSampleRows</code> is clamped to at least one whole row. <code>includeRaw</code> selects the formatter's raw-text section. Unsupported or unreadable documents can produce warnings; fatal input and formatting errors exit with status 1.</p>
+<h2>Verification</h2><p><code>npm test</code> in <code>file-parser-agent/</code> selects <code>node --test tests/**/*.test.mjs</code>. Unit checks cover path resolution, document loading, Markdown formatting, stdin parsing, and the separate LLM helper. Integration tests exercise the command through standard input and inspect Markdown output. These are parser checks, separate from Ploinky's deployment acceptance runner.</p>
+</article></main>
+<div data-include="partials/footer.html"></div><script src="partials-loader.js"></script>
+</body></html>

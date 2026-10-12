@@ -8,18 +8,15 @@ The article *How Claude Code works in large codebases* (Anthropic, May 2026) rec
 - **Triggered review:** any time a new major Claude model ships and you sense the setup isn't taking advantage of it (or is fighting it).
 - **Triggered review:** any time a new top-level subrepo is added to `~/work/file-parser/`.
 
-A SessionStart hook (`hooks/maintenance_check.mjs`) warns when the last review is >90 days old.
-
 ## DRI
 
 Single Directly-Responsible Individual: **the workspace owner (currently `skutner`)**.
 
 The DRI owns:
 
-- `~/work/file-parser/CLAUDE.md` and every subrepo `CLAUDE.md`
-- `~/work/file-parser/.claude/settings.json` (workspace permissions, hooks, MCP server registration)
+- `~/work/file-parser/AGENTS.md` and every subrepo `AGENTS.md` (the only instruction files; `CLAUDE.md` files were retired on 2026-10-11)
+- `~/work/file-parser/.claude/settings.json` (workspace permissions)
 - `~/work/file-parser/.claude/hooks/` (workspace-aware hooks)
-- `~/work/file-parser/.claude/mcp-servers/ploinky-mcp/` (the workspace MCP server)
 - `~/work/file-parser/.claude/plugin-marketplace/plugins/file-parser-workspace/` (the workspace plugin)
 
 The DRI also decides:
@@ -32,11 +29,13 @@ The DRI also decides:
 
 Run this list every 90 days, or whenever the marker file is stale:
 
-### CLAUDE.md health
+### AGENTS.md health
 
-- [ ] `find ~/work/file-parser -name CLAUDE.md -not -path '*/node_modules/*' -not -path '*/.ploinky/*' | xargs wc -l | sort -rn | head` — confirm no CLAUDE.md is >150 lines (excluding `achillesAgentLib/CLAUDE.md` which is intentionally larger as a subsystem map).
-- [ ] Top-level `CLAUDE.md` still accurately maps subrepos (anything added/renamed?).
-- [ ] Per-subrepo CLAUDE.md test commands still match the actual test entry points.
+- [ ] `find ~/work/file-parser -name CLAUDE.md -not -path '*/node_modules/*' -not -path '*/.ploinky/*' -not -path '*/evidence/*' -not -path '*/dgx-local-llm-plan-sync/*'` prints nothing. A stray CLAUDE.md is loaded beside AGENTS.md and invites drift.
+- [ ] `find ~/work/file-parser -name AGENTS.md -not -path '*/node_modules/*' -not -path '*/.ploinky/*' -not -path '*/evidence/*' | xargs wc -l | sort -rn | head` — confirm no AGENTS.md is >200 lines.
+- [ ] Top-level `AGENTS.md` still accurately maps subrepos (anything added/renamed?).
+- [ ] Per-subrepo AGENTS.md test commands still match the actual test entry points.
+- [ ] `~/.claude/settings.json` still sets `pluginConfigs["cc-plugin-agents-md@builtin"].options.instructionFiles` to `claude-md-and-agents-md` and excludes `~/AGENTS.md` via `claudeMdExcludes`.
 - [ ] DS-NNN spec references still resolve (try `find ... -name 'DSXX*'` for any cited spec id).
 
 ### Model compensation drift
@@ -53,15 +52,9 @@ The article warns: "instructions written for your current model can work against
 - [ ] `agents/` subagent definitions — still match current workflows?
 - [ ] `hooks/commit_attribution_guard.mjs` patterns still catch the right strings?
 
-### MCP server health
-
-- [ ] `node /Users/danielsava/work/file-parser/.claude/mcp-servers/ploinky-mcp/index.mjs` still loads (smoke test in `~/work/file-parser/.claude/mcp-servers/ploinky-mcp/`).
-- [ ] Tools still produce useful output (run `ds_spec_lookup`, `skill_by_name` manually).
-
 ### Hooks health
 
-- [ ] All hooks fire without errors: trigger SessionStart with `cd ~/work/file-parser/ploinky && claude` and check the context block prints.
-- [ ] Lint hook still emits sensible reminders for the current convention set.
+- [ ] All hooks fire without errors. The workspace SessionStart context hook was removed on 2026-10-11 because native AGENTS.md loading supplies the same context.
 
 ### Cleanup
 
@@ -76,3 +69,4 @@ The article warns: "instructions written for your current model can work against
 ## Review log
 
 - **2026-05-15** — Initial setup. Implemented all 9 phases from the *Claude Code at scale* article plan. Marker initialized.
+- **2026-10-11** — Retired every CLAUDE.md in favor of AGENTS.md (native in Claude Code), removed the stale SessionStart context hook, and tuned user settings (auto-compact window, prompt cache TTL, AGENTS.md mode). Backup: `~/.claude/backups/agentsmd-settings-migration-20261011/`.

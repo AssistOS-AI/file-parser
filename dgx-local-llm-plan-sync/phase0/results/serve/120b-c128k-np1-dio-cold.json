@@ -1,0 +1,87 @@
+{
+ "bin": "l1/llama-b11159",
+ "model": "gpt-oss-120b-MXFP4.gguf",
+ "load_mode": "dio",
+ "ctx": 131072,
+ "np": 1,
+ "cold": true,
+ "extra": "",
+ "load_seconds": 16.07,
+ "load_delta_GiB": {
+  "MemFree": -67.71,
+  "MemAvailable": -67.7,
+  "Cached": 1.18
+ },
+ "after_load_GiB": {
+  "MemFree": 33.08,
+  "MemAvailable": 41.35,
+  "Cached": 8.54
+ },
+ "load_rate_GBps": 3.94,
+ "greedy": {
+  "content": "\n\nThe first ten prime numbers are: 2, 3, 5, 7, 11, 13, 17, 19, 23, and 29. \n\n1 is not considered a prime number because a prime number is defined as a natural number greater than 1 that has exactly two distinct positive divisors: 1 and itself. Since 1 only has one positive divisor (itself), it does not meet the definition of a prime number.\n\nThe",
+  "tokens_predicted": 101,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 28,
+   "prompt_ms": 249.471,
+   "prompt_per_token_ms": 8.909678571428572,
+   "prompt_per_second": 112.23749453844334,
+   "predicted_n": 101,
+   "predicted_ms": 1797.75,
+   "predicted_per_token_ms": 17.9775,
+   "predicted_per_second": 55.625086914198306
+  }
+ },
+ "prefill": {
+  "tokens": 117964,
+  "seconds": 90.64,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 117964,
+   "prompt_ms": 90026.904,
+   "prompt_per_token_ms": 0.7631726967549421,
+   "prompt_per_second": 1310.3194129612634,
+   "predicted_n": 16,
+   "predicted_ms": 573.628,
+   "predicted_per_token_ms": 38.24186666666667,
+   "predicted_per_second": 26.149351147433524
+  },
+  "mem_GiB": {
+   "MemFree": 33.84,
+   "MemAvailable": 42.11,
+   "Cached": 8.54
+  }
+ },
+ "ok": true,
+ "mem": {
+  "samples": 1117,
+  "seconds": 112.17,
+  "start_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 100.78,
+   "MemAvailable": 109.05,
+   "Cached": 7.36,
+   "Buffers": 1.47,
+   "Shmem": 0.01
+  },
+  "end_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 100.66,
+   "MemAvailable": 108.94,
+   "Cached": 7.37,
+   "Buffers": 1.47,
+   "Shmem": 0.01
+  },
+  "min_MemAvailable_GiB": 40.75,
+  "min_MemFree_GiB": 32.48,
+  "max_Cached_GiB": 8.62,
+  "min_Cached_GiB": 7.36,
+  "max_drop_MemAvailable_GiB": 68.29,
+  "max_psi_full_avg10": 0
+ },
+ "server_log_notes": [
+  "0.00.363.554 I srv    load_model: loading model 'models/gpt-oss-120b-MXFP4.gguf'",
+  "0.16.035.709 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 131072, kv_unified = 'false'"
+ ]
+}

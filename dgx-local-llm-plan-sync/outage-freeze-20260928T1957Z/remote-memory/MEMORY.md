@@ -1,0 +1,6 @@
+- [dgx-local-agent planning](dgx-local-agent-planning.md) — local-llm multi-arch plan: files, roles (engineering, Codex, Mac relay), owner decisions incl. no backward compat, pending safety review
+- [DGX host tooling](dgx-host-tooling.md) — gh at ~/.local/bin authenticated (skutner), pushes via gh credential helper, no AI attribution, ploinky not on PATH, skopeo/nvidia-ctk/nvcc
+- [Same branch name across repos](same-branch-name-across-repos.md) — multi-repo work uses one branch name everywhere (local-llm plan: `local-llm-multiarch`)
+- [Keep models until conclusion](keep-models-until-conclusion.md) — keep downloaded models while space allows until the implementation no longer needs them; delete only with the owner's go-ahead
+- [Measurement quiet host](measurement-quiet-host.md) — flock /home/research/phase0/.memlock around tests/builds/pushes during measurements; multi-user host
+- [No agent names in commits](commit-message-no-agent-names.md) — not even via review file names like *_codex.md; scan message before committing

@@ -1,0 +1,1180 @@
+{
+ "rule_version": 3,
+ "generated": "2026-09-28T21:48:06",
+ "rules": "plans/phase0-followup-data-quality_codex.md rev 2, sections 3-5; see this tool's docstring",
+ "attribution_check": {
+  "check": "rev 2, 4e: controlled 2 GiB anonymous allocation, no GPU, under the memory lock",
+  "evaluation_version": 2,
+  "why_v2": "Evaluation 1 compared window averages; another user (salboaie) released about 5 GiB 2.9 s after the allocation, so averages over 20 s cannot isolate a 2 GiB step on this host. Evaluation 2 measures the steps across each edge (last sample before, first sample after), where background drift has at most ~1 s to act. Same raw samples (attribution-check-attr.jsonl).",
+  "attribution_sha256": "54ec1f0cf10a1b09223f21f360da605e0c4c348933267335302a1fe8154d480c",
+  "samples": 68,
+  "helper": {
+   "alloc_start": 1790621945.444,
+   "touched": 1790621946.096,
+   "released": 1790621966.097
+  },
+  "alloc_edge": {
+   "from_s": -0.38,
+   "to_s": 0.05,
+   "external_step_GiB": 2.13,
+   "drop_step_GiB": 2.22,
+   "runner_step_GiB": 0.0,
+   "research_anon_step_GiB": 1.97,
+   "residual_step_GiB": 0.09
+  },
+  "release_edge": {
+   "from_s": -0.3,
+   "to_s": 0.24,
+   "external_step_GiB": -1.99,
+   "drop_step_GiB": -1.93,
+   "runner_step_GiB": 0.0,
+   "research_anon_step_GiB": -2.0,
+   "residual_step_GiB": 0.06
+  },
+  "background_during_check": "salboaie anon 8.87 -> 3.90 GiB at +2.3..+3.4 s; MemAvailable followed it (+3.05 GiB) with external (-3.18 GiB): residual step -0.13 GiB",
+  "pass": true,
+  "timing": "each step appears in the first sample after the edge (sample period ~0.55 s without a GPU runner, ~0.9 s with one)",
+  "whole_window_identity": {
+   "evaluation_version": 3,
+   "what": "Accounting identity over the whole check: residual = (MemAvailable drop) - (external change) - (runner change), all relative to the first sample, through the helper +2 GiB and the other user's -5 GiB.",
+   "samples": 68,
+   "span_s": 36.5,
+   "residual_min_GiB": -0.12,
+   "residual_max_GiB": 0.64,
+   "residual_range_GiB": 0.76,
+   "residual_range_during_hold_GiB": 0.69,
+   "external_range_GiB": 7.2,
+   "drop_range_GiB": 7.24,
+   "residual_across_other_user_release_GiB": [
+    0.37,
+    0.5,
+    0.47
+   ],
+   "pass": false,
+   "interpretation": "Established: after the other user released about 5 GiB, AnonPages fell at once while MemAvailable recovered about 0.5-0.6 GiB short and closed that gap over about 15 s, so the residual is not flat through external changes. Why is a HYPOTHESIS only (for example delayed kernel accounting of freed memory); unsampled contributions (page cache, slab, kernel or other non-anonymous memory) are not separated. The edge-step pass shows step detection only; the residual is not an acceptance filter."
+  }
+ },
+ "attribution_validated": false,
+ "deferred_by_quiet_gate": [],
+ "interrupted_attempts": [
+  {
+   "run": "qwen-c256k-np1-mtpoff-cram8192-r1",
+   "status": "INTERRUPTED",
+   "retry": "qwen-c256k-np1-mtpoff-cram8192-r1-a2 (new attempt filename; nothing overwritten)"
+  }
+ ],
+ "runs": [
+  {
+   "run": "120b-c128k-np4-cram1-r1",
+   "raw_sha256": "4653ac12a117702950275f5f5add7eab3b398984b554345638252bde3548490e",
+   "rule_version": 3,
+   "harness_version": 1,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "no 10 s flat post-run window within 60 s of exit",
+    "release: 1.14 GiB missing at exit+10 s, max 1.66 GiB",
+    "overlapped engineering activity: grep -a over the llama.cpp release directory (reads 864M of library files into page cache)"
+   ],
+   "notes": [
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": false,
+    "lock": false,
+    "external": null
+   },
+   "baseline_GiB": 109.33,
+   "baseline_waited_s": 10.0,
+   "quiet_after": null,
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 1.17,
+     "+2s": 1.27,
+     "+5s": 1.27,
+     "+10s": 1.18,
+     "+60s": 1.65
+    },
+    "max_offset_GiB": 1.66,
+    "offset_at_10s_GiB": 1.14,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 66.64,
+   "phase_peaks_GiB": {
+    "greedy": 66.95,
+    "prefill": 73.17,
+    "parallel": 73.38,
+    "coldparallel": 69.12,
+    "longgen": 70.11
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": false,
+   "lower_bound_reasons": [],
+   "end_offset_GiB": 1.65,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    1,
+    ""
+   ]
+  },
+  {
+   "run": "120b-c128k-np4-cram1-r2",
+   "raw_sha256": "bd175a3ba3a5c1018a4342d3f1925004e60958780a6e7e677c891b42a6c23c98",
+   "rule_version": 3,
+   "harness_version": 5,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "post-run level differs from pre-run by +3.01 GiB",
+    "external memory moved up to 8.63 GiB during the run"
+   ],
+   "notes": [
+    "host busy before run: the baseline took 80 s to settle"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": true,
+    "lock": true,
+    "external": false
+   },
+   "baseline_GiB": 106.48,
+   "baseline_waited_s": 80.2,
+   "quiet_after": {
+    "start_after_exit_s": 7.2,
+    "mean_GiB": 109.49,
+    "net_post_minus_pre_GiB": 3.01
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": -2.86,
+     "+2s": -2.89,
+     "+5s": -2.47,
+     "+10s": -2.97,
+     "+60s": -2.15
+    },
+    "max_offset_GiB": -2.45,
+    "offset_at_10s_GiB": -2.96,
+    "ok": true
+   },
+   "at_ready_drop_GiB": 69.19,
+   "phase_peaks_GiB": {
+    "greedy": 69.44,
+    "prefill": 71.25,
+    "parallel": 71.03,
+    "coldparallel": 76.21,
+    "longgen": 75.67
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": true,
+   "lower_bound_reasons": [
+    "memory ended 2.72 GiB above the pre-run baseline"
+   ],
+   "end_offset_GiB": -2.72,
+   "diagnostic": {
+    "coverage_at_ready": {
+     "runner_gpu_GiB": 64.07,
+     "logged_CUDA0_buffers_GiB": 63.89,
+     "gpu_minus_buffers_GiB": 0.19,
+     "runner_rssanon_GiB": 0.31,
+     "runner_rssshmem_GiB": 1.17,
+     "logged_CUDA_Host_buffers_GiB": 1.13,
+     "residual_GiB": 1.92
+    },
+    "load_lag": {
+     "lag_s": 0.2,
+     "mean_abs_error_GiB": 1.9,
+     "points": 29
+    },
+    "residual_status": "diagnostic only until the validation checks (rev 2, 4a-4e) pass"
+   },
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    1,
+    ""
+   ]
+  },
+  {
+   "run": "120b-c128k-np4-cram4096-r1",
+   "raw_sha256": "2303147489dfa4413c6013923ac6ea4a2f4094d215eb333af659c990137fee48",
+   "rule_version": 3,
+   "harness_version": 1,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "release: 1.82 GiB missing at exit+10 s, max 2.19 GiB"
+   ],
+   "notes": [
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": true,
+    "release": false,
+    "lock": true,
+    "external": null
+   },
+   "baseline_GiB": 109.86,
+   "baseline_waited_s": 30.1,
+   "quiet_after": {
+    "start_after_exit_s": 39.0,
+    "mean_GiB": 109.35,
+    "net_post_minus_pre_GiB": -0.5
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 1.18,
+     "+2s": 1.33,
+     "+5s": 2.19,
+     "+10s": 1.76,
+     "+60s": 0.63
+    },
+    "max_offset_GiB": 2.19,
+    "offset_at_10s_GiB": 1.82,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 67.31,
+   "phase_peaks_GiB": {
+    "greedy": 67.61,
+    "prefill": 67.99,
+    "parallel": 68.61,
+    "coldparallel": 71.77,
+    "longgen": 73.14
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": false,
+   "lower_bound_reasons": [],
+   "end_offset_GiB": 0.63,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    4096,
+    ""
+   ]
+  },
+  {
+   "run": "120b-c128k-np4-cram4096-r2",
+   "raw_sha256": "14a44e4745957e7da10df09fe8dac2a03d0b1d3f0b73e4ada472394a4ad61b35",
+   "rule_version": 3,
+   "harness_version": 4,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "post-run level differs from pre-run by -0.58 GiB",
+    "release: -1.09 GiB missing at exit+10 s, max 10.0 GiB"
+   ],
+   "notes": [
+    "host busy before run: the baseline took 190 s to settle",
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": false,
+    "lock": true,
+    "external": null
+   },
+   "baseline_GiB": 105.5,
+   "baseline_waited_s": 190.5,
+   "quiet_after": {
+    "start_after_exit_s": 44.1,
+    "mean_GiB": 104.92,
+    "net_post_minus_pre_GiB": -0.58
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 7.65,
+     "+2s": 7.93,
+     "+5s": 8.91,
+     "+10s": -1.1,
+     "+60s": 0.38
+    },
+    "max_offset_GiB": 10.0,
+    "offset_at_10s_GiB": -1.09,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 67.12,
+   "phase_peaks_GiB": {
+    "greedy": 67.42,
+    "prefill": 70.9,
+    "parallel": 75.95,
+    "coldparallel": 72.41,
+    "longgen": 78.27
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": false,
+   "lower_bound_reasons": [],
+   "end_offset_GiB": 0.38,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    4096,
+    ""
+   ]
+  },
+  {
+   "run": "120b-c128k-np4-cram8192-r1",
+   "raw_sha256": "504e2775ad5d212809d9a9150135b17b87281e7476b4a80086e02bda1f6a67f5",
+   "rule_version": 3,
+   "harness_version": 1,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "no 10 s flat post-run window within 60 s of exit"
+   ],
+   "notes": [
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": true,
+    "lock": true,
+    "external": null
+   },
+   "baseline_GiB": 109.53,
+   "baseline_waited_s": 20.0,
+   "quiet_after": null,
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": -0.14,
+     "+2s": 0.05,
+     "+5s": -0.08,
+     "+10s": -0.06,
+     "+60s": 0.61
+    },
+    "max_offset_GiB": 0.39,
+    "offset_at_10s_GiB": -0.08,
+    "ok": true
+   },
+   "at_ready_drop_GiB": 67.1,
+   "phase_peaks_GiB": {
+    "greedy": 67.43,
+    "prefill": 67.81,
+    "parallel": 71.8,
+    "coldparallel": 75.68,
+    "longgen": 75.86
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": false,
+   "lower_bound_reasons": [],
+   "end_offset_GiB": 0.61,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "120b-c128k-np4-cram8192-r2",
+   "raw_sha256": "b26687e37f94062daf64eea4646dfd3ba497d0358acf5f889c8bca69f6cc3625",
+   "rule_version": 3,
+   "harness_version": 3,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "post-run level differs from pre-run by -3.91 GiB",
+    "release: 3.78 GiB missing at exit+10 s, max 4.08 GiB"
+   ],
+   "notes": [
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": false,
+    "lock": true,
+    "external": null
+   },
+   "baseline_GiB": 107.86,
+   "baseline_waited_s": 10.0,
+   "quiet_after": {
+    "start_after_exit_s": 12.1,
+    "mean_GiB": 103.96,
+    "net_post_minus_pre_GiB": -3.91
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 2.35,
+     "+2s": 2.62,
+     "+5s": 3.21,
+     "+10s": 3.77,
+     "+60s": 7.82
+    },
+    "max_offset_GiB": 4.08,
+    "offset_at_10s_GiB": 3.78,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 66.85,
+   "phase_peaks_GiB": {
+    "greedy": 66.67,
+    "prefill": 66.9,
+    "parallel": 76.57,
+    "coldparallel": 82.93,
+    "longgen": 78.73
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": false,
+   "lower_bound_reasons": [],
+   "end_offset_GiB": 7.82,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "20b-c128k-np4-cram1-r1",
+   "raw_sha256": "975e71887ae84b70e53600bbd21ba2b821922d83b4005957e069565e5c2ec20e",
+   "rule_version": 3,
+   "harness_version": 3,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "post-run level differs from pre-run by -2.29 GiB",
+    "release: 2.36 GiB missing at exit+10 s, max 2.4 GiB",
+    "overlapped engineering activity: node --test: C12 tests, two mutation runs, two full-suite runs (--test-concurrency=1), git commit and push"
+   ],
+   "notes": [
+    "host busy before run: the baseline took 100 s to settle",
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": false,
+    "lock": false,
+    "external": null
+   },
+   "baseline_GiB": 108.79,
+   "baseline_waited_s": 100.3,
+   "quiet_after": {
+    "start_after_exit_s": 0.0,
+    "mean_GiB": 106.5,
+    "net_post_minus_pre_GiB": -2.29
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 2.32,
+     "+2s": 2.3,
+     "+5s": 2.23,
+     "+10s": 2.36,
+     "+60s": 1.58
+    },
+    "max_offset_GiB": 2.4,
+    "offset_at_10s_GiB": 2.36,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 16.51,
+   "phase_peaks_GiB": {
+    "greedy": 16.79,
+    "prefill": 17.81,
+    "parallel": 17.92,
+    "coldparallel": 23.56,
+    "longgen": 23.64
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": false,
+   "lower_bound_reasons": [],
+   "end_offset_GiB": 1.58,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-20b-MXFP4.gguf",
+    131072,
+    4,
+    1,
+    ""
+   ]
+  },
+  {
+   "run": "20b-c128k-np4-cram1-r2",
+   "raw_sha256": "22dde16137ffb356a521534d164d0e0fae44c8d98853dbb223f8458d76f245e1",
+   "rule_version": 3,
+   "harness_version": 5,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "external memory moved up to 0.56 GiB during the run"
+   ],
+   "notes": [
+    "host busy before run: the baseline took 100 s to settle"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": true,
+    "release": true,
+    "lock": true,
+    "external": false
+   },
+   "baseline_GiB": 109.23,
+   "baseline_waited_s": 100.3,
+   "quiet_after": {
+    "start_after_exit_s": 0.0,
+    "mean_GiB": 109.33,
+    "net_post_minus_pre_GiB": 0.09
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": -0.11,
+     "+2s": -0.04,
+     "+5s": -0.09,
+     "+10s": -0.12,
+     "+60s": -0.03
+    },
+    "max_offset_GiB": -0.03,
+    "offset_at_10s_GiB": -0.14,
+    "ok": true
+   },
+   "at_ready_drop_GiB": 16.42,
+   "phase_peaks_GiB": {
+    "greedy": 16.72,
+    "prefill": 16.91,
+    "parallel": 17.26,
+    "coldparallel": 17.37,
+    "longgen": 17.36
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": false,
+   "lower_bound_reasons": [],
+   "end_offset_GiB": 0.07,
+   "diagnostic": {
+    "coverage_at_ready": {
+     "runner_gpu_GiB": 14.79,
+     "logged_CUDA0_buffers_GiB": 14.6,
+     "gpu_minus_buffers_GiB": 0.19,
+     "runner_rssanon_GiB": 0.3,
+     "runner_rssshmem_GiB": 1.17,
+     "logged_CUDA_Host_buffers_GiB": 1.13,
+     "residual_GiB": 0.11
+    },
+    "load_lag": {
+     "lag_s": 0.1,
+     "mean_abs_error_GiB": 0.1,
+     "points": 10
+    },
+    "residual_status": "diagnostic only until the validation checks (rev 2, 4a-4e) pass"
+   },
+   "config": [
+    "gpt-oss-20b-MXFP4.gguf",
+    131072,
+    4,
+    1,
+    ""
+   ]
+  },
+  {
+   "run": "20b-c128k-np4-cram8192-r1",
+   "raw_sha256": "a44cd6615e58dbc5d9b1a08392e5fd56cbaf3002ab5806348b57281357f0a500",
+   "rule_version": 3,
+   "harness_version": 3,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "release: 0.72 GiB missing at exit+10 s, max 0.79 GiB",
+    "overlapped engineering activity: node --test, single test files one after another (C12 work), including controller tests"
+   ],
+   "notes": [
+    "host busy before run: the baseline took 281 s to settle",
+    "external memory not measured (harness < v5)"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": true,
+    "release": false,
+    "lock": false,
+    "external": null
+   },
+   "baseline_GiB": 109.0,
+   "baseline_waited_s": 280.8,
+   "quiet_after": {
+    "start_after_exit_s": 21.7,
+    "mean_GiB": 109.08,
+    "net_post_minus_pre_GiB": 0.08
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 0.16,
+     "+2s": 0.01,
+     "+5s": 0.55,
+     "+10s": 0.74,
+     "+60s": 0.98
+    },
+    "max_offset_GiB": 0.79,
+    "offset_at_10s_GiB": 0.72,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 16.27,
+   "phase_peaks_GiB": {
+    "greedy": 16.59,
+    "prefill": 17.06,
+    "parallel": 20.01,
+    "coldparallel": 23.01,
+    "longgen": 26.89
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": false,
+   "lower_bound_reasons": [],
+   "end_offset_GiB": 0.98,
+   "diagnostic": null,
+   "config": [
+    "gpt-oss-20b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "20b-c128k-np4-cram8192-r2",
+   "raw_sha256": "b0f6aaf638fccd67696cca8f93b18e79104c2a92cfe643f06ad81fea888ef030",
+   "rule_version": 3,
+   "harness_version": 5,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "post-run level differs from pre-run by +5.11 GiB",
+    "external memory moved up to 5.21 GiB during the run"
+   ],
+   "notes": [
+    "host busy before run: the baseline took 70 s to settle"
+   ],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": true,
+    "lock": true,
+    "external": false
+   },
+   "baseline_GiB": 104.31,
+   "baseline_waited_s": 70.2,
+   "quiet_after": {
+    "start_after_exit_s": 22.4,
+    "mean_GiB": 109.43,
+    "net_post_minus_pre_GiB": 5.11
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": -4.86,
+     "+2s": -4.63,
+     "+5s": -4.64,
+     "+10s": -4.16,
+     "+60s": -1.36
+    },
+    "max_offset_GiB": -4.09,
+    "offset_at_10s_GiB": -4.13,
+    "ok": true
+   },
+   "at_ready_drop_GiB": 16.55,
+   "phase_peaks_GiB": {
+    "greedy": 16.87,
+    "prefill": 17.16,
+    "parallel": 15.5,
+    "coldparallel": 18.38,
+    "longgen": 20.52
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": true,
+   "lower_bound_reasons": [
+    "parallel peak 15.5 GiB is 1.05 GiB below at-ready"
+   ],
+   "end_offset_GiB": -0.44,
+   "diagnostic": {
+    "coverage_at_ready": {
+     "runner_gpu_GiB": 14.79,
+     "logged_CUDA0_buffers_GiB": 14.6,
+     "gpu_minus_buffers_GiB": 0.19,
+     "runner_rssanon_GiB": 0.3,
+     "runner_rssshmem_GiB": 1.17,
+     "logged_CUDA_Host_buffers_GiB": 1.13,
+     "residual_GiB": 0.23
+    },
+    "load_lag": {
+     "lag_s": 0.1,
+     "mean_abs_error_GiB": 0.15,
+     "points": 9
+    },
+    "residual_status": "diagnostic only until the validation checks (rev 2, 4a-4e) pass"
+   },
+   "config": [
+    "gpt-oss-20b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "qwen-c128k-np4-mtpoff-cram8192-r1",
+   "raw_sha256": "17889e1cf2e1619aa9ef06c9fb5c1feb670849315ad409565d81871b9713e4f9",
+   "rule_version": 3,
+   "harness_version": 5,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "post-run level differs from pre-run by -1.01 GiB",
+    "release: 0.78 GiB missing at exit+10 s, max 1.3 GiB",
+    "external memory moved up to 1.5 GiB during the run"
+   ],
+   "notes": [],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": false,
+    "lock": true,
+    "external": false
+   },
+   "baseline_GiB": 109.02,
+   "baseline_waited_s": 10.0,
+   "quiet_after": {
+    "start_after_exit_s": 27.2,
+    "mean_GiB": 108.01,
+    "net_post_minus_pre_GiB": -1.01
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 1.25,
+     "+2s": 0.7,
+     "+5s": 0.65,
+     "+10s": 0.79,
+     "+60s": 0.5
+    },
+    "max_offset_GiB": 1.3,
+    "offset_at_10s_GiB": 0.78,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 26.27,
+   "phase_peaks_GiB": {
+    "greedy": 26.68,
+    "prefill": 27.54,
+    "parallel": 30.6,
+    "coldparallel": 33.59,
+    "longgen": 35.13
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": true,
+   "lower_bound_reasons": [
+    "memory ended 0.55 GiB above the pre-run baseline"
+   ],
+   "end_offset_GiB": -0.55,
+   "diagnostic": {
+    "coverage_at_ready": {
+     "runner_gpu_GiB": 24.11,
+     "logged_CUDA0_buffers_GiB": 23.92,
+     "gpu_minus_buffers_GiB": 0.19,
+     "runner_rssanon_GiB": 0.37,
+     "runner_rssshmem_GiB": 1.08,
+     "logged_CUDA_Host_buffers_GiB": 1.04,
+     "residual_GiB": 0.58
+    },
+    "load_lag": {
+     "lag_s": 0.1,
+     "mean_abs_error_GiB": 0.54,
+     "points": 13
+    },
+    "residual_status": "diagnostic only until the validation checks (rev 2, 4a-4e) pass"
+   },
+   "config": [
+    "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "qwen-c256k-np1-mtpoff-cram8192-r1-a2",
+   "raw_sha256": "e1287ec2ad8c4aa20316dbed6a40e03bfb2ce9d6a480eeda7b7274ec808808d8",
+   "rule_version": 3,
+   "harness_version": 5,
+   "class": "INCONCLUSIVE",
+   "failures": [
+    "post-run level differs from pre-run by -1.35 GiB",
+    "release: 1.32 GiB missing at exit+10 s, max 1.47 GiB",
+    "external memory moved up to 10.17 GiB during the run"
+   ],
+   "notes": [],
+   "checks": {
+    "quiet_pre": true,
+    "quiet_post": false,
+    "release": false,
+    "lock": true,
+    "external": false
+   },
+   "baseline_GiB": 110.88,
+   "baseline_waited_s": 10.0,
+   "quiet_after": {
+    "start_after_exit_s": 0.1,
+    "mean_GiB": 109.53,
+    "net_post_minus_pre_GiB": -1.35
+   },
+   "release_10s": {
+    "offsets_GiB": {
+     "+0s": 1.3,
+     "+2s": 1.47,
+     "+5s": 1.31,
+     "+10s": 1.3,
+     "+60s": 2.07
+    },
+    "max_offset_GiB": 1.47,
+    "offset_at_10s_GiB": 1.32,
+    "ok": false
+   },
+   "at_ready_drop_GiB": 29.81,
+   "phase_peaks_GiB": {
+    "greedy": 30.27,
+    "prefill": 40.34,
+    "longgen": 39.87
+   },
+   "peaks_less_explained_GiB": null,
+   "peaks_are_lower_bounds": false,
+   "lower_bound_reasons": [],
+   "end_offset_GiB": 2.12,
+   "diagnostic": {
+    "coverage_at_ready": {
+     "runner_gpu_GiB": 26.93,
+     "logged_CUDA0_buffers_GiB": 26.74,
+     "gpu_minus_buffers_GiB": 0.19,
+     "runner_rssanon_GiB": 0.38,
+     "runner_rssshmem_GiB": 1.58,
+     "logged_CUDA_Host_buffers_GiB": 1.54,
+     "residual_GiB": 0.89
+    },
+    "load_lag": {
+     "lag_s": 0.0,
+     "mean_abs_error_GiB": 0.56,
+     "points": 14
+    },
+    "residual_status": "diagnostic only until the validation checks (rev 2, 4a-4e) pass"
+   },
+   "config": [
+    "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    262144,
+    1,
+    8192,
+    ""
+   ]
+  }
+ ],
+ "preserved_phase0": [
+  {
+   "run": "phase0/120b-c128k-np4-dio",
+   "raw_sha256": "5a79310cd9f762a995bd8d6a4999eeb00b29105a8f63bb63159bd8ee37c04a46",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 80.51,
+   "config": [
+    "gpt-oss-120b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "phase0/20b-c128k-np4-cram-default",
+   "raw_sha256": "85a284db8da8d9b8b9b4e52e49242ff71b528f04a0d03563c347b96e748d0961",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 25.42,
+   "config": [
+    "gpt-oss-20b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "phase0/20b-c128k-np4-cram-8192-v2",
+   "raw_sha256": "5758adcb6a0a8e12b6c7a717d5337c6a476b1c1d607a6028dbbf668d78f4630e",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 20.3,
+   "config": [
+    "gpt-oss-20b-MXFP4.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "phase0/qwen-c128k-np4-mtpoff",
+   "raw_sha256": "e3fffac878a8f8317509d2ce1b53ee735823d1b7c87c4b5b106ad566faafaa12",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 33.37,
+   "config": [
+    "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    131072,
+    4,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "phase0/qwen-c128k-np4-mtpon",
+   "raw_sha256": "29a3753c4c1ee95bc65e2dc21308eb887eeff5df4193fb0b35f668de04b8fb7b",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 34.86,
+   "config": [
+    "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    131072,
+    4,
+    8192,
+    "--spec-type draft-mtp --spec-draft-n-max 3"
+   ]
+  },
+  {
+   "run": "phase0/qwen-c256k-np1-mtpoff",
+   "raw_sha256": "31b5f80e9f9003238442483154c9b4e724a0285aada16c758baf8f8ece6e0783",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 31.3,
+   "config": [
+    "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    262144,
+    1,
+    8192,
+    ""
+   ]
+  },
+  {
+   "run": "phase0/qwen-c256k-np1-mtpon",
+   "raw_sha256": "23e63d5f8e0e1d8ec56c163dea322c8afb6c0ba9b1dd4c6dbe83781f37f21377",
+   "class": "INCONCLUSIVE",
+   "reason": "Phase 0 harness: no validity checks or attribution; its peak stays in the worst case",
+   "peak_drop_GiB": 34.8,
+   "config": [
+    "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    262144,
+    1,
+    8192,
+    "--spec-type draft-mtp --spec-draft-n-max 3"
+   ]
+  }
+ ],
+ "configs": [
+  {
+   "config": {
+    "model": "gpt-oss-120b-MXFP4.gguf",
+    "ctx": 131072,
+    "np": 4,
+    "cache_ram": 1,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "120b-c128k-np4-cram1-r1",
+     "INCONCLUSIVE"
+    ],
+    [
+     "120b-c128k-np4-cram1-r2",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 76.21,
+    "from": "120b-c128k-np4-cram1-r2",
+    "phase": "coldparallel",
+    "is_lower_bound": true
+   },
+   "lower_bound_runs": [
+    "120b-c128k-np4-cram1-r2"
+   ]
+  },
+  {
+   "config": {
+    "model": "gpt-oss-120b-MXFP4.gguf",
+    "ctx": 131072,
+    "np": 4,
+    "cache_ram": 4096,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "120b-c128k-np4-cram4096-r1",
+     "INCONCLUSIVE"
+    ],
+    [
+     "120b-c128k-np4-cram4096-r2",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 78.27,
+    "from": "120b-c128k-np4-cram4096-r2",
+    "phase": "longgen",
+    "is_lower_bound": false
+   },
+   "lower_bound_runs": []
+  },
+  {
+   "config": {
+    "model": "gpt-oss-120b-MXFP4.gguf",
+    "ctx": 131072,
+    "np": 4,
+    "cache_ram": 8192,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "120b-c128k-np4-cram8192-r1",
+     "INCONCLUSIVE"
+    ],
+    [
+     "120b-c128k-np4-cram8192-r2",
+     "INCONCLUSIVE"
+    ],
+    [
+     "phase0/120b-c128k-np4-dio",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 82.93,
+    "from": "120b-c128k-np4-cram8192-r2",
+    "phase": "coldparallel",
+    "is_lower_bound": false
+   },
+   "lower_bound_runs": []
+  },
+  {
+   "config": {
+    "model": "gpt-oss-20b-MXFP4.gguf",
+    "ctx": 131072,
+    "np": 4,
+    "cache_ram": 1,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "20b-c128k-np4-cram1-r1",
+     "INCONCLUSIVE"
+    ],
+    [
+     "20b-c128k-np4-cram1-r2",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 23.64,
+    "from": "20b-c128k-np4-cram1-r1",
+    "phase": "longgen",
+    "is_lower_bound": false
+   },
+   "lower_bound_runs": []
+  },
+  {
+   "config": {
+    "model": "gpt-oss-20b-MXFP4.gguf",
+    "ctx": 131072,
+    "np": 4,
+    "cache_ram": 8192,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "20b-c128k-np4-cram8192-r1",
+     "INCONCLUSIVE"
+    ],
+    [
+     "20b-c128k-np4-cram8192-r2",
+     "INCONCLUSIVE"
+    ],
+    [
+     "phase0/20b-c128k-np4-cram-default",
+     "INCONCLUSIVE"
+    ],
+    [
+     "phase0/20b-c128k-np4-cram-8192-v2",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 26.89,
+    "from": "20b-c128k-np4-cram8192-r1",
+    "phase": "longgen",
+    "is_lower_bound": false
+   },
+   "lower_bound_runs": [
+    "20b-c128k-np4-cram8192-r2"
+   ]
+  },
+  {
+   "config": {
+    "model": "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    "ctx": 131072,
+    "np": 4,
+    "cache_ram": 8192,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "qwen-c128k-np4-mtpoff-cram8192-r1",
+     "INCONCLUSIVE"
+    ],
+    [
+     "phase0/qwen-c128k-np4-mtpoff",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 35.13,
+    "from": "qwen-c128k-np4-mtpoff-cram8192-r1",
+    "phase": "longgen",
+    "is_lower_bound": true
+   },
+   "lower_bound_runs": [
+    "qwen-c128k-np4-mtpoff-cram8192-r1"
+   ]
+  },
+  {
+   "config": {
+    "model": "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+    "ctx": 262144,
+    "np": 1,
+    "cache_ram": 8192,
+    "extra": ""
+   },
+   "runs": [
+    [
+     "qwen-c256k-np1-mtpoff-cram8192-r1-a2",
+     "INCONCLUSIVE"
+    ],
+    [
+     "phase0/qwen-c256k-np1-mtpoff",
+     "INCONCLUSIVE"
+    ]
+   ],
+   "status": "needs 2 clean runs",
+   "agreeing_clean_pair": null,
+   "worst_case": {
+    "drop_GiB": 40.34,
+    "from": "qwen-c256k-np1-mtpoff-cram8192-r1-a2",
+    "phase": "prefill",
+    "is_lower_bound": false
+   },
+   "lower_bound_runs": []
+  }
+ ]
+}

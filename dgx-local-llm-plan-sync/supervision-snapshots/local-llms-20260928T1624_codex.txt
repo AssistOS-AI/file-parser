@@ -1,0 +1,3 @@
+ec77b402b00404e446bcdec3a6e08982dfd43e4f
+
+The diff and status were captured in separate read-only SSH calls while engineering was committing. This is a best-effort, non-atomic diff, not a patch certified against the HEAD above. Do not apply it blindly. Use the verified Git bundle checkpoint for committed recovery.

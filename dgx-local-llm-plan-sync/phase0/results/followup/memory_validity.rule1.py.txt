@@ -1,0 +1,166 @@
+#!/usr/bin/env python3
+"""Classify follow-up runs as memory evidence (plans/phase0-followup-data-quality_codex.md, section 3).
+
+Reads the raw run records (<run>.json, <run>-mem.csv, <run>-attr.jsonl when harness v4 wrote one) and
+results/followup/engineering-activity.json; writes results/followup/memory-validity.json. Raw records and
+annotations.json (request validity) are never changed.
+
+Rule version 1. A run is valid memory evidence only if:
+  (a) every stress request passed (the greedy smoke check is annotations.json's business);
+  (b) its baseline settled within 60 s and lies within 0.5 GiB of the idle reference (the median of the
+      baselines of runs that pass (c) and settled within 60 s, unless --idle-ref is given);
+  (c) MemAvailable is back within 0.5 GiB by exit + 10 s, with no excursion above 0.75 GiB in [exit, exit + 10 s];
+  (d) with attribution (v4): memory not explained by the runner stays within 0.5 GiB of its at-ready value in
+      every phase; without it the run is "valid-without-attribution";
+  and its baseline-to-exit+10 s window overlaps no recorded engineering activity.
+A configuration has enough evidence with two valid runs whose at-ready drop and every phase peak agree within
+0.75 GiB; its evidence is the maximum over its valid runs.
+
+usage: memory_validity.py [--dir results/followup] [--idle-ref GiB]
+"""
+import argparse, datetime, glob, hashlib, json, os, statistics, sys
+
+TOOLS = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, TOOLS)
+import attribution  # noqa: E402
+
+G = 1024 ** 3
+RULE_VERSION = 1
+AGREE_GIB = 0.75
+
+
+def load_mem(prefix):
+    rows = []
+    with open(prefix + '-mem.csv') as f:
+        next(f)
+        for line in f:
+            parts = line.strip().split(',')
+            rows.append((float(parts[0]), int(parts[3])))
+    return rows
+
+
+def load_attr(prefix):
+    path = prefix + '-attr.jsonl'
+    if not os.path.exists(path):
+        return []
+    with open(path) as f:
+        return [json.loads(line) for line in f if line.strip()]
+
+
+def intervals(directory, day):
+    path = os.path.join(directory, 'engineering-activity.json')
+    if not os.path.exists(path):
+        return []
+    data = json.load(open(path))
+    out = []
+    for entry in data['intervals']:
+        start = datetime.datetime.fromisoformat(f"{data['date']}T{entry['start']}+02:00").timestamp()
+        end = datetime.datetime.fromisoformat(f"{data['date']}T{entry['end']}+02:00").timestamp()
+        out.append((start, end, entry['what']))
+    return out
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument('--dir', default=os.path.join(TOOLS, '..', 'results', 'followup'))
+    ap.add_argument('--idle-ref', type=float, default=None)
+    a = ap.parse_args()
+    directory = os.path.abspath(a.dir)
+    runs = []
+    for path in sorted(glob.glob(os.path.join(directory, '*-r[0-9].json'))):
+        name = os.path.basename(path)[:-5]
+        if name.startswith('stop-'):
+            continue
+        raw = open(path, 'rb').read()
+        result = json.loads(raw)
+        prefix = path[:-5]
+        mem = load_mem(prefix)
+        attr = load_attr(prefix)
+        base = result['baseline']['MemAvailable']
+        v4 = attribution.analyse(result, mem, attr, base)
+        window_start = mem[0][0] - (result['baseline'].get('waited_s') or 0) - 10 if mem else None
+        window_end = (result.get('exit_epoch') or 0) + 10
+        runs.append({'name': name, 'raw': raw, 'result': result, 'v4': v4, 'base': base,
+                     'window': (window_start, window_end)})
+    good_baselines = [r['base'] / G for r in runs
+                      if r['v4'].get('release_10s', {}).get('ok') and not r['v4']['baseline']['wait_over_60s']]
+    # The reviewer's reference (109.4 GiB) stands until at least three runs qualify for the median.
+    idle_ref = a.idle_ref if a.idle_ref is not None else (round(statistics.median(good_baselines), 2) if len(good_baselines) >= 3 else 109.4)
+    activity = intervals(directory, None)
+    out_runs = []
+    for r in runs:
+        res, v4 = r['result'], r['v4']
+        reasons = []
+        stress = [q for q in res.get('requests', []) if q.get('pattern') != 'greedy']
+        if not stress or not all(q.get('ok') for q in stress):
+            reasons.append('(a) a stress request failed')
+        waited = res['baseline'].get('waited_s') or 0
+        off = r['base'] / G - idle_ref
+        if waited > 60:
+            reasons.append(f'(b) baseline took {waited:.0f} s to settle')
+        if abs(off) > 0.5:
+            reasons.append(f'(b) baseline {r["base"] / G:.2f} GiB is {off:+.2f} GiB from the idle reference')
+        rel = v4.get('release_10s', {})
+        if not rel.get('ok'):
+            reasons.append(f'(c) release: {rel.get("offset_at_10s_GiB")} GiB missing at exit+10 s, max {rel.get("max_offset_GiB")} GiB in the window')
+        for start, end, what in activity:
+            if r['window'][0] is not None and start <= r['window'][1] and end >= r['window'][0]:
+                reasons.append(f'overlapped engineering activity: {what}')
+        att = v4.get('attribution')
+        if att is None:
+            d = 'not available (harness < v4)'
+        elif att['within_0.5GiB_of_ready']:
+            d = 'ok'
+        else:
+            worst = max((p for p in att['phases'] if p['unattributed_vs_ready_max_GiB'] is not None),
+                        key=lambda p: p['unattributed_vs_ready_max_GiB'])
+            d = f'unattributed memory moved {worst["unattributed_vs_ready_max_GiB"]} GiB from at-ready in {worst["name"]}'
+            reasons.append(f'(d) {d}')
+        cls = 'rejected' if reasons else ('valid' if att is not None else 'valid-without-attribution')
+        out_runs.append({
+            'run': r['name'], 'raw_sha256': hashlib.sha256(r['raw']).hexdigest(), 'rule_version': RULE_VERSION,
+            'harness_version': res.get('harness_version', '1 or 2 (not recorded)'), 'class': cls, 'reasons': reasons,
+            'attribution': d, 'baseline_GiB': round(r['base'] / G, 2), 'baseline_waited_s': waited,
+            'release_10s': rel, 'at_ready_drop_GiB': res.get('at_ready_drop_GiB'),
+            'phase_peaks_GiB': {p['name']: p.get('peak_drop_GiB') for p in res['phases'] if p['name'] not in ('load', 'settle')},
+            'config': {k: res.get(k) for k in ('model', 'ctx', 'np', 'cache_ram', 'extra')},
+        })
+    configs = {}
+    for entry in out_runs:
+        key = json.dumps(entry['config'], sort_keys=True)
+        configs.setdefault(key, []).append(entry)
+    out_configs = []
+    for key, entries in configs.items():
+        valid = [e for e in entries if e['class'] != 'rejected']
+        agree = True
+        for i in range(len(valid)):
+            for j in range(i + 1, len(valid)):
+                x, y = valid[i], valid[j]
+                pairs = [(x['at_ready_drop_GiB'], y['at_ready_drop_GiB'])] + \
+                        [(x['phase_peaks_GiB'].get(k), y['phase_peaks_GiB'].get(k)) for k in x['phase_peaks_GiB']]
+                if any(p is None or q is None or abs(p - q) > AGREE_GIB for p, q in pairs):
+                    agree = False
+        status = 'enough' if len(valid) >= 2 and agree else ('disagree: needs another valid run' if len(valid) >= 2 else f'needs {2 - len(valid)} more valid run(s)')
+        evidence = None
+        if valid:
+            evidence = {'at_ready_drop_GiB': max(e['at_ready_drop_GiB'] for e in valid),
+                        'phase_peaks_GiB': {k: max(e['phase_peaks_GiB'][k] for e in valid if e['phase_peaks_GiB'].get(k) is not None)
+                                            for k in valid[0]['phase_peaks_GiB']}}
+        out_configs.append({'config': json.loads(key), 'runs': [(e['run'], e['class']) for e in entries],
+                            'status': status, 'evidence_max_over_valid': evidence,
+                            'all_valid_attributed': all(e['class'] == 'valid' for e in valid) if valid else None})
+    report = {'rule_version': RULE_VERSION, 'generated': datetime.datetime.now().isoformat(timespec='seconds'),
+              'idle_reference_GiB': idle_ref, 'idle_reference_from': 'argument' if a.idle_ref is not None else 'median of runs passing (c) with a baseline wait <= 60 s (109.4 until three qualify)',
+              'runs': out_runs, 'configs': out_configs}
+    target = os.path.join(directory, 'memory-validity.json')
+    with open(target + '.tmp', 'w') as f:
+        json.dump(report, f, indent=1)
+    os.replace(target + '.tmp', target)
+    for e in out_runs:
+        print(f"{e['run']:<32} {e['class']:<26} {'; '.join(e['reasons'])}")
+    for c in out_configs:
+        print(c['config'], c['status'])
+
+
+if __name__ == '__main__':
+    main()

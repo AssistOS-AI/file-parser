@@ -1,0 +1,67 @@
+{
+ "bin": "l2/out",
+ "model": "gpt-oss-120b-MXFP4.gguf",
+ "load_mode": "dio",
+ "ctx": 32768,
+ "np": 1,
+ "cold": false,
+ "extra": "",
+ "load_seconds": 15.88,
+ "load_delta_GiB": {
+  "MemFree": -64.62,
+  "MemAvailable": -64.54,
+  "Cached": 0.87
+ },
+ "after_load_GiB": {
+  "MemFree": 30.35,
+  "MemAvailable": 39.63,
+  "Cached": 8.32
+ },
+ "load_rate_GBps": 3.99,
+ "greedy": {
+  "content": "\n\nThe first ten prime numbers are: 2, 3, 5, 7, 11, 13, 17, 19, 23, and 29. \n\n1 is not considered a prime number because it only has one positive divisor (itself), whereas prime numbers must have exactly two distinct positive divisors: 1 and the number itself. This definition excludes 1 from being classified as a prime.\n\nThe",
+  "tokens_predicted": 92,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 28,
+   "prompt_ms": 318.819,
+   "prompt_per_token_ms": 11.386392857142857,
+   "prompt_per_second": 87.82412591470396,
+   "predicted_n": 92,
+   "predicted_ms": 1643.896,
+   "predicted_per_token_ms": 18.06479120879121,
+   "predicted_per_second": 55.356299911916565
+  }
+ },
+ "ok": true,
+ "mem": {
+  "samples": 204,
+  "seconds": 20.36,
+  "start_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 94.96,
+   "MemAvailable": 104.17,
+   "Cached": 7.45,
+   "Buffers": 1.47,
+   "Shmem": 0.01
+  },
+  "end_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 91.35,
+   "MemAvailable": 100.55,
+   "Cached": 7.45,
+   "Buffers": 1.47,
+   "Shmem": 0.01
+  },
+  "min_MemAvailable_GiB": 38.89,
+  "min_MemFree_GiB": 29.61,
+  "max_Cached_GiB": 8.39,
+  "min_Cached_GiB": 7.45,
+  "max_drop_MemAvailable_GiB": 65.28,
+  "max_psi_full_avg10": 0
+ },
+ "server_log_notes": [
+  "0.00.357.153 I srv    load_model: loading model 'models/gpt-oss-120b-MXFP4.gguf'",
+  "0.15.762.120 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 32768, kv_unified = 'false'"
+ ]
+}

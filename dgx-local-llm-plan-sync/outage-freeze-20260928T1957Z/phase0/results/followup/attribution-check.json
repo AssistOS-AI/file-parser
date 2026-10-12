@@ -1,0 +1,52 @@
+{
+ "check": "rev 2, 4e: controlled 2 GiB anonymous allocation, no GPU, under the memory lock",
+ "evaluation_version": 2,
+ "why_v2": "Evaluation 1 compared window averages; another user (salboaie) released about 5 GiB 2.9 s after the allocation, so averages over 20 s cannot isolate a 2 GiB step on this host. Evaluation 2 measures the steps across each edge (last sample before, first sample after), where background drift has at most ~1 s to act. Same raw samples (attribution-check-attr.jsonl).",
+ "attribution_sha256": "54ec1f0cf10a1b09223f21f360da605e0c4c348933267335302a1fe8154d480c",
+ "samples": 68,
+ "helper": {
+  "alloc_start": 1790621945.444,
+  "touched": 1790621946.096,
+  "released": 1790621966.097
+ },
+ "alloc_edge": {
+  "from_s": -0.38,
+  "to_s": 0.05,
+  "external_step_GiB": 2.13,
+  "drop_step_GiB": 2.22,
+  "runner_step_GiB": 0.0,
+  "research_anon_step_GiB": 1.97,
+  "residual_step_GiB": 0.09
+ },
+ "release_edge": {
+  "from_s": -0.3,
+  "to_s": 0.24,
+  "external_step_GiB": -1.99,
+  "drop_step_GiB": -1.93,
+  "runner_step_GiB": 0.0,
+  "research_anon_step_GiB": -2.0,
+  "residual_step_GiB": 0.06
+ },
+ "background_during_check": "salboaie anon 8.87 -> 3.90 GiB at +2.3..+3.4 s; MemAvailable followed it (+3.05 GiB) with external (-3.18 GiB): residual step -0.13 GiB",
+ "pass": true,
+ "timing": "each step appears in the first sample after the edge (sample period ~0.55 s without a GPU runner, ~0.9 s with one)",
+ "whole_window_identity": {
+  "evaluation_version": 3,
+  "what": "Accounting identity over the whole check: residual = (MemAvailable drop) - (external change) - (runner change), all relative to the first sample, through the helper +2 GiB and the other user's -5 GiB.",
+  "samples": 68,
+  "span_s": 36.5,
+  "residual_min_GiB": -0.12,
+  "residual_max_GiB": 0.64,
+  "residual_range_GiB": 0.76,
+  "residual_range_during_hold_GiB": 0.69,
+  "external_range_GiB": 7.2,
+  "drop_range_GiB": 7.24,
+  "residual_across_other_user_release_GiB": [
+   0.37,
+   0.5,
+   0.47
+  ],
+  "pass": false,
+  "interpretation": "Established: after the other user released about 5 GiB, AnonPages fell at once while MemAvailable recovered about 0.5-0.6 GiB short and closed that gap over about 15 s, so the residual is not flat through external changes. Why is a HYPOTHESIS only (for example delayed kernel accounting of freed memory); unsampled contributions (page cache, slab, kernel or other non-anonymous memory) are not separated. The edge-step pass shows step detection only; the residual is not an acceptance filter."
+ }
+}

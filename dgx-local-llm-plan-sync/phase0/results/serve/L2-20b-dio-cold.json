@@ -1,0 +1,67 @@
+{
+ "bin": "l2/out",
+ "model": "gpt-oss-20b-MXFP4.gguf",
+ "load_mode": "dio",
+ "ctx": 8192,
+ "np": 1,
+ "cold": true,
+ "extra": "",
+ "load_seconds": 4.15,
+ "load_delta_GiB": {
+  "MemFree": -13.09,
+  "MemAvailable": -13.03,
+  "Cached": 0.76
+ },
+ "after_load_GiB": {
+  "MemFree": 33.91,
+  "MemAvailable": 96.54,
+  "Cached": 58.96
+ },
+ "load_rate_GBps": 2.92,
+ "greedy": {
+  "content": " The answer should be in JSON format. The JSON should have a key called \"prime_numbers\" with the list of prime numbers as its value, and a key called \"explanation\" with the explanation as its value.\"\n\nWe need to produce JSON with keys \"prime_numbers\" and \"explanation\". The prime_numbers list: first ten prime numbers: 2,3,5,7,11,13,17,19,23,29. Explanation: two sentences why 1 is not prime. For example: \"A prime number is defined as a natural number greater than 1 that has no positive divisors other than ",
+  "tokens_predicted": 128,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 28,
+   "prompt_ms": 230.215,
+   "prompt_per_token_ms": 8.221964285714286,
+   "prompt_per_second": 121.62543709141455,
+   "predicted_n": 128,
+   "predicted_ms": 1587.731,
+   "predicted_per_token_ms": 12.501818897637795,
+   "predicted_per_second": 79.98836074876664
+  }
+ },
+ "ok": true,
+ "mem": {
+  "samples": 80,
+  "seconds": 7.93,
+  "start_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 47.0,
+   "MemAvailable": 109.57,
+   "Cached": 58.2,
+   "Buffers": 1.74,
+   "Shmem": 0.01
+  },
+  "end_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 46.96,
+   "MemAvailable": 109.62,
+   "Cached": 58.29,
+   "Buffers": 1.74,
+   "Shmem": 0.01
+  },
+  "min_MemAvailable_GiB": 96.5,
+  "min_MemFree_GiB": 33.86,
+  "max_Cached_GiB": 59.12,
+  "min_Cached_GiB": 58.2,
+  "max_drop_MemAvailable_GiB": 13.08,
+  "max_psi_full_avg10": 0
+ },
+ "server_log_notes": [
+  "0.00.317.737 I srv    load_model: loading model 'models/gpt-oss-20b-MXFP4.gguf'",
+  "0.04.133.258 I srv    load_model: initializing, n_slots = 1, n_ctx_slot = 8192, kv_unified = 'false'"
+ ]
+}

@@ -1,0 +1,4 @@
+ggml_cuda_init: found 1 CUDA devices (Total VRAM: 122502 MiB):
+  Device 0: NVIDIA GB10, compute capability 12.1, VMM: yes, VRAM: 122502 MiB
+load_backend: loaded CUDA backend from /home/research/phase0/l2/out/libggml-cuda.so
+load_backend: loaded CPU backend from /home/research/phase0/l2/out/libggml-cpu-armv8.6_2.so

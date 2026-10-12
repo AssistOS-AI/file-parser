@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>file-parser Documentation</title><link rel="stylesheet" href="styles.css"><script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'; mermaid.initialize({startOnLoad:true,theme:'neutral'});</script></head>
+<body>
+<div data-include="partials/header.html"></div>
+<main class="page"><article class="page__panel content">
+<p class="breadcrumb"><a href="index.html">Overview</a></p>
+<h1>Wiki</h1>
+<p>These terms describe the project's own components and contracts.</p>
+<section id="definition-process-documents"><h2>process_documents</h2><p>The MCP tool and command-line entry point convert one document to Markdown. The descriptor in <code>file-parser-agent/mcp-config.json</code> launches <code>src/tools/process-documents.mjs</code>. The command calls the document loader and formatter, reports warnings on standard error, and does not call the optional LLM helper.</p></section>
+<section id="definition-workspace-path"><h2>Workspace path</h2><p>A document path names a file visible to the process. The loader selects a nonempty <code>options.workspaceRoot</code>, then <code>WORKSPACE_PATH</code>, then the process working directory as its base. The command does not supply <code>options.workspaceRoot</code>, so its relative input uses the environment variable before the working directory. Absolute input stays absolute. The resolver normalizes separators but does not confine access to one directory.</p></section>
+<section id="definition-document-record"><h2>Document record</h2><p>The loader returns an internal record containing the resolved path, type, file metadata, summary, and extracted content or tables. The Markdown formatter uses that record to build human-readable sections and sampled table rows. This internal structure is not the command output schema.</p></section>
+</article></main>
+<div data-include="partials/footer.html"></div><script src="partials-loader.js"></script>
+</body></html>

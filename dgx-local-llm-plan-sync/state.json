@@ -1,0 +1,84 @@
+{
+ "synced_size": 2496721,
+ "notified_size": 2496721,
+ "last_seen_size": 2496721,
+ "stable_polls": 0,
+ "memory_sig": "5008:1790598747",
+ "memory_notified": "10067:1790625139",
+ "synced_at": "2026-09-28T15:34:12+0300",
+ "ssh_failures": 398,
+ "missing_reported": false,
+ "plans_sig": [
+  "local-llm-multiarch-implementation-log.md:81688:1790624886.1696398950",
+  "local-llm-multiarch-plan.md:78152:1790624800.3661562030",
+  "local-llm-multiarch-plan-review-claude-code-opus-5-5.md:57549:1790597589.8909411630",
+  "local-llm-multiarch-plan-review-codex-gpt-6_codex.md:42219:1790597312.4438039760",
+  "local-llm-multiarch-plan-review-prompt.md:9631:1790596110.2441012450",
+  "local-llms-history-correction-approval_codex.md:4007:1790624215.4529763650",
+  "local-llm-workspace-reuse-recheck_codex.md:34422:1790621487.3748342390",
+  "local-llm-workspace-reuse-review_codex.md:31144:1790619028.2943094940",
+  "local-llm-x86-gate-procedure.md:6493:1790613186.3548348830",
+  "phase0-followup-data-quality_codex.md:27213:1790625135.3749708900",
+  "phase0-safety-followup_codex.md:23572:1790620994.4795225260"
+ ],
+ "repo_sigs": {
+  "ploinky": "local-llm-multiarch=338a3c567391cdc3004daa88d1e0ad16436bfe8d master=3f8ffa58d99855c3c5301d242628e9021c2a7130\nmaster\nlocal-llm-multiarch=338a3c567391cdc3004daa88d1e0ad16436bfe8d master=c039fab26965494821f4b88b53f369c933587f6e\nlocal-llm-multiarch\n338a3c567391cdc3004daa88d1e0ad16436bfe8d",
+  "local-llms": "local-llm-multiarch=70047bd70b1cf97688a93e29e1882215f01ac081 main=03697765a35d92adf4c7db1be9616c0b5a64cb63\nmain\nlocal-llm-multiarch=70047bd70b1cf97688a93e29e1882215f01ac081 main=03697765a35d92adf4c7db1be9616c0b5a64cb63\nlocal-llm-multiarch\n70047bd70b1cf97688a93e29e1882215f01ac081",
+  "container-image-builds": "local-llm-multiarch=afd94156f766c2ac8215a06c78d257b40506195e main=95ba10a2be4eb1aeb0d9612186c746ae9d7b9efe\nmain\nlocal-llm-multiarch=afd94156f766c2ac8215a06c78d257b40506195e main=95ba10a2be4eb1aeb0d9612186c746ae9d7b9efe\nlocal-llm-multiarch\nafd94156f766c2ac8215a06c78d257b40506195e"
+ },
+ "repo_failed": {},
+ "repo_seen": {
+  "ploinky": "local-llm-multiarch=338a3c567391cdc3004daa88d1e0ad16436bfe8d master=3f8ffa58d99855c3c5301d242628e9021c2a7130\nmaster\nlocal-llm-multiarch=338a3c567391cdc3004daa88d1e0ad16436bfe8d master=c039fab26965494821f4b88b53f369c933587f6e\nlocal-llm-multiarch\n338a3c567391cdc3004daa88d1e0ad16436bfe8d",
+  "local-llms": "local-llm-multiarch=70047bd70b1cf97688a93e29e1882215f01ac081 main=03697765a35d92adf4c7db1be9616c0b5a64cb63\nmain\nlocal-llm-multiarch=70047bd70b1cf97688a93e29e1882215f01ac081 main=03697765a35d92adf4c7db1be9616c0b5a64cb63\nlocal-llm-multiarch\n70047bd70b1cf97688a93e29e1882215f01ac081",
+  "container-image-builds": "local-llm-multiarch=afd94156f766c2ac8215a06c78d257b40506195e main=95ba10a2be4eb1aeb0d9612186c746ae9d7b9efe\nmain\nlocal-llm-multiarch=afd94156f766c2ac8215a06c78d257b40506195e main=95ba10a2be4eb1aeb0d9612186c746ae9d7b9efe\nlocal-llm-multiarch\nafd94156f766c2ac8215a06c78d257b40506195e"
+ },
+ "repo_wip_event_at": {
+  "container-image-builds": 1790613592.10252,
+  "local-llms": 1790622134.702348
+ },
+ "phase0_sig": "335965ab26edc5121e0198dec8490d04f3ca72be",
+ "phase0_synced_at": "2026-09-28T22:54:43+0300",
+ "sessions": {
+  "implementer": {
+   "missing_reported": false,
+   "synced": 10949768,
+   "last_seen": 11054723,
+   "stable": 0
+  },
+  "review": {
+   "missing_reported": false,
+   "synced": 10286589,
+   "last_seen": 10286589,
+   "stable": 1
+  }
+ },
+ "origin_checked_at": 1790652899.191922,
+ "unpushed_since": {},
+ "unpushed_reported": {},
+ "origin_tips": {
+  "ploinky:local-llm-multiarch": "338a3c567391cdc3004daa88d1e0ad16436bfe8d",
+  "local-llms:local-llm-multiarch": "70047bd70b1cf97688a93e29e1882215f01ac081",
+  "container-image-builds:local-llm-multiarch": "afd94156f766c2ac8215a06c78d257b40506195e"
+ },
+ "transcripts_fail": 0,
+ "transcripts_synced_at": 1790625210.04344,
+ "wip": {
+  "ploinky": {
+   "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "at": 1790613281.764365,
+   "fails": 0
+  },
+  "local-llms": {
+   "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "base": "d68c70fe097e932ac6593d0e690f124583e8a52d",
+   "at": 1790623797.960841,
+   "fails": 0
+  },
+  "container-image-builds": {
+   "hash": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "at": 1790613735.4840488,
+   "fails": 0,
+   "base": "f10aeb51119be6063a0c12f9e5d537c95ba5386f"
+  }
+ }
+}

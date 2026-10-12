@@ -1,0 +1,244 @@
+---
+id: DS002
+title: Model Lifecycle
+status: accepted
+owner: local-llm
+summary: Catalog, registry, on-demand download, the deployment state machine, and restart behaviour.
+---
+
+# DS002 Model Lifecycle
+
+## Introduction
+
+This specification defines how a model moves from a catalog entry to a running deployment and back, and what survives a restart. It reuses the catalog-plus-registry split of repository DS008 and replaces its download and start rules.
+
+## Core Content
+
+### Catalog and registry
+
+| Source | Where | Editable |
+| --- | --- | --- |
+| Seed catalog | `catalog/models.json`, schema `local-llm.catalog/v2` (`catalog/schema.json`) | No; ships with the agent |
+| User registry | `state.registry` in `/data/state/controller.json` | Yes, through `local_llm_model_add`, `_update`, `_remove` |
+
+Every entry is validated by `validateModel` (`src/controller/catalog.mjs`). Ids are 2–64 lowercase characters. Sources are keyed by weight format, not by runner: `gguf` is a Hugging Face source naming one `.gguf` file in an `owner/name` repository, `ollama` is an Ollama library tag, and `hf` (safetensors, read by vLLM) and `exl3` (EXL3, read by TabbyAPI) are Hugging Face snapshots (below). Every runner reads exactly one format (its adapter's `weightFormat`), so runners that read the same format share one download and one Delete weights. `recommended` and `validated` stay keyed by runner, because parameters and measurements are per runner. An Ollama source names a library tag. Seed Hugging Face sources must pin `commit`, `size` and `sha256`. User sources may name a branch; `model_add` resolves it to a commit, size and LFS sha256 through the Hugging Face API before the entry is stored. A user entry cannot reuse a seed id, and an invalid stored entry is skipped rather than breaking the catalog.
+
+Registries written before catalog v2 keyed sources by runner id. When the state file loads, `migrateModelEntry` rewrites each entry: `llama.cpp` becomes `gguf` (an entry whose only GGUF was under the v1 `lmstudio` key, or the old `vllm` fallback, keeps it as `gguf`), and the `recommended` and `validated` entries of the v1 LM Studio stub, which never ran, are dropped. Only an entry that still keys sources by runner is v1: since LM Studio became a runner again (Phase R7) a v2 entry keeps its own `lmstudio` entries. The migration is idempotent and never throws. The state file stays at version 1: a controller from before catalog v2 then reads migrated entries as invalid and hides them, but keeps and saves them, so a downgrade and a later upgrade lose no user model. A state file of any other version is kept aside as `controller.json.unsupported-<time>` instead of being overwritten.
+
+### Weights on demand
+
+Nothing is downloaded at enable, at restart, when the Local LLMs dashboard is opened, or when a model is added. Weights are fetched only by `local_llm_run`.
+
+Each source type has a weight store (`src/controller/weightStores.mjs`) that pins, inspects, fetches and deletes it and names its artifact identity; runners that read the same file share that identity, so no runner may delete weights another runner is using.
+
+| Format (source type) | Download |
+| --- | --- |
+| `gguf` (`huggingface`), fetched by the controller before the runner starts | `src/controller/downloader.mjs` fetches `/<repo>/resolve/<commit>/<file>` into `/data/models/gguf/<repo>/<commit>/<file>.partial` (the file's whole relative path, so same-named files in different folders never share a location), with an identity sidecar `<file>.partial.json`. It resumes with `Range`, restarts on a 200 reply, discards the partial on an invalid `Content-Range` or a changed identity, re-resolves expired redirects, refuses to start when free space is below the remaining bytes plus 5 %, pauses on `ENOSPC`, and renames the file into place only after the sha256 matches. |
+| `ollama` (`ollama`), fetched by the runner | The Ollama adapter starts `ollama serve` with `OLLAMA_MODELS=/data/models/ollama` and streams `/api/pull`. When the catalog pins `manifestDigest`, the stored manifest must hash to it. |
+| `hf` and `exl3` (`hf-snapshot`), fetched by the controller before the runner starts | A snapshot is every top-level model file of a repository at one commit: names ending in `.json`, `.safetensors`, `.txt`, `.model`, `.tiktoken` or `.jinja`. It takes no subdirectories (gpt-oss-20b keeps a second copy of its weights in `original/`), no Python (remote code is never run), and no other weight formats. Each file is pinned by size and either its LFS sha256 or, for a small file kept in git, its git blob oid (sha1 over `blob <size>\0` and the bytes). `size` is the sum of the files. Seed entries pin every file; `model_add` pins a user entry's revision through the Hugging Face tree API. The files download one by one with the same downloader (resume, free-space check, verification before the rename) into `/data/models/hf/<repo>/<commit>/`. The partial files and identity records live in `/data/models/hf/.state/<repo>/<commit>/`, so the directory a runner loads holds only verified files. A snapshot is ready only when every file has verified. Delete weights removes the snapshot and its records together. |
+
+`HF_TOKEN`, when set in the agent profile, is sent as a Bearer header to the Hugging Face base URL and is never logged. Node's `fetch` drops the header when a redirect leaves that origin, so the signed CDN URL never receives it.
+
+### Deployment state machine
+
+```
+idle ──run──▶ downloading ──▶ verifying ──▶ starting ──▶ loading ──▶ ready
+  ▲              │ cancel / drain                                  │ stop
+  │              ▼                                                  ▼
+  └──────────  paused  ◀── restart ──                           stopping ──▶ idle
+any phase ── failure ──▶ error (the next run or stop clears it; stop also clears paused)
+```
+
+One deployment exists at a time. A second `run` while one is active is rejected with `busy` unless `replace: true`. A repeated `run` with the same `requestId` is a no-op, so a client retry cannot start a second job. Before the download and again before the runner starts, admission (DS003) is evaluated against the current hardware snapshot.
+
+The job takes an immutable copy of the model source when it starts. A registry edit during a download cannot change which file is fetched. Deleting the weights of, updating, or removing a model in use is rejected with `in_use`. Ollama tags can share blobs. Deleting one tag's weights never removes a partial blob that another tag's recorded pull claims, and it is rejected with `in_use` while another tag's running pull has reported a blob this deletion would touch. While any other Ollama pull runs, partials that no tag claims are kept, because that pull may not have reported them yet.
+
+### Restart
+
+State is written atomically to `/data/state/controller.json`. After a restart, `downloading`, `verifying` and `pulling` become `paused`, and `starting`, `loading`, `ready` and `stopping` become `idle`, because the runner process did not survive. Nothing resumes automatically; the next explicit Run resumes a paused download with `Range`.
+
+### Reuse from repository DS008
+
+| DS008 rule | local-llm |
+| --- | --- |
+| Catalog is read-only; registry is operator-created and persists on the volume | Kept |
+| Registration records metadata only | Kept: `model_add` stores metadata and never downloads |
+| Registry writes are atomic | Kept (write to a temporary file, then rename) |
+| Download is built into start; llama.cpp models must be pre-placed | Replaced: explicit Run downloads, resumes and verifies |
+| Switching models needs an agent restart | Replaced: Run with `replace: true` stops the current runner and starts the new one |
+
+## Decisions & Questions
+
+### Question #1: Why is a paused download not resumed automatically after a restart?
+
+Response: A restart can be the operator's way of stopping a large download, and an automatic resume would consume bandwidth and disk without a request. The state records `paused` with the byte count, and the next Run continues from there.
+
+## Conclusion
+
+Weights move onto the disk only after an explicit Run, are verified against a pinned identity, survive restarts as resumable partials, and are removed only by an explicit delete.
+---
+id: DS003
+title: GPU and Resources
+status: accepted
+owner: local-llm
+summary: Manifest-declared GPU access and the operator override, admission, runner isolation, and memory estimates.
+---
+
+# DS003 GPU and Resources
+
+## Introduction
+
+This specification defines how `local-llm` reaches the GPU, how it decides whether a model fits before downloading anything, and how the runner processes are isolated. It replaces the operator-flag approach of repository DS010 with a grant that Ploinky enforces.
+
+## Core Content
+
+### GPU access through the manifest, with the operator override
+
+The manifest declares `containerSecurity.gpu: true` (Ploinky decision D14), so the agent gets the GPU in any workspace where its repo is installed and the host has a usable NVIDIA GPU, with no host step. When the host prepares the Box (`ploinky start`, `restart`, `update`, `gpu grant`, `gpu revoke`) and the host has a usable NVIDIA GPU, it recreates that workspace's Box with the NVIDIA device nodes (`/dev/nvidia0`, `/dev/nvidiactl`, `/dev/nvidia-uvm`), read-only binds of the driver libraries under `/usr/local/nvidia/lib64` and of `nvidia-smi` under `/usr/local/nvidia/bin`, a hookless CDI spec `ploinky.local/gpu=all`, and a grant marker naming the agent. The operator overrides the manifest on the host: `ploinky gpu revoke --agent local-llms/local-llm` denies it persistently, `ploinky gpu grant --agent local-llms/local-llm` restores it, `ploinky gpu revoke` without `--agent` turns manifest-declared GPU access off for the whole workspace, and `ploinky gpu status` shows each GPU agent with its source (Ploinky `ploinky-box/gpuGrant.mjs`).
+
+The declaration asks for that CDI device and nothing else. Ploinky attaches it only while the Box's marker names the agent and is active, and checks again before every launch. Otherwise the agent still starts, without the device, and Ploinky passes `PLOINKY_GPU_STATUS=unavailable` and `PLOINKY_GPU_REASON`, which says what to run on the host: `ploinky gpu grant --agent local-llms/local-llm` after a revoke, `ploinky start` when the repo was installed after the Box was last prepared, or `ploinky gpu status` on a host without a usable GPU. The hardware snapshot reports that reason, so Settings, `local_llm_overview` and `local_llm_status` show it and every Run is refused as `incompatible` with it; there is no CPU fallback in this release (plan decision D7). The agent therefore never fails to start on a machine without a GPU, which matters because Explorer enables it by default. If the GPU disappears while the agent runs, the hardware snapshot reports it unavailable and every Run is refused as `incompatible`.
+
+### Hardware snapshot
+
+`src/controller/hardware.mjs` reads:
+
+| Value | Source |
+| --- | --- |
+| GPU name, total, used and free memory, driver | `nvidia-smi --query-gpu` (path `/usr/local/nvidia/bin/nvidia-smi`, overridable by `LOCAL_LLM_NVIDIA_SMI` for tests) |
+| Other GPU users | `nvidia-smi --query-compute-apps` |
+| Total and available RAM | `/proc/meminfo` |
+| Free disk under `/data` | `statfs` |
+
+### Admission
+
+`admit()` in `src/controller/admission.mjs` returns one of three answers, each with a reason and an estimate labelled `isEstimate: true`:
+
+| Answer | Meaning | Example |
+| --- | --- | --- |
+| `ok` | The deployment fits now. A warning is attached when it needs more than half of the RAM available now. | gpt-oss-20b × llama.cpp at 16k context with 17 expert layers in RAM on a 6 GB GPU |
+| `incompatible` | This machine can never run these parameters. The reason names the limit and the parameter to change. | 128k context with every expert on the GPU |
+| `insufficient-now` | The hardware is enough, but memory or disk is held by something else at the moment. The reason names the other GPU users. | Ollama holding 4.5 GB of VRAM |
+
+Estimates for llama.cpp come from the model's measured memory profile when the catalog has one (non-expert bytes, expert bytes per layer, KV bytes per token, fixed KV bytes), and from the file size otherwise. The gpt-oss-20b profile was measured on an RTX 3060 Laptop GPU (6 GB); for the default parameters the estimate is 4,851 MiB of GPU memory against 4,817 MiB measured. A 256 MiB GPU margin and a 1 GiB RAM margin are kept free. Admission runs when the overview is built, before a download starts, and again before the runner starts.
+
+`admit()` makes the checks every runner shares (the runner is supported, the model has a source in the runner's format, a GPU is available) and then calls the runner adapter's own policy: `admitLlamaServer` for llama.cpp and ik_llama.cpp (the same memory layout for the same GGUF file), `admitLmStudio` for LM Studio, `admitOllama` for Ollama, `admitVllm` for vLLM, and `admitTabbyApi` for TabbyAPI. A runner the release lists but cannot run is `incompatible` with the reason its adapter gives. A runner this deployment's operator left off (LM Studio without its switch, DS001) is `incompatible` with the switch's reason, before any estimate.
+
+`admitLmStudio` is the llama-server estimate plus 768 MiB of RAM for LM Studio's daemon and workers (about 0.6 GB measured at idle). It can reuse the llama-server model because LM Studio runs the same llama-server and the adapter sets every flag that affects memory. Through LM Studio's SDK it sets the context, parallel slots, unified KV, batch and micro-batch sizes, K and V cache types, flash attention on or off, mmap without mlock, and no context checkpoints. Through the SDK's argument override it sets the exact GPU layers, CPU MoE layers and threads. After each load the controller reads the engine's command line, and any flag that differs (the last value of a repeated flag counts), or an engine other than the pinned 2.41.0, fails the start with `runner_flags`. On the RTX 3060 Laptop, gpt-oss-20b at the llama.cpp runner's settings used 4,776 MiB of GPU memory on LM Studio, the same as on llama.cpp.
+
+`admitVllm` keeps all weights on the GPU unless the admin sets `cpuOffloadGb`, which moves that many GiB of weights to system RAM with a warning that generation becomes much slower. It sizes the KV cache for `maxModelLen` from the model's `kvBytesPerToken` (halved for an fp8 KV cache) and adds 768 MiB for activations, the CUDA context and allocator slack, measured with Qwen3-4B-AWQ. CUDA reports about 94 % of nvidia-smi's total as usable. When weights, KV cache and overhead exceed 90 % of that, the model is `incompatible`; the reason names `maxModelLen`, a smaller model, or the least `cpuOffloadGb` that would fit. The GPU share vLLM gets (`--gpu-memory-utilization`) is the admin's value, or else what is free now less two margins, at most 0.9. If that share or the need exceeds what is free now, the answer is `insufficient-now`, naming the other GPU users. With `cpuOffloadGb` set, the system RAM estimate is (1.81 × the offload + 3.0 GiB) × 1.15. It comes from two runs of gpt-oss-20b with 10 GiB offloaded on the RTX 3060 machine (31 GiB of RAM, its 8 GiB swap already full). On 8080, available memory fell from 23.2 to 2.2 GiB, and `free` showed shared memory grow by about 18.1 GiB (1.81 × the offload: vLLM's pinned copies, more than any single process's RssShmem shows). The engine and API server held about 3.0 GiB more. In the fixture, available memory fell by at least 20.1 GiB before a guard stopped the run. An offload run must leave max(4 GiB, 10 % of RAM) available. When the estimate exceeds the available memory less that floor, the answer is `insufficient-now`; the reason names the estimate, what is available and the floor. When it exceeds total RAM less the floor, `incompatible`. The speed warning stays. On the 31 GiB machine, gpt-oss-20b (at least 9 GiB of offload on 6 GB) therefore needs 26.2 GiB available, so it is refused there in practice. The admission records the floor (`ramFloorBytes`), and the controller keeps a memory guard as the backstop. While such a runner loads, it samples MemAvailable every 2 s, and every 10 s once the runner is ready. If available memory falls below the floor, it stops the runner at once (SIGTERM, then SIGKILL within the drain's 3 s grace), and the deployment ends in `error` with "stopped: host memory below the floor (X GiB available, Y GiB required)". The first estimate (offload + 3 GiB, 13.0 GiB for 10 GiB) admitted a run that took the host down to about 2.2 GiB available with swap full. Without offload, the estimate stays 3 GiB with a 1 GiB margin, and there is no guard.
+
+`admitTabbyApi` keeps all EXL3 weights on the GPU and sizes the KV cache for `cacheSize` tokens (the max sequence length unless set) at the `cacheMode` precision (Q8 a half, Q6 three eighths, Q4 a quarter of FP16), plus an estimated 640 MiB for the CUDA context and one prompt chunk's activations. ExLlamaV3 keeps the model's input embedding (`memory.embeddingBytes`) in system RAM, so that counts toward RAM, not the GPU. It is `incompatible` above the usable share of the GPU or the machine's RAM, and `insufficient-now` above what is free now.
+
+### Runner isolation
+
+| Rule | How |
+| --- | --- |
+| Loopback only | llama.cpp and ik_llama.cpp get `--host 127.0.0.1`; Ollama gets `OLLAMA_HOST=127.0.0.1:<port>` |
+| Fixed ports | Each adapter declares its port; `defaultPorts()` refuses two runners on one port. llama.cpp 18080, ik_llama.cpp 18081, vLLM 18082, TabbyAPI 18083, LM Studio 18084 (its daemon also listens on 127.0.0.1:41343, and its engine on a random loopback port), Ollama 18434, all inside the agent's network namespace |
+| Not reachable through the Router | `routerAccess.agentPorts: false` closes the agent-port relay for this agent |
+| Per-start credentials | llama.cpp and ik_llama.cpp get a fresh random `--api-key` on every start, and vLLM and TabbyAPI a key of their own; the chat responder reads it from the controller. LM Studio has none headless: its server relies on loopback, the agent's own network namespace and the closed relay, and the controller keeps only its own model loaded (DS001) |
+| Minimal environment | Runners get `PATH`, `HOME=/data/home`, `LANG` and their own variables only; no agent secrets |
+| Reaped on stop and drain | Each runner leads its own process group. Stop sends SIGTERM to the group, then SIGKILL after the grace period; when the runner exits, anything left in its group is killed, so helper processes a runner starts never outlive it |
+
+### Reuse from repository DS010
+
+| DS010 rule | local-llm |
+| --- | --- |
+| RAM floor checked at startup from a catalog band | Replaced by per-deployment admission against measured or estimated needs |
+| GPU passthrough is an operator runtime flag; the manifest cannot express it | Replaced by the manifest declaration `containerSecurity.gpu` with the operator's grant and revoke as override (DS010 Question #1, option 3: manifest field plus operator control) |
+| `nvidia-smi` and `/dev/nvidia0` as GPU signals | Kept as the hardware snapshot source, read from the granted paths |
+| One loaded model at a time to limit contention | Kept: one deployment at a time; Ollama runs with `OLLAMA_MAX_LOADED_MODELS=1` |
+
+## Decisions & Questions
+
+### Question #1: Why is the memory estimate profile-based instead of computed from GGUF metadata?
+
+Response: The GGUF header gives tensor sizes but not the CUDA compute buffers or the runtime's allocation behaviour, which differ by build and flash-attention mode. A profile measured on real hardware and stored with the catalog entry is accurate for the seed model; the file-size heuristic is the fallback for user models and is labelled as such.
+
+## Conclusion
+
+The agent reaches the GPU through its manifest declaration, which the operator can revoke, refuses before downloading when a model cannot fit, keeps runners on loopback behind a per-start key, and never exposes a runner port through the Router.
+---
+id: DS004
+title: On-demand Runners
+status: accepted
+owner: local-llm
+summary: Runners installed after the image is built, from a lock shipped in the image, a verified cache in /data and a runnable copy rebuilt in the container; a proprietary entry is never downloaded in CI.
+---
+
+# DS004 On-demand Runners
+
+## Introduction
+
+llama.cpp, ik_llama.cpp and Ollama are part of the agent image. Heavier runners, the PyTorch-based vLLM and ExLlamaV3 + TabbyAPI, would add several gigabytes to every Explorer deployment, so an administrator installs them only where they are wanted (runners plan, decision R2 = c). This specification defines what may be installed, where the files go, how they are checked, and when the runnable copy is rebuilt.
+
+## Core Content
+
+### What may be installed
+
+The image ships `/opt/local-llm/runners.lock.json` (schema `local-llm.runners-lock/v1`, `src/controller/runnerLock.mjs`). For each installable runner it names the version, the kind (`python` or `archive`), the licence, every file with its URL, size and sha256, and the checks the CI install job runs. Administrators choose a runner id; they never supply a URL. The lock accepts only plain https URLs on `files.pythonhosted.org`, `github.com`, `codeload.github.com`, `download.pytorch.org`, `openaipublic.blob.core.windows.net` and `llmster.lmstudio.ai`, and each file is pinned by size and sha256 as well.
+
+A licence may be marked `proprietary` (LM Studio): the software may not be redistributed, so it never ships in the image, and a proprietary entry must also require acceptance. The CI install check validates such an entry from the lock alone and never downloads it (below).
+
+A `python` runner's files are wheels, source archives with `extract` (the directory they are unpacked into), and data files with `into` (the directory of the runnable copy they are copied into). A data file is something the runner would otherwise download when it runs. vLLM's `o200k_base.tiktoken`, the tokenizer vocabulary gpt-oss's chat format needs, is pinned this way into `tiktoken/`, and the vLLM adapter points `TIKTOKEN_ENCODINGS_BASE` there. openai_harmony then reads the file and checks its sha256 instead of fetching it from openaipublic (runners plan §6: nothing unpinned is downloaded at run time). vLLM loads harmony only on the first gpt-oss chat request, so a gpt-oss snapshot (`model_type` `gpt_oss`) is refused at start with `runner_incomplete` when the runnable copy lacks the file, for example an install from an older lock.
+
+### Where the files go
+
+| Part | Path | Lifetime |
+| --- | --- | --- |
+| Cache | `/data/runners/<id>/<version>/files/<name>`, and `installed.json`, the install record | Persists: the only part that survives the container |
+| Runnable copy | `/opt/runners/<id>/<version>/` in the container's own filesystem. The image creates `/opt/runners` owned by uid 1000. | The container's lifetime |
+
+### Install
+
+| Step | Rule |
+| --- | --- |
+| Start | `local_llm_runner_install { runnerId, acceptLicence }`, admin only. Nothing installs automatically. One install runs at a time. |
+| Operator switch | A runner whose adapter has one (LM Studio, `LOCAL_LLM_LMSTUDIO=internal-use`, DS001) is refused with `runner_disabled` while it is off, before anything downloads; the dashboard shows the reason and no Install. Uninstall still works, to free the disk. |
+| Licence | A runner whose lock entry sets `requiresAcceptance` is refused with `licence_required` unless `acceptLicence` is true. The acceptance is recorded in the install state and in `installed.json`, with who accepted (the verified caller from the Router-signed invocation, never tool input) and when. The dashboard shows the licence, its source link and the notice before the Install is sent. |
+| Download | Each file goes through the downloader's resume, size and free-disk checks and is verified against its sha256 before it is used (`downloadFile`). The whole install first needs free space for the remaining bytes plus 5 %. A Stop, a drain or a network failure leaves the install `paused`; the next Install resumes the partial files. A server that answers a resumed request with 200 and only part of the file (LM Studio's download host does, with no `Content-Range`) makes the downloader discard the partial and start that file again from zero. |
+| Record | `installed.json` is written only after every file verified. |
+| Runnable copy | Built right after the download (below), so the install also measures the rebuild time. |
+| Update | A new lock version is installed beside the old one. The old version's cache and copy are removed only after the new version is in place. |
+
+### Runnable copy
+
+Before the first launch in a container, and at the end of an install, `ensureRunnable` checks the copy's `.ready.json` marker. If the marker names this exact lock entry, the copy is reused, so a process restart in the same container does not rebuild. Otherwise:
+
+1. every cached file is copied into container-local staging (`/opt/runners/.stage-<id>`) and hashed as it is copied; any difference from the lock blocks the rebuild with `cache_changed`. The steps below read only the staged copies, so a file replaced in `/data` after the check cannot reach the runnable copy;
+2. the copy's directory is emptied;
+3. a `python` runner gets a virtual environment from `/usr/bin/python3` (`uv venv`), and `uv pip install --offline --no-index --find-links <staging> --no-deps --require-hashes --no-cache` installs exactly the locked wheels; source archives are unpacked where the lock says, and data files are copied read-only (0444) into their `into` directory;
+4. an `archive` runner's archives are unpacked, dropping one leading directory unless the file says `strip: 0` (LM Studio's llmster tarball has `llmster` and `.bundle/` at its root). File times are not restored (`tar --touch`): on the container's fuse-overlayfs, setting a directory's time fails with `EPERM`;
+5. the staging is removed and the marker is written last.
+
+Only one build of a runner's copy runs at a time: a caller that arrives while it is being built (an Install finishing while a Run starts) shares that build. A Run on a runner whose install is in progress is refused with `busy`.
+
+Every step runs in its own process group, so a Stop or a drain ends it. `uv` gets a minimal environment (`UV_OFFLINE`, `UV_PYTHON_DOWNLOADS=never`, no agent secrets). Code changed in the runnable copy lasts only as long as the container, like code baked into the image; `ploinky restart` creates a new container, which rebuilds the copy from the verified cache.
+
+### LM Studio's runnable copy
+
+The lock's `lmstudio` entry is llmster 0.0.25-1 with its bundled CUDA 12 engine, one tarball from `llmster.lmstudio.ai` (1,105,623,572 bytes, sha256 `46778639…`, `strip: 0`), under LM Studio's Terms, marked proprietary. The copy is the unpacked tarball, with no post-install step: llmster runs from it directly, without LM Studio's `install.sh` or `bootstrap`. Its home is `home/` inside the copy. On its first start in a container, llmster moves its engines out of the copy into that home, so the two share one lifetime: a rebuild or an uninstall removes both, and nothing of LM Studio's lives in `/data` except the verified tarball in the cache. The LM Studio SDK the adapter loads through is not part of the copy: it is pinned in the image (`/opt/local-llm/lmstudio-sdk`).
+
+### Uninstall
+
+`local_llm_runner_uninstall { runnerId }` deletes the runner's cache and runnable copy, clears its install state and re-runs runner detection. It is refused while the runner runs a model, and it cancels an install in progress.
+
+### Detection
+
+A runner is installable when it is in the image's lock and this release has an adapter for it; a lock entry without an adapter (a runner a later release will run) is installed only by the CI install check. An installable runner is installed when its cache is complete and its record names the lock entry. Detection reads files only; it never imports Python packages. It runs again after every install and uninstall, so the dashboard and `local_llm_overview` follow without an agent restart. A Run on an installable runner that is not installed is refused with `runner_not_installed`.
+
+### CI install check
+
+The image's publish workflow installs every lock entry inside the published image with `tools/runner_install_check.mjs`, one entry at a time. It checks each pinned distribution's version, imports the modules that load without a GPU, lists the ones that need the driver, and runs `ldd` on every shared object in the runnable copy. A library `ldd` cannot find passes only if the Box GPU grant supplies it (`libcuda.so.1`), if another file in the same environment has that name (wheels load each other's libraries at run time, as torch loads its CUDA libraries), or if the lock entry lists it in `check.optionalLibraries` with the reason the runner never needs it (for example MPI and RDMA libraries for multi-node transports). Any other missing library fails the check, and the report lists all three groups. Every data file (`into`) must also be in the runnable copy with the lock's sha256.
+
+A proprietary entry is never downloaded in CI, because downloading it would accept its terms on behalf of whoever runs CI. The workflow runs the check for it with no network and `--validate-only`, and the check itself also refuses to download any proprietary entry. It reports `downloaded: false` with what the lock pins: the files, their total size, their hosts and the licence fields. The install of such a runner is proven live, on a deployment whose admin accepted its terms.
+
+## Decisions & Questions
+
+### Question #1: Why rebuild the runnable copy instead of running from /data?
+
+Response: `/data` is a workspace bind that survives containers and that other processes with workspace access can write. Rebuilding into the container's own filesystem from a cache that is re-verified against the image's lock means that code changed on disk never outlives the container, the same guarantee code baked into the image has. The check and the build use the same bytes: each file is hashed while it is copied into container-local staging, and the build reads only that copy, so a writer that swaps a cached file after the check gains nothing.
+
+### Question #2: Why `--no-deps` with the full closure?
+
+Response: The lock already lists the resolved closure for this image's Python, so the install needs no resolver: every wheel is named with its hash, and nothing else can be installed.

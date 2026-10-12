@@ -1,0 +1,8 @@
+{
+  "plan": "Approved refined source-byte retention design",
+  "implementation": "No blocking findings",
+  "helperSha256": "9a62099314e65e4369a4f9fb85478e154957723901973f6f2f2c0f6f03fffcc2",
+  "manifestSha256": "7c95813a5285ae088259aab2f4e60dda6542877a7c88339cd39b6eb2d58229f7",
+  "runtimeVerification": "Independent recovery verification passed; see recovery-verification.json",
+  "scope": "25 exact source/payload targets; original task evidence remains unchanged"
+}

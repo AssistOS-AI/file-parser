@@ -1,0 +1,136 @@
+{
+ "bin": "l1/llama-b11159",
+ "model": "Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf",
+ "load_mode": "dio",
+ "ctx": 131072,
+ "np": 4,
+ "cold": false,
+ "extra": "",
+ "load_seconds": 6.73,
+ "load_delta_GiB": {
+  "MemFree": -26.49,
+  "MemAvailable": -26.38,
+  "Cached": 1.19
+ },
+ "after_load_GiB": {
+  "MemFree": 30.27,
+  "MemAvailable": 84.29,
+  "Cached": 51.99
+ },
+ "load_rate_GBps": 3.4,
+ "greedy": {
+  "content": "\n\n<think>\nHere's a thinking process:\n\n1.  **Analyze User Input:**\n   - Statement: \"The capital of France is Paris.\" (True, but irrelevant to the main task)\n   - Task 1: \"List the first ten prime numbers\"\n   - Task 2: \"Explain in two sentences why 1 is not a prime number.\"\n\n2.  **Task 1: First ten prime numbers**\n   - Primes are natural numbers greater than 1 that have exactly two distinct positive divisors: 1 and themselves.\n   - Let's list them: ",
+  "tokens_predicted": 128,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 28,
+   "prompt_ms": 199.909,
+   "prompt_per_token_ms": 7.139607142857143,
+   "prompt_per_second": 140.0637289966935,
+   "predicted_n": 128,
+   "predicted_ms": 1914.622,
+   "predicted_per_token_ms": 15.07576377952756,
+   "predicted_per_second": 66.33163099556988
+  }
+ },
+ "prefill": {
+  "tokens": 117964,
+  "seconds": 56.98,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 117964,
+   "prompt_ms": 56515.719,
+   "prompt_per_token_ms": 0.47909293513275236,
+   "prompt_per_second": 2087.2777005632715,
+   "predicted_n": 16,
+   "predicted_ms": 399.113,
+   "predicted_per_token_ms": 26.607533333333333,
+   "predicted_per_second": 37.583341058797885
+  },
+  "mem_GiB": {
+   "MemFree": 28.95,
+   "MemAvailable": 83.77,
+   "Cached": 52.77
+  }
+ },
+ "parallel": {
+  "seconds": 54.96,
+  "timings": [
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 11020.109,
+    "prompt_per_token_ms": 0.4203902113374533,
+    "prompt_per_second": 2378.7423518224728,
+    "predicted_n": 64,
+    "predicted_ms": 42237.136,
+    "predicted_per_token_ms": 670.4307301587302,
+    "predicted_per_second": 1.491578406263152
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 16018.418,
+    "prompt_per_token_ms": 0.6110634775310902,
+    "prompt_per_second": 1636.4911940742213,
+    "predicted_n": 64,
+    "predicted_ms": 29831.939,
+    "predicted_per_token_ms": 473.52284126984125,
+    "predicted_per_second": 2.111830545108047
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 18131.882,
+    "prompt_per_token_ms": 0.6916869611657893,
+    "prompt_per_second": 1445.7407124092247,
+    "predicted_n": 64,
+    "predicted_ms": 2125.663,
+    "predicted_per_token_ms": 33.74068253968254,
+    "predicted_per_second": 29.637811826239624
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 18951.481,
+    "prompt_per_token_ms": 0.7229526588845655,
+    "prompt_per_second": 1383.2164356970309,
+    "predicted_n": 64,
+    "predicted_ms": 15182.138,
+    "predicted_per_token_ms": 240.98631746031748,
+    "predicted_per_second": 4.149613183597725
+   }
+  ]
+ },
+ "ok": true,
+ "mem": {
+  "samples": 1233,
+  "seconds": 123.73,
+  "start_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 56.77,
+   "MemAvailable": 110.67,
+   "Cached": 50.8,
+   "Buffers": 1.79,
+   "Shmem": 0.01
+  },
+  "end_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 55.49,
+   "MemAvailable": 110.99,
+   "Cached": 52.36,
+   "Buffers": 1.79,
+   "Shmem": 0.01
+  },
+  "min_MemAvailable_GiB": 77.3,
+  "min_MemFree_GiB": 22.38,
+  "max_Cached_GiB": 53.41,
+  "min_Cached_GiB": 50.8,
+  "max_drop_MemAvailable_GiB": 33.38,
+  "max_psi_full_avg10": 0
+ },
+ "server_log_notes": [
+  "0.00.344.166 I srv    load_model: loading model 'models/Qwen3.6-35B-A3B-UD-Q4_K_XL.gguf'",
+  "0.06.699.244 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 131072, kv_unified = 'true'"
+ ]
+}

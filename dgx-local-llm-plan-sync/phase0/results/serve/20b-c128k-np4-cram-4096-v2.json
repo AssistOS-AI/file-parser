@@ -1,0 +1,136 @@
+{
+ "bin": "l1/llama-b11159",
+ "model": "gpt-oss-20b-MXFP4.gguf",
+ "load_mode": "dio",
+ "ctx": 131072,
+ "np": 4,
+ "cold": false,
+ "extra": "--cache-ram 4096",
+ "load_seconds": 5.23,
+ "load_delta_GiB": {
+  "MemFree": -15.61,
+  "MemAvailable": -15.61,
+  "Cached": 1.17
+ },
+ "after_load_GiB": {
+  "MemFree": 80.29,
+  "MemAvailable": 92.86,
+  "Cached": 11.45
+ },
+ "load_rate_GBps": 2.32,
+ "greedy": {
+  "content": " The answer should be in JSON format. The JSON should have a key called \"prime_numbers\" with the list of prime numbers, and a key called \"explanation\" with the explanation. The JSON should be pretty-printed with an indentation of 4 spaces.\"\n\nWe need to produce JSON with keys \"prime_numbers\" and \"explanation\". The prime_numbers list should contain the first ten prime numbers. The explanation should be two sentences explaining why 1 is not a prime number. The JSON should be pretty-printed with indentation of 4 spaces. So we need to output JSON with 4 spaces indentation. The prime numbers: ",
+  "tokens_predicted": 128,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 28,
+   "prompt_ms": 173.171,
+   "prompt_per_token_ms": 6.184678571428571,
+   "prompt_per_second": 161.6898903396065,
+   "predicted_n": 128,
+   "predicted_ms": 1604.306,
+   "predicted_per_token_ms": 12.632330708661417,
+   "predicted_per_second": 79.16195538756322
+  }
+ },
+ "prefill": {
+  "tokens": 117964,
+  "seconds": 52.36,
+  "timings": {
+   "cache_n": 0,
+   "prompt_n": 117964,
+   "prompt_ms": 51925.103,
+   "prompt_per_token_ms": 0.4401775372147435,
+   "prompt_per_second": 2271.8106115263745,
+   "predicted_n": 16,
+   "predicted_ms": 394.949,
+   "predicted_per_token_ms": 26.329933333333333,
+   "predicted_per_second": 37.9795872378459
+  },
+  "mem_GiB": {
+   "MemFree": 79.9,
+   "MemAvailable": 92.48,
+   "Cached": 11.46
+  }
+ },
+ "parallel": {
+  "seconds": 46.65,
+  "timings": [
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 17352.178,
+    "prompt_per_token_ms": 0.6619431601434348,
+    "prompt_per_second": 1510.703728373464,
+    "predicted_n": 64,
+    "predicted_ms": 2046.542,
+    "predicted_per_token_ms": 32.48479365079365,
+    "predicted_per_second": 30.783634051976456
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 12281.68,
+    "prompt_per_token_ms": 0.4685160601205463,
+    "prompt_per_second": 2134.3985513382536,
+    "predicted_n": 64,
+    "predicted_ms": 28447.228,
+    "predicted_per_token_ms": 451.5433015873016,
+    "predicted_per_second": 2.2146270279831834
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 15654.112,
+    "prompt_per_token_ms": 0.5971660944533456,
+    "prompt_per_second": 1674.5759836137622,
+    "predicted_n": 64,
+    "predicted_ms": 15750.952,
+    "predicted_per_token_ms": 250.0151111111111,
+    "predicted_per_second": 3.9997582368354627
+   },
+   {
+    "cache_n": 0,
+    "prompt_n": 26214,
+    "prompt_ms": 6911.282,
+    "prompt_per_token_ms": 0.2636485084306096,
+    "prompt_per_second": 3792.9287214730925,
+    "predicted_n": 64,
+    "predicted_ms": 37934.127,
+    "predicted_per_token_ms": 602.129,
+    "predicted_per_second": 1.6607736880303057
+   }
+  ]
+ },
+ "ok": true,
+ "mem": {
+  "samples": 1093,
+  "seconds": 109.7,
+  "start_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 95.9,
+   "MemAvailable": 108.47,
+   "Cached": 10.28,
+   "Buffers": 1.56,
+   "Shmem": 0.01
+  },
+  "end_GiB": {
+   "MemTotal": 119.63,
+   "MemFree": 95.93,
+   "MemAvailable": 108.51,
+   "Cached": 10.29,
+   "Buffers": 1.56,
+   "Shmem": 0.01
+  },
+  "min_MemAvailable_GiB": 88.71,
+  "min_MemFree_GiB": 76.13,
+  "max_Cached_GiB": 11.46,
+  "min_Cached_GiB": 10.28,
+  "max_drop_MemAvailable_GiB": 19.76,
+  "max_psi_full_avg10": 0
+ },
+ "server_log_notes": [
+  "0.00.365.765 I srv    load_model: loading model 'models/gpt-oss-20b-MXFP4.gguf'",
+  "0.05.150.186 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 131072, kv_unified = 'true'"
+ ]
+}

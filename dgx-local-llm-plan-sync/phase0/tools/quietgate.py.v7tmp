@@ -1,0 +1,94 @@
+"""Quiet-host scheduling gate for the one bounded rerun round (decision of 2026-09-28, relayed by the plan review).
+
+A scheduling heuristic only: it does not validate the attribution residual and does not make a run clean;
+the functional and validity requirements of a run are unchanged.
+
+v7 (timeout correction): one monotonic end-to-end deadline (budget_s) spans the unlocked quiet wait, the
+yield and lock contention, and the recheck under the lock.
+- Without the lock, wait until observed non-runner memory ((AnonPages + Shmem) from /proc/meminfo; no runner
+  is running between runs) holds within 0.25 GiB for quiet_s, sampled every second.
+- Take the exclusive memory lock, polled without blocking until the deadline (attribution.memlock with a
+  deadline). If the recheck of recheck_s cannot finish before the deadline, defer.
+- Re-check under the lock. If the host moved, release the lock and wait again, within the same deadline.
+- Never return 'passed' after the deadline. Any lock taken is released on deferral and on every error path.
+"""
+import time
+
+import attribution
+
+G = 1024 ** 3
+TOLERANCE = 0.25 * G
+
+
+def _external():
+    m = attribution.meminfo_snapshot()
+    return m['AnonPages'] + m['Shmem']
+
+
+def _wait_steady(seconds, deadline, clock, sleep, external, interval=1.0):
+    """True once the last `seconds` of samples lie within TOLERANCE, completed before `deadline`; else False."""
+    window = []
+    while clock() < deadline:
+        now = clock()
+        window.append((now, external()))
+        window = [(t, v) for (t, v) in window if t >= now - seconds]
+        values = [v for _, v in window]
+        if window[-1][0] - window[0][0] >= seconds - interval and max(values) - min(values) <= TOLERANCE:
+            return clock() <= deadline
+        sleep(max(0.0, min(interval, deadline - clock())))
+    return False
+
+
+def gate(who, quiet_s=60, recheck_s=20, budget_s=1800, *, clock=time.monotonic, sleep=time.sleep,
+         external=_external, lock=None, unlock=None):
+    """Returns (lock, record) once quiet, holding the lock, before the deadline; or (None, record) when deferred,
+    holding no lock. `lock(who, deadline)` returns (handle or None, waited); `unlock(handle, who)` releases."""
+    lock = lock or (lambda name, deadline: attribution.memlock(name, deadline=deadline))
+    unlock = unlock or attribution.memunlock
+    started = clock()
+    deadline = started + budget_s
+    attempts = []
+    held = None
+    taken = released = False
+
+    def record(outcome, reason=None):
+        out = {'gate': outcome, 'waited_s': round(clock() - started, 1), 'attempts': attempts, 'quiet_s': quiet_s,
+               'recheck_s': recheck_s, 'budget_s': budget_s, 'tolerance_GiB': TOLERANCE / G, 'clock': 'monotonic',
+               'lock_taken': taken, 'lock_released': released, 'gate_version': 7}
+        if reason:
+            out['reason'] = reason
+        return out
+
+    try:
+        while clock() < deadline:
+            if not _wait_steady(quiet_s, deadline, clock, sleep, external):
+                break
+            quiet_at = clock()
+            if deadline - quiet_at < recheck_s:
+                attempts.append({'quiet_at_s': round(quiet_at - started, 1), 'outcome': 'no time left for the recheck'})
+                break
+            handle, waited = lock(who, deadline)
+            if handle is None:
+                attempts.append({'quiet_at_s': round(quiet_at - started, 1), 'lock_wait_s': waited, 'outcome': 'lock not granted before the deadline'})
+                break
+            held, taken = handle, True
+            if deadline - clock() < recheck_s:
+                attempts.append({'quiet_at_s': round(quiet_at - started, 1), 'lock_wait_s': waited, 'outcome': 'no time left for the recheck after the lock'})
+                break
+            if _wait_steady(recheck_s, deadline, clock, sleep, external) and clock() <= deadline:
+                attempts.append({'quiet_at_s': round(quiet_at - started, 1), 'lock_wait_s': waited, 'outcome': 'recheck steady'})
+                result = record('passed')
+                handle, held = held, None
+                return handle, result
+            attempts.append({'quiet_at_s': round(quiet_at - started, 1), 'lock_wait_s': waited, 'outcome': 'moved under the lock; released'})
+            unlock(held, who)
+            held, released = None, True
+        if held is not None:
+            unlock(held, who)
+            held, released = None, True
+        return None, record('deferred', 'no quiet interval with a completed recheck within the budget')
+    finally:
+        # Only an exception gets here with a lock still held.
+        if held is not None:
+            unlock(held, who)
+            released = True

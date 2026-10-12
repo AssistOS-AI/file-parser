@@ -1,0 +1,3 @@
+#!/bin/sh
+# Run a command inside the nested local-llm container of the test Box.
+exec podman exec -i -u podman ploinky-box-gpu-test-workspace-90b386b1f08a podman exec -i ploinky_local-llms_local-llm_gpu-test-workspace_90b386b1 "$@"

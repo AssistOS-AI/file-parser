@@ -1,0 +1,19 @@
+{
+ "repo": "local-llms",
+ "clean": false,
+ "remote_dir": "/home/research/dev/local-llms",
+ "base_head": "d68c70fe097e932ac6593d0e690f124583e8a52d",
+ "head_ref": "local-llm-multiarch",
+ "captured_at_remote_utc": "2026-09-28T19:21:55Z",
+ "captured_at_local": "2026-09-28T22:21:55+0300",
+ "wip_hash": "96e7add252ea836832790290d988971a06c87738",
+ "verified": true,
+ "capture_note": "content hash equal before and after the lock-free read, and the patch applies to base_head; it matches that tree state unless a change was reverted within the read",
+ "files_in_patch": 4,
+ "patch_bytes": 41860,
+ "skipped_untracked": [],
+ "validated": "applies to base_head (git apply --cached --check --binary in a throwaway index)",
+ "restore": "git worktree add <dir> <base_head> && git -C <dir> apply --binary wip.patch",
+ "patch_sha256": "c07acb4bbf2d59b21c4c03a9f61c8c6721ba323a275c46a725b99e4dcebb3d39",
+ "generation": "gen-20260928T222155-761"
+}

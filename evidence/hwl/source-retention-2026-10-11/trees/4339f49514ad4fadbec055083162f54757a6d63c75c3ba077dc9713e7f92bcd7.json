@@ -1,0 +1,1016 @@
+[
+  {
+    "path": ".",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".github",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".github/workflows",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": ".github/workflows/runner-lock-check.yml",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8947,
+    "sha256": "b66fe13f56c354a104cea15722f401cd759129668961a2a753372cc611a8a03e"
+  },
+  {
+    "path": ".gitignore",
+    "mode": 420,
+    "type": "file",
+    "bytes": 806,
+    "sha256": "922cf946b6c2a66760f62871df4085586aeb1cc4d2ee639f34398faa1dc331f9"
+  },
+  {
+    "path": "AGENTS.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2685,
+    "sha256": "d73a502dce77c97b25dc4c418fecbd6683437b791cbdaa0082f5aa3ae3d7799a"
+  },
+  {
+    "path": "CLAUDE.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 269,
+    "sha256": "3ad5d871e0030f2ef586320046b3aeb41c1514755602d5d15194c792c6527b32"
+  },
+  {
+    "path": "README.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2589,
+    "sha256": "ba98cd42532af68b816e707c8fc19cbfed14a5101a8605e40cae30d5f09b6800"
+  },
+  {
+    "path": "dependencies_codex.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 696,
+    "sha256": "4fe0dbc471b9d5fa72c87afe6a7d5267cc3c3ede9ceda5edbb99028eceb6537f"
+  },
+  {
+    "path": "docs",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "docs/handoff-local-llms.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1744,
+    "sha256": "155fdf70035fee920a7accb5c8e8b0247e50b03addbfad8ff668e79ebe487812"
+  },
+  {
+    "path": "fileSizesCheck.sh",
+    "mode": 493,
+    "type": "file",
+    "bytes": 8912,
+    "sha256": "09bf3edf02b9e9d1f17e9f9617571108a38eb8714b4d06d05bcb88762a9f31ed"
+  },
+  {
+    "path": "local-llm",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/IDE-plugins",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-settings",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-settings/config.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 393,
+    "sha256": "9a9bb8c812482d9f16d96263eac65587f6eb95dbef7bcfdb3f44d7f5c66b8cab"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-settings/icon.svg",
+    "mode": 420,
+    "type": "file",
+    "bytes": 364,
+    "sha256": "598acf1b11e01a7c5be45c282490db72c97f6a30b8250f0ae181754048ef0c37"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-settings/local-llm-settings-model.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18725,
+    "sha256": "a178a9e3116e6f93b7a6a09fcc27d1a3653adaed5a42d4d323efc7649dcf7352"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-settings/local-llm-settings.css",
+    "mode": 420,
+    "type": "file",
+    "bytes": 432,
+    "sha256": "fc7c720934c1a70cf973c2e0cf37a76fb7e7375b0217cf330f3233d602239a2d"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-settings/local-llm-settings.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 963,
+    "sha256": "a77f6c34aa29c2b96197cc1f9045e19dc80fbd9fc6823e169972dcc778cbf643"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-settings/local-llm-settings.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3514,
+    "sha256": "23150b0dcd821b27e2edcc83372b657067e39a4011e3fcd6b9b307d74e2f5d5f"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button/components",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button/components/local-llm-dashboard",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button/components/local-llm-dashboard/local-llm-dashboard-view.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 34800,
+    "sha256": "a2dedf34b847de3fd0dda27dbee1714cbadf35eee0885d6f6427f02c058b933f"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button/components/local-llm-dashboard/local-llm-dashboard.css",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7385,
+    "sha256": "4f6185c550e5d89ce05002d8cb06c1abf782ea2ef467dad11331209a3349ba06"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button/components/local-llm-dashboard/local-llm-dashboard.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14381,
+    "sha256": "c05679f856f82ddb7280734cda761d3b312afe6ca120a8bc490b19abe0db0844"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button/components/local-llm-dashboard/local-llm-dashboard.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 46388,
+    "sha256": "d340932d3bb88fcb4c79a5d42d00dc0f2de08ba397f3daca1d4b435f9b1c8fb5"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button/config.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 862,
+    "sha256": "5b754b831888a22fdf4156c2e8a676fc2680f824c8e677524a2f9c6c87e38da7"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button/icon.svg",
+    "mode": 420,
+    "type": "file",
+    "bytes": 364,
+    "sha256": "598acf1b11e01a7c5be45c282490db72c97f6a30b8250f0ae181754048ef0c37"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button/local-llm-tool-button.css",
+    "mode": 420,
+    "type": "file",
+    "bytes": 578,
+    "sha256": "a39e11d6a99306de9b06ecf7cfdb0cca8df43dada8bb0e67e83056de3d621996"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button/local-llm-tool-button.html",
+    "mode": 420,
+    "type": "file",
+    "bytes": 450,
+    "sha256": "98120015038d849f78d4ea43ed6bb540514a00069c7736fe8ba2427c27401248"
+  },
+  {
+    "path": "local-llm/IDE-plugins/local-llm-tool-button/local-llm-tool-button.js",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2152,
+    "sha256": "d09d5fc9542d4ecfb06629a9970465f2999e33b5a809fa9b63e4650a6a8008e7"
+  },
+  {
+    "path": "local-llm/catalog",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/catalog/models.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20047,
+    "sha256": "1bc693f51844ae53695435ead6c115e70ca081ca5edacb0a0a80f771766c782c"
+  },
+  {
+    "path": "local-llm/catalog/runners.lock.linux-amd64.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 764,
+    "sha256": "0b90295e262277ff2f19e163fff3b845d9915f21e3a557e5f8f63dcd7ea91245"
+  },
+  {
+    "path": "local-llm/catalog/runners.lock.linux-arm64.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1455,
+    "sha256": "ae389a66aebcb97825f6f0ac67de46768fe3aab549be90e3610fc07ea9fa50a7"
+  },
+  {
+    "path": "local-llm/catalog/schema.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13448,
+    "sha256": "6f2e536ffec6d5e1c222a32abfcd94b7dcaf6a7b53b2b4602397cdb0446140c9"
+  },
+  {
+    "path": "local-llm/docs",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/docs/specs",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/docs/specs/DS000-vision-and-scope.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12404,
+    "sha256": "b24a4d0ae24f54b63f9ea15517b2c6c5d9219ddfc55d059ea616c0c13584d07a"
+  },
+  {
+    "path": "local-llm/docs/specs/DS001-agent-contract.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 23465,
+    "sha256": "9e763df91e0129abc87bdb48582ad094edf0cc0436e03c1d3349b50c36fd0a32"
+  },
+  {
+    "path": "local-llm/docs/specs/DS002-model-lifecycle.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 30365,
+    "sha256": "af74fd3301ce94f92fa95f8486cf67133d8da0317f987fb1faf41e63f49cd2ea"
+  },
+  {
+    "path": "local-llm/docs/specs/DS003-gpu-and-resources.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 24820,
+    "sha256": "f86827f0939ee48f843a6f2559f6cbc2e51b56866b8084a4ed46d00672f97ac5"
+  },
+  {
+    "path": "local-llm/docs/specs/DS004-on-demand-runners.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 24607,
+    "sha256": "cc286e69c76ac056cf015475dad95a58ce31db319f1eebf2b70a39bd442d739e"
+  },
+  {
+    "path": "local-llm/docs/specs/DS005-hardware-profiles.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 37071,
+    "sha256": "47f39f5323deef9225560306afe74a68a79609d21fc42f101f051902055627fb"
+  },
+  {
+    "path": "local-llm/docs/specs/DS006-coding-style.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6499,
+    "sha256": "b605d99112e4a25beb8e20677a42e0ab9efd53af6dba5c85711827d455bd78c2"
+  },
+  {
+    "path": "local-llm/docs/specs/matrix.md",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2433,
+    "sha256": "c089ad5e8ad6aee27656da32b26621f1a6891c632f2c03a81c3e766a68f8ce1e"
+  },
+  {
+    "path": "local-llm/manifest.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3073,
+    "sha256": "1946bcfac7c4989dd40f09649637be46031c714d87c2f5674afaf6887deca7b7"
+  },
+  {
+    "path": "local-llm/mcp-config.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 14335,
+    "sha256": "57f08e9ef50e0669b4195bb234b8daafbee0264642878e5ccbe3854d84469e42"
+  },
+  {
+    "path": "local-llm/package.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 128,
+    "sha256": "9f5a92fd06255c6a975ed3f90cadd015199ffb21e9f148a5f74ea2fd39d92499"
+  },
+  {
+    "path": "local-llm/src",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/src/chatResponder.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10131,
+    "sha256": "29b6c2cbbbc0ffbcce16fcc9c0fa3bc84c049fe30f91b9ba3284d53dca633590"
+  },
+  {
+    "path": "local-llm/src/controlHandlers.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1126,
+    "sha256": "624285db72a6ee9a1a361ad699bd9e2abd53153933768e0a86a4b1d57c5e4eda"
+  },
+  {
+    "path": "local-llm/src/controlSocket.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6437,
+    "sha256": "8bbef5bc6aec2ca801994abbec399a64921eb182a2a2555f7588dfce135d9ae6"
+  },
+  {
+    "path": "local-llm/src/controller",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/src/controller/admission.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 27773,
+    "sha256": "7b6f67634ea82fa55f7738763508d1b2f8c930fc77a7b2764cd455ab41e24dc9"
+  },
+  {
+    "path": "local-llm/src/controller/catalog.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 28317,
+    "sha256": "36812657f8941ec9eba5a6d975c8bd2d580d92d834d27313bb62e9c803b2c9a0"
+  },
+  {
+    "path": "local-llm/src/controller/commandQueue.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 909,
+    "sha256": "bf8d10d13a6074cd9f6120a6224baa7bc10005d55e8bfdd309cfdd6a686d0f4b"
+  },
+  {
+    "path": "local-llm/src/controller/deployments.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 106533,
+    "sha256": "261f4965a9a9548be460fad20e02e369345d1c102982b1a2ca65e90ab3216d73"
+  },
+  {
+    "path": "local-llm/src/controller/downloadError.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 793,
+    "sha256": "443018d1fefff8acbc4b74e75c50658d3f60b38438c67cf84a2a51e3b7992fe6"
+  },
+  {
+    "path": "local-llm/src/controller/downloader.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 50370,
+    "sha256": "449df9c00fa29dca3c967c52e7e4c1550ba11342f5b185f1529e62890465e03c"
+  },
+  {
+    "path": "local-llm/src/controller/ggufHeader.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 17102,
+    "sha256": "2ff61c233add4c650d40351aee5faea41d9886b6511d81ab8ffa6d6a73119823"
+  },
+  {
+    "path": "local-llm/src/controller/hardware.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 22657,
+    "sha256": "7d3d3caf1115fce64cf8d4f10878b79213354983c15f2f991b4520c18a90cae4"
+  },
+  {
+    "path": "local-llm/src/controller/modelLookup.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 24518,
+    "sha256": "b7ca7e03d114074ff543f163fe4f15faec138045e700d7aacf273b563f198cc2"
+  },
+  {
+    "path": "local-llm/src/controller/ollamaStore.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12728,
+    "sha256": "6fd0041ee57ba606608498e25a9135698f55f1433d982bd4811c6d490584b9f4"
+  },
+  {
+    "path": "local-llm/src/controller/ploinkyBudget.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12122,
+    "sha256": "deddfda63a8be7f59b8529ca26a976de9e641f6afd618767afaa902b4dd8595d"
+  },
+  {
+    "path": "local-llm/src/controller/profiles.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 36891,
+    "sha256": "28d5c963528541734a807832ca3f85058c3ec6a4377f5276e765489616ab6e72"
+  },
+  {
+    "path": "local-llm/src/controller/runnerInstaller.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 32050,
+    "sha256": "c58af8ff015760fc8357a2df88a889df3440b3bc3d0ef99aedf4c9da88eb391d"
+  },
+  {
+    "path": "local-llm/src/controller/runnerLock.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19106,
+    "sha256": "af02df2fc5ed712275b79d64d611a6b48a0a7ddb1e93586b5ea16771a657b211"
+  },
+  {
+    "path": "local-llm/src/controller/runnerProcess.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12864,
+    "sha256": "6a54b5339089edd39a82396c0caa653a08463114429b80af8619088e584df96f"
+  },
+  {
+    "path": "local-llm/src/controller/stateStore.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6700,
+    "sha256": "b051f66a29d2564488c45bf1b5a8ca88e4197006b70fd23b676f6b8fa5790f3c"
+  },
+  {
+    "path": "local-llm/src/controller/vllmMpsQualification.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3053,
+    "sha256": "64e582c43063e473b596a8258a7831b641323a7f780a70829d87053b2689d122"
+  },
+  {
+    "path": "local-llm/src/controller/weightStores.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20540,
+    "sha256": "cbb0ebf79efb5554a99ed2e9524f404cbd2469748322ac1aa773ac69f2a6b7a0"
+  },
+  {
+    "path": "local-llm/src/controller/workspaceReuse.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 25717,
+    "sha256": "7a393961c60a9a6dcc65764ee255a953857060856f4ea701e72a9cf10c5337f5"
+  },
+  {
+    "path": "local-llm/src/drainBudget.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 983,
+    "sha256": "b616ca3c5d62a7fc9018450abe2a5bdb82331a1eef4f8e6212bc8abec14af7f2"
+  },
+  {
+    "path": "local-llm/src/errors.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 665,
+    "sha256": "28581726cb33a6a5519af94815f212e69e5d469bf0a9505359dd1316e3b1febc"
+  },
+  {
+    "path": "local-llm/src/main.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4125,
+    "sha256": "37ef14cfe51713826388db667d32107f8e0a40426d7de3ff78336fd0f5a0bd50"
+  },
+  {
+    "path": "local-llm/src/runners",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/src/runners/ikLlamaCpp.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1793,
+    "sha256": "0325442b053e1762af98951787a7a12bd2228858d883c7d5ed9e10e7ad583fb4"
+  },
+  {
+    "path": "local-llm/src/runners/index.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4274,
+    "sha256": "be18b725e1f2d1426a8c57be6be0136af81344f74b7362ee142c8907d54d900a"
+  },
+  {
+    "path": "local-llm/src/runners/llamaCpp.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1672,
+    "sha256": "f2fd89bfe132f15abd622f185e7159ebd0e0d90acd8ac16c01991dfa17e5d08a"
+  },
+  {
+    "path": "local-llm/src/runners/llamaServer.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20829,
+    "sha256": "6b67ca4a71d875dfcbe60e3a447ae40bbe636095600af700f5192a19f81e02d7"
+  },
+  {
+    "path": "local-llm/src/runners/lmStudio.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20168,
+    "sha256": "11b69f6cedc32f14fd20f1448e9c6702713591c5758c248357b3ae2759891143"
+  },
+  {
+    "path": "local-llm/src/runners/lmStudioLoad.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2988,
+    "sha256": "1085263c7b7ae8729d1bc9916bacd45328f989fd51ff9d6065a34e83d81b9f24"
+  },
+  {
+    "path": "local-llm/src/runners/ollama.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 12638,
+    "sha256": "ec7411ed61446d5ce9b252980a253014b30f507127a785a24c86dd9030211e6a"
+  },
+  {
+    "path": "local-llm/src/runners/params.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7797,
+    "sha256": "8c9e471cd1cb99c8b1c9abecfa7e3287c1d92a389dc8f3ac84a56ddefe6b49d8"
+  },
+  {
+    "path": "local-llm/src/runners/tabbyApi.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7802,
+    "sha256": "3e18fb933abf4516f2a6bdf6ec58c3de163a5d88158358f8479efa594075e8db"
+  },
+  {
+    "path": "local-llm/src/runners/vllm.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15363,
+    "sha256": "726e509e986b447c5d16a587b0601cacd4591644a7036082e60f249a307cce06"
+  },
+  {
+    "path": "local-llm/src/testPrompt.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5223,
+    "sha256": "db58de7a752e1f517054d625a1e2c2177f456e086531652ebd0fc81900933ef5"
+  },
+  {
+    "path": "local-llm/tests",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/tests/agent-runner-lock.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 66845,
+    "sha256": "9e38a97377bada2f00a14d3c0098f4e6b599915332d1f6ab13ae27c16d9bf879"
+  },
+  {
+    "path": "local-llm/tests/catalog-admission.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6500,
+    "sha256": "5c279de3d7c0f3181bb837a69637aa6c4ea1b92f107ac22497cca5d32b074553"
+  },
+  {
+    "path": "local-llm/tests/catalog.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11417,
+    "sha256": "6ed70a1a6a328c79aef8ebf845f119256fe6b7abb2ebb872ad28a84085b1e5a5"
+  },
+  {
+    "path": "local-llm/tests/control-socket.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6555,
+    "sha256": "c7f478a70a7969a1346a83c5d6b197e128516d315c358d6c1fce47bef60de261"
+  },
+  {
+    "path": "local-llm/tests/controller.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 36500,
+    "sha256": "bdc4f8e0b2e5e91b034ea3cb99cc428bdd3c3c667a695729309e7c9d84ee4fb1"
+  },
+  {
+    "path": "local-llm/tests/cpu-cores.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4717,
+    "sha256": "3ac712642295d1a41e8a7aab5ef129c94a66d3d3d58a343e7c8a002bf5f0e3e7"
+  },
+  {
+    "path": "local-llm/tests/cpu-profile.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 99779,
+    "sha256": "1b548e10f7bdce246ce8c4e5a0b334de22cd70c0f276dc00082fe3cb3245f36d"
+  },
+  {
+    "path": "local-llm/tests/dashboard-plugin.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 81256,
+    "sha256": "17501fa36743077a2ca2549f061693bfa16db2c2d14f84b5682dea0b69f5cb71"
+  },
+  {
+    "path": "local-llm/tests/download-file.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7541,
+    "sha256": "d67defce1782f26412a1cbefb7c98c084730e088660d976cc73607f1c3426b49"
+  },
+  {
+    "path": "local-llm/tests/downloader.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 25675,
+    "sha256": "6ab10bf060bfdae6b73bb87ef06e4123e16749e33e30e00a4c88c3161b8fe671"
+  },
+  {
+    "path": "local-llm/tests/drain-budget.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2417,
+    "sha256": "8221e986e02966eecc7de96578d192677092453e23bf8532c95ca198f5f24b6b"
+  },
+  {
+    "path": "local-llm/tests/gguf-fixture.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 3716,
+    "sha256": "fb2561c5475e15982ba9ba06576fe3036154d0efcb1e2c9b8b47829c4846f93f"
+  },
+  {
+    "path": "local-llm/tests/gguf-header.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 28195,
+    "sha256": "ff8ff3a399a9428c748e9afdc710daa1bb2fa36704052011ff9609faa33ad8a9"
+  },
+  {
+    "path": "local-llm/tests/gpu-profiles-unchanged.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6170,
+    "sha256": "aa4df6e2076f3e5f1b3343db4fdd8b9e4e43310e09325ac515f8fce807a63bd4"
+  },
+  {
+    "path": "local-llm/tests/hardware-profile.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13149,
+    "sha256": "49db6513f2c0c09e3a1e846fccc551501a3935237d0b2a1855ae09f3730b002a"
+  },
+  {
+    "path": "local-llm/tests/hardware-stop.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19647,
+    "sha256": "9b654a6ced2506a01e644fe69068c85a10b903134a9c252f0c5395130da06f91"
+  },
+  {
+    "path": "local-llm/tests/hf-snapshot.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15760,
+    "sha256": "0e044421f23db597fefeaa8880a52bfbcd1d2122d6c912524252cd6bcaea5769"
+  },
+  {
+    "path": "local-llm/tests/lmstudio.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 29643,
+    "sha256": "4f19b1ae14f854d137b1e1a0eb90a4c72167615d547c0d0a4f222efa3a001f72"
+  },
+  {
+    "path": "local-llm/tests/main-drain.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15878,
+    "sha256": "cc679e6b3c049d77954e7bc8ddd82612fb38ba07bddcfe3718af490bf65e379a"
+  },
+  {
+    "path": "local-llm/tests/memory-guard.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8762,
+    "sha256": "57ff5bd89bc426bbde492632b14e3c48daa47c690ef5b94b3a60613614c35080"
+  },
+  {
+    "path": "local-llm/tests/model-lookup.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 93505,
+    "sha256": "f74b76b31fecfbf817b3afcb2992e453fad030e31ec304a43990fd138d1790cc"
+  },
+  {
+    "path": "local-llm/tests/ollama-fixture.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2038,
+    "sha256": "825e04f7c20ef5694c4f40563f8ab4099cb4212953cc2233b018df000ef6ef86"
+  },
+  {
+    "path": "local-llm/tests/ollama-registry.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 15899,
+    "sha256": "128b01af8297a996b4cfb94eabd816de42403cf40fcf53160e85bdfdf34c60d5"
+  },
+  {
+    "path": "local-llm/tests/ollama-store.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 1763,
+    "sha256": "c43e0d3ea79f06b365a146c29ff18f5a7b72561f3ef116bfa3759400c6d7343a"
+  },
+  {
+    "path": "local-llm/tests/overview-golden-a84617d.json",
+    "mode": 420,
+    "type": "file",
+    "bytes": 141345,
+    "sha256": "8978f3292acaed6ab56416ea3207690970058206d0715b29ea2226a923150ca9"
+  },
+  {
+    "path": "local-llm/tests/overview-scenarios.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13872,
+    "sha256": "b72ccd0c14f86fcfc1d42bb51f3cd64547e0bb1c9ab614fd8999b7a158d90e41"
+  },
+  {
+    "path": "local-llm/tests/ploinky-budget-admission.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 20787,
+    "sha256": "dd80810bc4090c49bd1129c3d6a55e5514359abf1c2c139ab68033136db8f8e6"
+  },
+  {
+    "path": "local-llm/tests/ploinky-budget-raw-guard.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 2760,
+    "sha256": "67266f59a4fe568c1ac03de74445907a2d21cadca890f07f154d218ec0e7003c"
+  },
+  {
+    "path": "local-llm/tests/ploinky-budget.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 28593,
+    "sha256": "24e82763eaeb3730c68af1d9861765de666c1cb0b3ea90449283fe164c098bee"
+  },
+  {
+    "path": "local-llm/tests/ploinky-cpu-budget-consistency.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6948,
+    "sha256": "d50d5113f50a25cfeb3a9c65d49498117f5a15516a1cb119723dce1523bca875"
+  },
+  {
+    "path": "local-llm/tests/ploinkyGpuCases.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 4067,
+    "sha256": "0d410ae55f465d0f519cc8fb15b84d8f0b26e41636b0a0e1b462f53f00230d73"
+  },
+  {
+    "path": "local-llm/tests/ploinkyGpuFixture.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6927,
+    "sha256": "a9aa9c147709983d259c1c524696bec9c582933815ce581c269cbfc931b3ddc5"
+  },
+  {
+    "path": "local-llm/tests/request-ids.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11619,
+    "sha256": "fdbe727b4b4c20c0430887450647c834e9e036fa4cdd6230ce2df4077661deb0"
+  },
+  {
+    "path": "local-llm/tests/review-file-integrity.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 38925,
+    "sha256": "8579761e46e4785100ffce614f1125659b5d55266b3753ccef3771d7e3d6d8e5"
+  },
+  {
+    "path": "local-llm/tests/review-runtime.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 28635,
+    "sha256": "9058c21c9a5c49004f4204842bc8536bd13ce8631cadd9c9fadfd7676a3f3041"
+  },
+  {
+    "path": "local-llm/tests/run-cancellation.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 13952,
+    "sha256": "56ac9ddb884f30f1171b1a67fe817997bff5d67cef69bd8b26a7353539044760"
+  },
+  {
+    "path": "local-llm/tests/runner-characterization.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 11733,
+    "sha256": "848aa04ee7ee7a63635930aebcf987b1c533257003200d717e19627cf0974a44"
+  },
+  {
+    "path": "local-llm/tests/runner-executable.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 48086,
+    "sha256": "e0ede44e4d8bba766b6ee7a3d40d0b8eee7dff0ce96dc65cedf32b1fbbb34f45"
+  },
+  {
+    "path": "local-llm/tests/runner-framework.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18014,
+    "sha256": "0a02e1f6be5ec6d671ac11b17a382ea9a6e0b11f05688203482e625ffff84f3a"
+  },
+  {
+    "path": "local-llm/tests/runner-install-check.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 7975,
+    "sha256": "b8e3d6bbaa0d1ffdc7664ed5adc749d18c87bbc419150b5f14e612406c4afc1c"
+  },
+  {
+    "path": "local-llm/tests/runner-install-controller.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 18785,
+    "sha256": "cf908a848df1a3596debefdaa834a9387a8a4e4e7f94d6312b2a0ba7e4ad10be"
+  },
+  {
+    "path": "local-llm/tests/runner-installer.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 27558,
+    "sha256": "c85baf023174101845d8c04d308a2f8797b04ced8be6a87ac3171c3d0d57923f"
+  },
+  {
+    "path": "local-llm/tests/runner-process.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 6163,
+    "sha256": "3c76d0999b9d615efa20266521f13efd68c23d82231e16b2ed4602b664e1a6a3"
+  },
+  {
+    "path": "local-llm/tests/runners.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 48744,
+    "sha256": "0b0e92ec4c03138ad5a0700174c761c28e73e186272b5d3f26f919ca92ebba0c"
+  },
+  {
+    "path": "local-llm/tests/runtime-models-unified.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 57419,
+    "sha256": "ecda2c9ab42612314d5517592c5d908d22f25558af7f8928a825b91246e3aa1c"
+  },
+  {
+    "path": "local-llm/tests/settings-plugin.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 24141,
+    "sha256": "a0799061199b6eabae0c83a749d06de9be08d9dacc525dbac20e5e317dac50ed"
+  },
+  {
+    "path": "local-llm/tests/shared-models-recheck.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 21359,
+    "sha256": "d156aa8543229d261e45700a604b0554768081dc8425964b3110a514bb304133"
+  },
+  {
+    "path": "local-llm/tests/shared-models.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 31326,
+    "sha256": "aaed3ddb59cb2206297c8e7a2c23d15ed5752303fafdcac17bbdbbd18546acf0"
+  },
+  {
+    "path": "local-llm/tests/split-gguf.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 8125,
+    "sha256": "8bd107f45d67bb5264a75c1baf46a6aeb84041bbc38dc24a160b50c58c43f17b"
+  },
+  {
+    "path": "local-llm/tests/tabbyapi.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 10122,
+    "sha256": "746d76f595bf46224385c949cce3df84e01a02a53e7b444d46ff2b146d116bce"
+  },
+  {
+    "path": "local-llm/tests/tar-walk.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16948,
+    "sha256": "08a44ac9f7170d2e5b3cf28e1edf5d3987b0b3df145d8048a99579fc640c107d"
+  },
+  {
+    "path": "local-llm/tests/tools-contract.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 28142,
+    "sha256": "df4e7eec23c5d036a763183e7c9085e7abf54f602425848790d1e97c6b8ef5bf"
+  },
+  {
+    "path": "local-llm/tests/unified-profile.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 34010,
+    "sha256": "dbb2e6b70bda90f35ba459293351f43c124338854ef1acd81dca78d35541f2bd"
+  },
+  {
+    "path": "local-llm/tests/vllm-mps-calibration.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 87097,
+    "sha256": "f3cd7b3f7f2efb8f61b51c3a99b9ed9d4deddb8af9111f70df1fdc32cb52e77d"
+  },
+  {
+    "path": "local-llm/tests/vllm.test.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 19925,
+    "sha256": "4dd77a5988e4ba2d0a7bfe932ba1a7ec7141a2770aeb6d7c1b8bc6468e68f676"
+  },
+  {
+    "path": "local-llm/tools",
+    "mode": 493,
+    "type": "directory"
+  },
+  {
+    "path": "local-llm/tools/local_llm_tool.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 5454,
+    "sha256": "32dad5a02b2606b7a26127d1d5f1ff17d4c6fb33de0977db227e541effcaf2b6"
+  },
+  {
+    "path": "local-llm/tools/runner_install_check.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 16844,
+    "sha256": "8839eb7a5f7ab83eb09f9cd943b2446059fdeb2d2728b0e9e865898455fefc02"
+  },
+  {
+    "path": "local-llm/tools/vllm_mps_calibration.mjs",
+    "mode": 420,
+    "type": "file",
+    "bytes": 56810,
+    "sha256": "b49d2353811f481a5750746e6e29df3f62c0880296a58d10c01ea2acc180d0e3"
+  }
+]

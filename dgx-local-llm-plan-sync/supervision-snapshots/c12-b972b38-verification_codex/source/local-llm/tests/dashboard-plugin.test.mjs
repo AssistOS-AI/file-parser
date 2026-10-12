@@ -1,0 +1,462 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import test from 'node:test';
+
+import * as dashboardModule from '../IDE-plugins/local-llm-tool-button/components/local-llm-dashboard/local-llm-dashboard.js';
+import {
+    detailInfoHtml,
+    estimateHtml,
+    hardwareCardsHtml,
+    installMessage,
+    modelsTableHtml,
+    runnersPanelHtml,
+    splitRunFields,
+    statusCardHtml,
+    tableRunners,
+} from '../IDE-plugins/local-llm-tool-button/components/local-llm-dashboard/local-llm-dashboard-view.js';
+import { fieldsFromSchema, rememberRunners, runnerOptions } from '../IDE-plugins/local-llm-settings/local-llm-settings-model.js';
+import { RUNNERS } from '../src/runners/index.mjs';
+
+const ROOT = new URL('..', import.meta.url);
+const BUTTON = new URL('IDE-plugins/local-llm-tool-button/', ROOT);
+const DASHBOARD = new URL('components/local-llm-dashboard/', BUTTON);
+const readText = (url) => fs.readFileSync(url, 'utf8');
+const readJson = (url) => JSON.parse(readText(url));
+
+const OVERVIEW_MODELS = [
+    {
+        id: 'gpt-oss-20b', displayName: 'gpt-oss-20b', architecture: 'moe', seed: true, license: 'Apache-2.0', totalParams: '21B', activeParams: '3.6B',
+        weights: {
+            gguf: { label: 'GGUF file', size: 12e9, download: { state: 'complete', total: 12e9 }, runners: ['llama.cpp', 'fake-gguf'] },
+            ollama: { label: 'Ollama tag', size: 13.8e9, download: { state: 'absent' }, runners: ['ollama'] },
+        },
+        runners: {
+            'llama.cpp': { format: 'gguf', size: 12e9, download: { state: 'complete', total: 12e9 }, admission: { status: 'ok' } },
+            'fake-gguf': { format: 'gguf', size: 12e9, download: { state: 'complete', total: 12e9 }, admission: { status: 'ok' } },
+            ollama: { format: 'ollama', size: 13.8e9, download: { state: 'absent' }, admission: { status: 'ok' } },
+        },
+    },
+    {
+        id: 'qwen3-0.6b', displayName: 'Qwen3 0.6B <b>', architecture: 'dense', seed: false, license: 'Apache-2.0',
+        weights: { gguf: { label: 'GGUF file', size: 6.4e8, download: { state: 'complete', total: 6.4e8 }, runners: ['llama.cpp', 'fake-gguf'] } },
+        runners: {
+            'llama.cpp': { format: 'gguf', size: 6.4e8, download: { state: 'complete', total: 6.4e8 }, admission: { status: 'ok' } },
+            'fake-gguf': { format: 'gguf', size: 6.4e8, download: { state: 'complete', total: 6.4e8 }, admission: { status: 'ok' } },
+        },
+    },
+];
+// A third supported runner the dashboard has never heard of.
+const RUNNER_LIST = [
+    { id: 'llama.cpp', displayName: 'llama.cpp', supported: true, installed: true },
+    { id: 'fake-gguf', displayName: 'Fake <GGUF>', supported: true, installed: true },
+    { id: 'ollama', displayName: 'Ollama', supported: true, installed: true },
+    { id: 'vllm', displayName: 'vLLM', supported: false, installed: false },
+];
+
+test('the toolbar plugin sits next to Soul Gateway, is admin-only and opens the dashboard in component mode', () => {
+    const config = readJson(new URL('config.json', BUTTON));
+    assert.equal(config.id, 'local-llm-tool-button');
+    assert.equal(config.component, 'local-llm-tool-button');
+    assert.equal(config.presenter, 'LocalLlmToolButton');
+    assert.equal(config.type, 'embedded');
+    assert.deepEqual(config.location, ['file-exp:toolbar']);
+    assert.equal(config.locationOrder, 295);
+    assert.equal(config.adminOnly, true);
+    assert.deepEqual(config.toolbarModal, { mode: 'component', component: 'local-llm-dashboard', title: 'Local LLMs' });
+    const dashboard = config.dependencies.find((entry) => entry.component === 'local-llm-dashboard');
+    assert.deepEqual(dashboard, { component: 'local-llm-dashboard', presenter: 'LocalLlmDashboard', type: 'embedded' });
+    for (const name of ['local-llm-dashboard.html', 'local-llm-dashboard.css', 'local-llm-dashboard.js']) {
+        assert.ok(fs.existsSync(new URL(name, DASHBOARD)), name);
+    }
+    for (const name of ['local-llm-tool-button.html', 'local-llm-tool-button.css', 'local-llm-tool-button.js', 'icon.svg']) {
+        assert.ok(fs.existsSync(new URL(name, BUTTON)), name);
+    }
+    assert.equal(typeof dashboardModule.LocalLlmDashboard, 'function');
+});
+
+test('the dashboard follows Explorer style rules and works in both themes through Explorer tokens', () => {
+    const presenter = readText(new URL('local-llm-dashboard.js', DASHBOARD));
+    const template = readText(new URL('local-llm-dashboard.html', DASHBOARD));
+    const styles = readText(new URL('local-llm-dashboard.css', DASHBOARD));
+    const buttonStyles = readText(new URL('local-llm-tool-button.css', BUTTON));
+    assert.match(presenter, /constructor\(element, invalidate\)[\s\S]*?this\.invalidate\(\);/);
+    assert.match(presenter, /webSkelPresenter\?\.setOptions/);
+    assert.match(template, /class="settings-tabs"[\s\S]*?role="tablist"/);
+    for (const tab of ['models', 'playground', 'logs']) {
+        assert.match(template, new RegExp(`data-llm-tab="${tab}"[\\s\\S]*?role="tab"`));
+        assert.match(template, new RegExp(`data-llm-panel="${tab}"[\\s\\S]*?role="tabpanel"`));
+    }
+    assert.match(template, /<custom-select id="localLlmRunner"/);
+    assert.doesNotMatch(template, /<select\b/);
+    assert.doesNotMatch(presenter, /<select\b/);
+    assert.doesNotMatch(presenter, /window\.confirm|window\.prompt|window\.alert/);
+    assert.doesNotMatch(template, /\$\$/, 'WebSkel treats $$name as a template variable');
+    assert.doesNotMatch(template, /\/explorer\/assets\/icons\//);
+    for (const css of [styles, buttonStyles]) {
+        assert.doesNotMatch(css, /#[0-9a-f]{3,8}\b/i);
+        assert.doesNotMatch(css, /(?:color|background|border(?:-color|-radius)?|box-shadow):/);
+        assert.doesNotMatch(css, /min-width:\s*(?:[1-9]\d*px|min\()/);
+        assert.doesNotMatch(css, /\/\*/, 'WebSkel mis-scopes the rule after a CSS comment');
+    }
+    assert.match(styles, /var\(--(?:space|font)-/);
+    assert.match(styles, /@media \(max-width: 720px\)/);
+    const scoped = (css, pattern) => {
+        for (const rule of css.replace(/@media[^{]*\{/g, '').split('}')) {
+            const selector = rule.split('{')[0].trim();
+            if (!selector) continue;
+            for (const part of selector.split(',')) assert.match(part.trim(), pattern, part.trim());
+        }
+    };
+    scoped(styles, /^local-llm-dashboard\b/);
+    scoped(buttonStyles, /^(?:\.app-toolbar-slot )?local-llm-tool-button\b/);
+});
+
+test('the Models table has no buttons; the detail panel holds the one Run and the model actions', () => {
+    const table = modelsTableHtml(OVERVIEW_MODELS, { selectedId: 'qwen3-0.6b', activeModelId: 'gpt-oss-20b', runners: RUNNER_LIST });
+    // One column per supported runner, named by the runner itself.
+    assert.deepEqual([...table.matchAll(/<th scope="col">([^<]*)<\/th>/g)].map((match) => match[1]),
+        ['Model', 'Licence', 'llama.cpp', 'Fake &lt;GGUF&gt;', 'Ollama']);
+    assert.doesNotMatch(table, /<button/);
+    assert.doesNotMatch(table, />\s*Run/);
+    assert.match(table, /data-model-id="qwen3-0.6b"[^>]*aria-selected="true"/);
+    assert.match(table, /class="local-llm-model-row active"/);
+    assert.match(table, /status-badge success">in use/);
+    assert.match(table, /Qwen3 0\.6B &lt;b&gt;/, 'names are escaped');
+    assert.match(table, /<td class="settings-card-meta">—<\/td>/, 'no Ollama source shows a dash');
+
+    const template = readText(new URL('local-llm-dashboard.html', DASHBOARD));
+    assert.equal((template.match(/data-run-submit/g) || []).length, 1);
+    assert.equal((template.match(/>\s*Run\s*</g) || []).length, 1);
+
+    const catalog = detailInfoHtml(OVERVIEW_MODELS[0], { runners: RUNNER_LIST });
+    assert.doesNotMatch(catalog, /removeModel/, 'catalog models cannot be removed');
+    // Weights are listed once per format, whatever the number of runners reading them.
+    assert.equal((catalog.match(/data-local-action="deleteWeights /g) || []).length, 1);
+    assert.match(catalog, /data-local-action="deleteWeights gpt-oss-20b gguf"/);
+    assert.match(catalog, /GGUF file[\s\S]*used by llama\.cpp, Fake &lt;GGUF&gt;/);
+    assert.doesNotMatch(catalog, /deleteWeights gpt-oss-20b ollama/, 'nothing to delete for Ollama');
+    assert.match(catalog, /Fake &lt;GGUF&gt;[\s\S]*Fits this machine/, 'every supported runner shows its fit');
+    const added = detailInfoHtml(OVERVIEW_MODELS[1], { runners: RUNNER_LIST });
+    assert.match(added, /data-local-action="removeModel qwen3-0\.6b"\s+disabled title="Delete its weights first"/,
+        'the server removes a model only without weights on disk');
+    assert.match(added, /Delete its weights first to remove it\./);
+    const emptyAdded = {
+        ...OVERVIEW_MODELS[1],
+        weights: { gguf: { label: 'GGUF file', size: 1, download: { state: 'absent' }, runners: ['llama.cpp'] } },
+        runners: { 'llama.cpp': { format: 'gguf', size: 1, download: { state: 'absent' }, admission: { status: 'ok' } } },
+    };
+    const removable = detailInfoHtml(emptyAdded, { runners: RUNNER_LIST });
+    assert.match(removable, /data-local-action="removeModel qwen3-0\.6b"\s*>Remove/);
+    assert.doesNotMatch(removable, /Delete its weights first/);
+    assert.doesNotMatch(added, />\s*Run\s*</);
+    assert.equal(detailInfoHtml(null), '');
+    assert.equal(modelsTableHtml([]), '<div class="settings-empty-state">No models in the catalog.</div>');
+});
+
+test('the Runners tab offers Install and Uninstall only for on-demand runners, with size, licence and progress', () => {
+    const licence = { name: 'AGPL-3.0', url: 'https://github.com/example/tabby/blob/main/LICENSE', source: 'https://github.com/example/tabby',
+        notice: 'Installed from upstream, not redistributed.', requiresAcceptance: true };
+    const runners = [
+        { id: 'llama.cpp', displayName: 'llama.cpp', supported: true, installed: true, version: 'b11159' },
+        { id: 'vllm', displayName: 'vLLM', supported: true, installed: false, version: null,
+            install: { version: '0.30.0', totalBytes: 4.2e9, licence: { name: 'Apache-2.0', url: 'https://x.example/L' }, installed: false, runnable: false, state: null } },
+        { id: 'tabby', displayName: 'Tabby <API>', supported: true, installed: true, version: 'abc1234',
+            install: { version: 'abc1234', totalBytes: 3e9, licence, installed: true, runnable: true,
+                state: { phase: 'installed', licence: { acceptedBy: 'admin@example.com', acceptedAt: '2026-09-24T12:00:00.000Z' }, rebuild: { seconds: 42.5 } } } },
+        { id: 'busy', displayName: 'Busy', supported: true, installed: false,
+            install: { version: '1', totalBytes: 1e9, licence: { name: 'MIT', url: 'https://x.example/M' }, installed: false, runnable: false, installing: true,
+                state: { phase: 'downloading', download: { bytes: 2.5e8, total: 1e9, rate: 5e6 } } } },
+    ];
+    const idle = runnersPanelHtml(runners.filter((runner) => runner.id !== 'busy'));
+    assert.match(idle, /data-local-action="installRunner vllm"/);
+    const html = runnersPanelHtml(runners);
+    assert.doesNotMatch(html, /installRunner llama\.cpp|uninstallRunner llama\.cpp/, 'runners in the image are not installed on demand');
+    assert.doesNotMatch(html, /data-local-action="installRunner/, 'no Install anywhere while one install runs');
+    assert.match(html, /4\.2 GB/);
+    assert.match(html, /data-local-action="uninstallRunner tabby"/);
+    assert.match(html, /Tabby &lt;API&gt;/);
+    assert.match(html, /AGPL-3\.0[\s\S]*accepted by admin@example\.com/);
+    assert.match(html, /href="https:\/\/github\.com\/example\/tabby"/);
+    assert.match(html, /<progress[^>]*value="25"/);
+});
+
+test('basic run settings are the ones that decide the fit; everything else is under a closed Advanced', () => {
+    const llama = fieldsFromSchema(RUNNERS['llama.cpp'].paramSchema, {});
+    const dense = splitRunFields(llama, RUNNERS['llama.cpp'], { architecture: 'dense' });
+    assert.deepEqual(dense.basic.map((field) => field.name), ['ctxSize']);
+    assert.equal(dense.basic.length + dense.advanced.length, llama.length);
+    const moe = splitRunFields(llama, RUNNERS['llama.cpp'], { architecture: 'moe' });
+    assert.deepEqual(moe.basic.map((field) => field.name), ['ctxSize', 'nCpuMoe']);
+    assert.ok(!moe.advanced.some((field) => ['ctxSize', 'nCpuMoe'].includes(field.name)));
+    const ollama = splitRunFields(fieldsFromSchema(RUNNERS.ollama.paramSchema, {}), RUNNERS.ollama, { architecture: 'moe' });
+    assert.deepEqual(ollama.basic.map((field) => field.name), ['numCtx']);
+    assert.deepEqual(splitRunFields([], RUNNERS.vllm, {}), { basic: [], advanced: [] });
+    // A runner the dashboard has never heard of names its own basic fields.
+    const custom = splitRunFields(fieldsFromSchema({ properties: { a: { type: 'integer' }, b: { type: 'integer' } } }, {}),
+        { id: 'fake', basicParams: ['b'], moeParams: [] }, { architecture: 'dense' });
+    assert.deepEqual(custom.basic.map((field) => field.name), ['b']);
+    const template = readText(new URL('local-llm-dashboard.html', DASHBOARD));
+    assert.match(template, /<details class="local-llm-advanced" data-run-advanced>/, 'Advanced starts closed');
+});
+
+test('the summary cards show live GPU use, and the status card names what runs and how to stop it', () => {
+    const hardware = {
+        gpu: { available: true, name: 'RTX', usedBytes: 13 * 2 ** 20, totalBytes: 6144 * 2 ** 20, processes: [] },
+        memory: { availableBytes: 24000 * 2 ** 20, totalBytes: 31301 * 2 ** 20 },
+        disk: { freeBytes: 290e9, totalBytes: 532e9 },
+    };
+    const idle = hardwareCardsHtml(hardware);
+    assert.match(idle, /13 MiB of 6,144 MiB/);
+    assert.match(idle, /<meter class="local-llm-meter"/);
+    const busy = hardwareCardsHtml(hardware, { available: true, usedBytes: 2593 * 2 ** 20, totalBytes: 6144 * 2 ** 20, processes: [{ name: 'llama-server' }] });
+    assert.match(busy, /2,593 MiB of 6,144 MiB/, 'a fresher status poll wins');
+    assert.match(busy, /in use by llama-server/);
+    assert.match(hardwareCardsHtml({ gpu: { available: false, reason: 'revoked' } }), /Not available[\s\S]*revoked/);
+
+    const none = statusCardHtml({ phase: 'idle', deployment: { modelId: 'gpt-oss-20b', runnerId: 'llama.cpp', phase: 'idle' } });
+    assert.match(none, />None</);
+    assert.match(none, /Last run: gpt-oss-20b on llama\.cpp/);
+    assert.match(none, /data-llm-stop/);
+    const downloading = statusCardHtml({ phase: 'downloading', deployment: { modelId: 'm', runnerId: 'ollama', download: { bytes: 5, total: 10, rate: 1e6, etaSeconds: 5 } } });
+    assert.match(downloading, /<progress class="local-llm-progress" max="100" value="50"/);
+    assert.match(downloading, /data-llm-cancel/);
+    const ready = statusCardHtml({
+        phase: 'ready',
+        deployment: { modelId: 'qwen3-0.6b', runnerId: 'llama.cpp' },
+        runnerReport: { device: 'CUDA0', offloaded: { layers: 29, of: 29 }, totalMiB: 2438 },
+        lastCompletion: { completionTokens: 7, generationTokensPerSecond: 223.4, source: 'runner timings' },
+    });
+    assert.match(ready, /qwen3-0\.6b on llama\.cpp/);
+    assert.match(ready, /status-badge success">ready/);
+    assert.match(ready, /device CUDA0 · 29\/29 layers on the GPU · buffers 2,438 MiB/);
+    assert.match(ready, /7 tokens at 223\.4 tokens\/s/);
+
+    const estimate = estimateHtml({ admission: { status: 'ok', estimate: { gpuBytes: 2051 * 2 ** 20, ramBytes: 768 * 2 ** 20, basis: 'file size heuristic' } } }, hardware);
+    assert.match(estimate, /GPU about 2,051 MiB of 6,144 MiB/);
+    assert.match(estimate, /RAM about 768 MiB of 24,000 MiB available/);
+    assert.match(estimateHtml({ error: 'Context size must be a whole number.' }), /settings-status error/);
+});
+
+test('on unified memory one card shows the shared pool, and the run form one shared-memory estimate', () => {
+    const hardware = {
+        gpu: { available: true, memoryModel: 'unified', name: 'NVIDIA GB10', totalBytes: null, usedBytes: null, freeBytes: null,
+            processes: [{ name: '/opt/llama.cpp/llama-server', usedBytes: 11875 * 2 ** 20 }] },
+        memory: { totalBytes: 122502 * 2 ** 20, availableBytes: 96000 * 2 ** 20, freeBytes: 80000 * 2 ** 20, cachedBytes: 14000 * 2 ** 20 },
+        disk: { freeBytes: 434e9, totalBytes: 916e9 },
+    };
+    const cards = hardwareCardsHtml(hardware);
+    assert.match(cards, /Unified memory available/);
+    assert.match(cards, /96,000 MiB of 122,502 MiB/);
+    assert.match(cards, /NVIDIA GB10 shares system memory · GPU in use by \/opt\/llama\.cpp\/llama-server · page cache 14,000 MiB/);
+    const total = 122502 * 2 ** 20;
+    assert.ok(cards.includes(`<meter class="local-llm-meter" min="0" max="${total}" value="${total - 96000 * 2 ** 20}"`));
+    assert.doesNotMatch(cards, /GPU memory|RAM available|—|NaN|null/, 'no GPU or RAM card, and no missing value reaches a card');
+    assert.match(cards, /Disk free/);
+    const estimate = estimateHtml({ admission: { status: 'ok', estimate: { unifiedBytes: 84 * 2 ** 30, basis: 'measured envelope' } } }, hardware);
+    assert.match(estimate, /Shared memory about 86,016 MiB of 122,502 MiB, 96,000 MiB available now/);
+    assert.doesNotMatch(estimate, /GPU about|RAM about/);
+});
+
+// Fake timers and a fake local-llm client for the dashboard's polling.
+function pollingHarness(t, callTool, { document } = {}) {
+    const saved = {
+        setTimeout: globalThis.setTimeout, clearTimeout: globalThis.clearTimeout, window: globalThis.window, document: globalThis.document,
+    };
+    const pending = new Map();
+    let nextId = 1;
+    globalThis.setTimeout = (fn, ms) => { const id = nextId++; pending.set(id, { fn, ms }); return id; };
+    globalThis.clearTimeout = (id) => { pending.delete(id); };
+    globalThis.window = { webSkel: { appServices: { getClient: () => ({ callTool }) } } };
+    if (document) globalThis.document = document;
+    t.after(() => Object.assign(globalThis, saved));
+    const settle = async () => { for (let i = 0; i < 6; i += 1) await new Promise((resolve) => saved.setTimeout(resolve, 0)); };
+    const fireAll = async () => {
+        const due = [...pending.values()];
+        pending.clear();
+        for (const timer of due) timer.fn();
+        await settle();
+    };
+    const presenter = new dashboardModule.LocalLlmDashboard({ isConnected: true, querySelector: () => null, querySelectorAll: () => [] }, () => {});
+    return { presenter, pending, fireAll, settle };
+}
+
+const statusText = (phase) => ({ content: [{ type: 'text', text: JSON.stringify({
+    phase, deployment: { phase, modelId: 'm', runnerId: 'llama.cpp' }, logs: [], nextSeq: 0,
+}) }] });
+
+test('each Send, Stop or Cancel keeps a single polling chain', async (t) => {
+    let statusCalls = 0;
+    const h = pollingHarness(t, async (tool) => {
+        if (tool === 'local_llm_status') { statusCalls += 1; return statusText('ready'); }
+        if (tool === 'local_llm_test_prompt') return { content: [{ type: 'text', text: JSON.stringify({ text: 'PONG', elapsedMs: 5 }) }] };
+        return { content: [{ type: 'text', text: '{}' }] };
+    });
+    const p = h.presenter;
+    p.status = { phase: 'ready' };
+    p.promptForm = { reportValidity: () => true, elements: { prompt: { value: 'hi' }, maxTokens: { value: '16' } } };
+    p.promptResult = { innerHTML: '' };
+    p.startPollingIfActive();
+    await h.fireAll();
+    assert.equal(h.pending.size, 1);
+    for (let send = 1; send <= 3; send += 1) {
+        await p.submitPrompt({ preventDefault() {} });
+        await h.settle();
+        assert.equal(h.pending.size, 1, `after Send #${send}`);
+    }
+    await p.stopDeployment();
+    await h.settle();
+    await p.cancelDownload();
+    await h.settle();
+    assert.equal(h.pending.size, 1, 'after Stop and Cancel');
+    const before = statusCalls;
+    await h.fireAll();
+    assert.equal(statusCalls - before, 1, 'one status call per tick');
+    p.closed = true;
+    await h.fireAll();
+    assert.equal(h.pending.size, 0);
+});
+
+test('a failed status call backs off and keeps polling while the dashboard is open', async (t) => {
+    let calls = 0;
+    const h = pollingHarness(t, async () => {
+        calls += 1;
+        if (calls === 2) throw new Error('transient router 502');
+        return statusText('downloading');
+    });
+    const p = h.presenter;
+    p.status = { phase: 'downloading' };
+    p.startPollingIfActive();
+    await h.fireAll();
+    assert.equal(calls, 1);
+    await h.fireAll();
+    assert.equal(calls, 2);
+    assert.equal(h.pending.size, 1, 'still polling after the failure');
+    assert.ok([...h.pending.values()][0].ms > 1500, 'with a backoff');
+    await h.fireAll();
+    assert.equal(calls, 3);
+    assert.equal(h.pending.size, 1);
+    assert.equal([...h.pending.values()][0].ms, 1500, 'back to the normal interval after a success');
+});
+
+function deferred() {
+    let resolve;
+    const promise = new Promise((ok) => { resolve = ok; });
+    return { promise, resolve };
+}
+
+test('at most one status request is in flight; a poll asked for meanwhile runs once after it', { timeout: 5000 }, async (t) => {
+    const replies = [];
+    let inFlight = 0;
+    let maxInFlight = 0;
+    const h = pollingHarness(t, async () => {
+        inFlight += 1;
+        maxInFlight = Math.max(maxInFlight, inFlight);
+        const reply = deferred();
+        replies.push(reply);
+        try {
+            return await reply.promise;
+        } finally {
+            inFlight -= 1;
+        }
+    });
+    const p = h.presenter;
+    p.status = { phase: 'downloading' };
+    const first = p.poll();
+    await h.settle();
+    assert.equal(replies.length, 1);
+    const second = p.poll();
+    p.startPollingIfActive(true);
+    await h.settle();
+    assert.equal(replies.length, 1);
+    assert.equal(h.pending.size, 0);
+    await second;
+    replies[0].resolve(statusText('downloading'));
+    await first;
+    await h.settle();
+    assert.equal(h.pending.size, 1);
+    assert.equal([...h.pending.values()][0].ms, 0, 'the follow-up runs at once');
+    await h.fireAll();
+    assert.equal(replies.length, 2);
+    assert.equal(maxInFlight, 1);
+    replies[1].resolve(statusText('ready'));
+    await h.settle();
+});
+
+test('while open and visible, the overview refreshes on a timer; hidden or closed, it stops', async (t) => {
+    const document = { hidden: false, addEventListener() {}, removeEventListener() {} };
+    let overviews = 0;
+    const h = pollingHarness(t, async (tool) => {
+        if (tool === 'local_llm_overview') overviews += 1;
+        return { content: [{ type: 'text', text: JSON.stringify({ hardware: {}, models: [], runners: [], deployment: null }) }] };
+    }, { document });
+    const p = h.presenter;
+    p.scheduleOverviewRefresh();
+    assert.deepEqual([...h.pending.values()].map((timer) => timer.ms), [dashboardModule.OVERVIEW_REFRESH_MS]);
+    await h.fireAll();
+    assert.equal(overviews, 1);
+    assert.equal(h.pending.size, 1, 'rescheduled');
+    document.hidden = true;
+    await h.fireAll();
+    assert.equal(overviews, 1, 'no refresh while the tab is hidden');
+    assert.equal(h.pending.size, 0, 'and no timer until it is visible again');
+    document.hidden = false;
+    p.onVisibilityChange();
+    assert.deepEqual([...h.pending.values()].map((timer) => timer.ms), [0], 'refreshes at once when visible again');
+    await h.fireAll();
+    assert.equal(overviews, 2);
+    p.afterUnload();
+    assert.equal(h.pending.size, 0, 'unload stops the timer');
+    await h.fireAll();
+    assert.equal(overviews, 2);
+});
+
+// LM Studio (runners plan I9, Phase R7): off unless this deployment's operator
+// turned it on; proprietary, for internal use only, with its Terms shown and
+// accepted before anything downloads.
+const LMSTUDIO_LICENCE = {
+    name: 'LM Studio Terms of Use, version August 23, 2026', url: 'https://lmstudio.ai/app-terms', requiresAcceptance: true, proprietary: true,
+    notice: 'Internal use only: the Terms license it "solely for Your personal and / or internal business purposes".',
+};
+const REASON = 'LM Studio is not enabled on this deployment (internal use only). This deployment\'s operator enables it with "ploinky var LOCAL_LLM_LMSTUDIO internal-use" and a restart of local-llm.';
+
+test('a runner the operator left off says why, offers no Install, and gets no column or Run option', () => {
+    const off = { id: 'lmstudio', displayName: 'LM Studio (internal use only)', supported: true, installed: false, enabled: false, disabledReason: REASON,
+        install: { version: '0.0.25-1', totalBytes: 1105623572, licence: LMSTUDIO_LICENCE, installed: false, runnable: false, state: null } };
+    const html = runnersPanelHtml([off]);
+    assert.doesNotMatch(html, /data-local-action="installRunner lmstudio"/);
+    assert.match(html, /not enabled on this deployment/);
+    assert.match(html, /ploinky var LOCAL_LLM_LMSTUDIO internal-use/);
+    assert.match(html, /href="https:\/\/lmstudio\.ai\/app-terms"/, 'the Terms stay visible');
+    // Installed earlier, then turned off: it can still be uninstalled to free the disk.
+    const installedOff = { ...off, installed: true, install: { ...off.install, installed: true, runnable: true } };
+    assert.match(runnersPanelHtml([installedOff]), /data-local-action="uninstallRunner lmstudio"/);
+    // On, it installs like any on-demand runner.
+    assert.match(runnersPanelHtml([{ ...off, enabled: true, disabledReason: undefined }]), /data-local-action="installRunner lmstudio"/);
+    assert.deepEqual(tableRunners([...RUNNER_LIST, off]).map((runner) => runner.id), ['llama.cpp', 'fake-gguf', 'ollama']);
+    const model = { runners: { 'llama.cpp': { admission: { status: 'ok' }, download: { state: 'complete' } }, lmstudio: { admission: { status: 'incompatible' } } } };
+    // The dashboard learns runner names from the overview.
+    rememberRunners([off]);
+    const options = runnerOptions({ runners: [RUNNER_LIST[0], off] }, model);
+    assert.equal(options.find((option) => option.value === 'lmstudio').label, 'LM Studio (internal use only) · not enabled on this deployment');
+});
+
+test('installing a proprietary runner shows its Terms, the internal-use rule and that the acceptance is recorded', () => {
+    const runner = { id: 'lmstudio', displayName: 'LM Studio (internal use only)',
+        install: { version: '0.0.25-1', totalBytes: 1105623572, licence: LMSTUDIO_LICENCE } };
+    const message = installMessage(runner);
+    assert.match(message, /^Install LM Studio \(internal use only\) 0\.0\.25-1\? It downloads 1\.1 GB of pinned files/);
+    assert.match(message, /proprietary software, for internal use only/);
+    assert.match(message, /LM Studio Terms of Use, version August 23, 2026 \(https:\/\/lmstudio\.ai\/app-terms\)/);
+    assert.match(message, /internal business purposes/);
+    assert.match(message, /accepts these terms on this workspace's behalf, and your acceptance is recorded/);
+    // A notice that already says so is not followed by the same sentence again (seen live in L3).
+    const said = installMessage({ ...runner, install: { ...runner.install, licence: { ...LMSTUDIO_LICENCE,
+        notice: 'Installing downloads it and accepts the Terms on this workspace\'s behalf, and your acceptance is recorded.' } } });
+    assert.equal(said.match(/acceptance is recorded/g).length, 1, said);
+    // An open-source licence that needs acceptance keeps its wording; one that does not just names it.
+    const agpl = installMessage({ id: 'tabbyapi', displayName: 'TabbyAPI', install: { version: 'f07131c', totalBytes: 4e9,
+        licence: { name: 'AGPL-3.0', url: 'https://x.example/L', source: 'https://x.example/S', notice: 'AGPL notice.', requiresAcceptance: true } } });
+    assert.match(agpl, /It is licensed under AGPL-3\.0 \(https:\/\/x\.example\/L; source: https:\/\/x\.example\/S\)\. AGPL notice\./);
+    assert.doesNotMatch(agpl, /proprietary/);
+    assert.match(installMessage({ id: 'vllm', install: { version: '0.30.0', totalBytes: 4e9, licence: { name: 'Apache-2.0' } } }), /Licence: Apache-2\.0\.$/);
+});

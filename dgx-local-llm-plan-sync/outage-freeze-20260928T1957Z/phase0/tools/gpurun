@@ -1,0 +1,3 @@
+#!/bin/sh
+# Run a GPU test process that the kernel OOM killer picks first.
+echo 1000 > /proc/self/oom_score_adj && exec "$@"

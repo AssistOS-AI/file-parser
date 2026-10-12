@@ -1,0 +1,775 @@
+   420	            baseUrl: `http://127.0.0.1:${runner.port}`,
+   421	            apiKey: runner.apiKey || null,
+   422	            model: definition.chatModel(deployment),
+   423	            requestOptions: definition.requestOptions?.(deployment.params) ?? null,
+   424	        };
+   425	    }
+   426	
+   427	    // ------------------------------------------------------------ pipelines
+   428	
+   429	    async function waitForHttp(url, { headers = {}, signal, process, accept = (response) => response.ok } = {}) {
+   430	        const deadline = Date.now() + readyTimeoutMs;
+   431	        while (Date.now() < deadline) {
+   432	            if (signal?.aborted) throw new LocalLlmError('aborted', 'Stopped while starting.');
+   433	            if (process && !process.running) throw new LocalLlmError('runner_exited', 'The runner exited while starting.');
+   434	            try {
+   435	                // Each probe has its own deadline, so a runner that accepts the
+   436	                // connection and never answers cannot outlast readyTimeoutMs.
+   437	                const probeSignal = signal ? AbortSignal.any([signal, AbortSignal.timeout(PROBE_TIMEOUT_MS)]) : AbortSignal.timeout(PROBE_TIMEOUT_MS);
+   438	                const response = await fetchImpl(url, { headers, signal: probeSignal });
+   439	                if (accept(response)) return response;
+   440	            } catch (error) {
+   441	                if (signal?.aborted) throw new LocalLlmError('aborted', 'Stopped while starting.');
+   442	            }
+   443	            await sleep(pollMs, signal);
+   444	        }
+   445	        throw new LocalLlmError('start_timeout', `The runner did not become ready within ${readyTimeoutMs / 1000} s.`);
+   446	    }
+   447	
+   448	    function runnerEnv(launchEnv) {
+   449	        // Only what the runner needs: never the agent's secrets or tokens.
+   450	        return {
+   451	            PATH: env.PATH || '/usr/local/nvidia/bin:/usr/local/bin:/usr/bin:/bin',
+   452	            HOME: path.join(dataDir, 'home'),
+   453	            LANG: 'C.UTF-8',
+   454	            ...launchEnv,
+   455	        };
+   456	    }
+   457	
+   458	    // A helper step of a runner's start-up or watchdog (for example LM
+   459	    // Studio's `lms import`): its own process group, ended by `signal`, with
+   460	    // only the environment the adapter gives it. `json` returns the step's
+   461	    // last output line, parsed.
+   462	    function stepRunner(signal) {
+   463	        // `quiet` steps (a watchdog's routine check) are logged only when they fail.
+   464	        return async ({ label, command, args = [], env: stepEnv = {}, cwd = '/', json = false, quiet = false }) => {
+   465	            const result = await runTool({ command, args, env: stepEnv, cwd, signal });
+   466	            if (result.aborted) throw new LocalLlmError('aborted', 'Stopped while starting.');
+   467	            if (result.code !== 0) {
+   468	                const tail = result.output.trim().split('\n').slice(-3).join(' | ').slice(0, 600);
+   469	                throw new LocalLlmError('runner_step_failed', `${label} failed (exit ${result.code ?? result.signal}): ${tail}`);
+   470	            }
+   471	            if (!quiet) log.append('controller', `${label}: done`);
+   472	            if (!json) return { output: result.output };
+   473	            try {
+   474	                return JSON.parse(result.output.trim().split('\n').at(-1));
+   475	            } catch {
+   476	                throw new LocalLlmError('runner_step_failed', `${label} returned no result.`);
+   477	            }
+   478	        };
+   479	    }
+   480	
+   481	    function launchRunner(deployment, launch, apiKey, port, { definition = null, runnerDir = null } = {}) {
+   482	        fs.mkdirSync(path.join(dataDir, 'home'), { recursive: true });
+   483	        log.addSecret(apiKey);
+   484	        runnerLogStart = log.seq;
+   485	        lastCompletion = null;
+   486	        log.append('controller', `starting ${launch.command} ${launch.args.join(' ')}`);
+   487	        const process = startRunner({
+   488	            command: launch.command, args: launch.args, env: runnerEnv(launch.env), cwd: launch.cwd || '/', log,
+   489	            filter: launch.outputFilter || null,
+   490	        });
+   491	        runner = {
+   492	            pid: process.pid,
+   493	            port,
+   494	            apiKey,
+   495	            deploymentId: deployment.id,
+   496	            exited: process.exited,
+   497	            stop: (options) => process.stop(options),
+   498	            get running() { return process.running; },
+   499	        };
+   500	        const current = runner;
+   501	        const cancelGuard = startMemoryGuard(deployment, current);
+   502	        process.exited.then((result) => {
+   503	            cancelGuard();
+   504	            current.stopWatchdog?.();
+   505	            // The adapter's clean-up once its process group is gone (LM Studio
+   506	            // deletes its server log and reaps anything left in its copy).
+   507	            try {
+   508	                definition?.afterExit?.({ runnerDir, log: (line) => log.append('controller', line) });
+   509	            } catch (error) {
+   510	                log.append('controller', `clean-up after ${definition.id} failed: ${error.message}`);
+   511	            }
+   512	            if (runner !== current) return;
+   513	            runner = null;
+   514	            if (memoryStop?.deploymentId === deployment.id) return;
+   515	            const live = state.deployment;
+   516	            if (live?.id === deployment.id && ['starting', 'loading', 'ready', 'downloading'].includes(live.phase)
+   517	                && !draining && live.phase !== 'stopping') {
+   518	                const tail = log.since(0, 5).map((entry) => entry.line).join(' | ');
+   519	                setPhase('error', {
+   520	                    error: `The runner exited unexpectedly (code ${result.code ?? 'none'}, signal ${result.signal ?? 'none'}). ${tail}`,
+   521	                });
+   522	            }
+   523	        });
+   524	        return runner;
+   525	    }
+   526	
+   527	    // The backstop behind a RAM-floor admission (vLLM with CPU offload, whose
+   528	    // estimate comes from two runs on one machine): while this runner loads and
+   529	    // runs, sample MemAvailable; below the floor, stop it at once.
+   530	    function startMemoryGuard(deployment, current) {
+   531	        const floor = deployment.admission?.estimate?.ramFloorBytes;
+   532	        if (!Number.isFinite(floor) || floor <= 0) return () => {};
+   533	        let timer = null;
+   534	        let cancelled = false;
+   535	        const schedule = () => {
+   536	            if (cancelled) return;
+   537	            const ready = state.deployment?.id === deployment.id && state.deployment.phase === 'ready';
+   538	            timer = setTimeout(tick, ready ? memoryGuardReadyMs : memoryGuardLoadMs);
+   539	            timer.unref?.();
+   540	        };
+   541	        const tick = () => {
+   542	            if (cancelled || runner !== current) return;
+   543	            let available = null;
+   544	            try {
+   545	                available = readMemory().availableBytes;
+   546	            } catch {}
+   547	            if (Number.isFinite(available) && available < floor) {
+   548	                cancelled = true;
+   549	                stopForMemory(deployment, current,
+   550	                    `stopped: host memory below the floor (${gib(available)} available, ${gib(floor)} required)`).catch(() => {});
+   551	                return;
+   552	            }
+   553	            schedule();
+   554	        };
+   555	        schedule();
+   556	        return () => {
+   557	            cancelled = true;
+   558	            clearTimeout(timer);
+   559	        };
+   560	    }
+   561	
+   562	    async function stopForMemory(deployment, current, message) {
+   563	        memoryStop = { deploymentId: deployment.id, message };
+   564	        log.append('controller', message);
+   565	        // The host is short of memory now: SIGKILL follows SIGTERM within the
+   566	        // drain's grace, not a Stop's.
+   567	        try {
+   568	            await current.stop({ graceMs: DRAIN_RUNNER_GRACE_MS });
+   569	        } catch {}
+   570	        // Once the agent drains, the drain settles the state; the log keeps the message.
+   571	        if (draining || queue.closed) return;
+   572	        try {
+   573	            await queue.run(async () => {
+   574	                if (runner === current) runner = null;
+   575	                if (job?.deploymentId === deployment.id) await job.promise.catch(() => {});
+   576	                // A Stop or a replace that came in meanwhile has already settled it.
+   577	                const live = state.deployment;
+   578	                if (live?.id === deployment.id && live.phase !== 'idle') setPhase('error', { error: message, runner: null });
+   579	            });
+   580	        } catch (error) {
+   581	            log.append('controller', `memory guard: the stop was not recorded (${error.message})`);
+   582	        }
+   583	    }
+   584	
+   585	    function updateProgress(progress) {
+   586	        const deployment = state.deployment;
+   587	        if (!deployment) return;
+   588	        deployment.download = {
+   589	            bytes: progress.bytes,
+   590	            total: progress.total,
+   591	            rate: Math.round(progress.rate || 0),
+   592	            etaSeconds: progress.etaSeconds ?? null,
+   593	            transferred: progress.transferred || 0,
+   594	        };
+   595	        if (progress.total && progress.bytes >= progress.total && deployment.phase === 'downloading') {
+   596	            deployment.phase = 'verifying';
+   597	        }
+   598	        save();
+   599	    }
+   600	
+   601	    async function recheckAdmission(deployment, model) {
+   602	        const definition = getRunner(deployment.runnerId);
+   603	        const source = deployment.artifact;
+   604	        const result = admit({ runner: definition, model, source, params: deployment.params, snapshot: await snapshot() });
+   605	        deployment.admission = result;
+   606	        if (result.status !== 'ok') {
+   607	            throw new LocalLlmError(`admission_${result.status.replace('-', '_')}`, result.reason, { admission: result });
+   608	        }
+   609	    }
+   610	
+   611	    // What a runner's start-up pipeline may use. The adapter launches its
+   612	    // process through `launch` (an argv and a minimal environment), waits
+   613	    // with `waitForHttp`, and may report phases and progress for weights it
+   614	    // fetches itself; the controller owns the process and the state.
+   615	    function startContext(deployment, model, signal, weights, runnerDir = null) {
+   616	        const definition = getRunner(deployment.runnerId);
+   617	        const port = ports[deployment.runnerId];
+   618	        const apiKey = definition.apiKey ? apiKeyFactory() : null;
+   619	        return Object.freeze({
+   620	            runner: definition,
+   621	            model,
+   622	            params: deployment.params,
+   623	            artifact: deployment.artifact,
+   624	            weights,
+   625	            // An on-demand runner's runnable copy (null for runners in the image).
+   626	            runnerDir,
+   627	            // The admission just re-checked before launch; vLLM sizes its GPU share from it.
+   628	            admission: deployment.admission ?? null,
+   629	            shmDir,
+   630	            port,
+   631	            apiKey,
+   632	            dataDir,
+   633	            signal,
+   634	            fetch: fetchImpl,
+   635	            store: storeFor(deployment.artifact),
+   636	            launch: (spec) => launchRunner(deployment, spec, apiKey, port, { definition, runnerDir }),
+   637	            exec: stepRunner(signal),
+   638	            waitForHttp: (url, options = {}) => waitForHttp(url, { ...options, signal }),
+   639	            setPhase: (phase) => setPhase(phase),
+   640	            progress: updateProgress,
+   641	            record: (fields) => {
+   642	                Object.assign(deployment, fields);
+   643	                save();
+   644	            },
+   645	            recheckAdmission: () => recheckAdmission(deployment, model),
+   646	            throwIfAborted: () => throwIfAborted(signal),
+   647	        });
+   648	    }
+   649	
+   650	    async function runPipeline(deployment, model, signal) {
+   651	        const definition = getRunner(deployment.runnerId);
+   652	        const store = storeFor(deployment.artifact);
+   653	        let weights = null;
+   654	        if (store.fetchedBy === 'controller') {
+   655	            setPhase('downloading');
+   656	            const fetched = await store.fetch({ artifact: deployment.artifact, signal, onProgress: updateProgress });
+   657	            throwIfAborted(signal);
+   658	            deployment.download = {
+   659	                ...(deployment.download || {}),
+   660	                bytes: fetched.bytes,
+   661	                total: fetched.bytes,
+   662	                transferred: fetched.bytesTransferred,
+   663	            };
+   664	            weights = { path: fetched.path };
+   665	            await recheckAdmission(deployment, model);
+   666	            throwIfAborted(signal);
+   667	        }
+   668	        setPhase('starting');
+   669	        let runnerDir = null;
+   670	        if (installable(definition.id)) {
+   671	            log.append('controller', `preparing ${definition.id} from its verified cache`);
+   672	            const built = await installer.ensureRunnable(definition.id, { signal });
+   673	            runnerDir = installer.pathsFor(installer.entryFor(definition.id)).runDir;
+   674	            if (built.rebuilt) log.append('controller', `rebuilt ${definition.id} in ${built.seconds.toFixed(1)} s (${built.bytes} bytes)`);
+   675	            throwIfAborted(signal);
+   676	        }
+   677	        const details = await definition.start(startContext(deployment, model, signal, weights, runnerDir));
+   678	        throwIfAborted(signal);
+   679	        if (!runner || runner.deploymentId !== deployment.id) {
+   680	            throw new LocalLlmError('runner_exited', 'The runner is not running after its start-up.');
+   681	        }
+   682	        setPhase('ready', { runner: { pid: runner.pid, port: runner.port, startedAt: now().toISOString(), ...(details || {}) } });
+   683	        startWatchdog(deployment, runner, definition, runnerDir);
+   684	    }
+   685	
+   686	    // An adapter's periodic check while its runner is ready (LM Studio loads
+   687	    // any model a request names, so it unloads anything but ours). A check's
+   688	    // note is logged; a failed check is logged and does not stop the runner.
+   689	    function startWatchdog(deployment, current, definition, runnerDir) {
+   690	        const watchdog = definition.watchdog;
+   691	        if (!watchdog || typeof watchdog.check !== 'function') return;
+   692	        const abort = new AbortController();
+   693	        let timer = null;
+   694	        const tick = async () => {
+   695	            if (abort.signal.aborted || runner !== current || state.deployment?.id !== deployment.id || state.deployment.phase !== 'ready') return;
+   696	            try {
+   697	                const note = await watchdog.check({
+   698	                    deployment: publicDeployment(), modelId: deployment.modelId, port: current.port, runnerDir,
+   699	                    exec: stepRunner(abort.signal), signal: abort.signal,
+   700	                });
+   701	                if (note && !abort.signal.aborted) log.append('controller', `${definition.id} watchdog: ${note}`);
+   702	            } catch (error) {
+   703	                if (!abort.signal.aborted) log.append('controller', `${definition.id} watchdog failed: ${error.message}`);
+   704	            }
+   705	            if (!abort.signal.aborted) {
+   706	                timer = setTimeout(tick, watchdog.intervalMs || 30_000);
+   707	                timer.unref?.();
+   708	            }
+   709	        };
+   710	        timer = setTimeout(tick, watchdog.intervalMs || 30_000);
+   711	        timer.unref?.();
+   712	        current.stopWatchdog = () => {
+   713	            abort.abort();
+   714	            clearTimeout(timer);
+   715	        };
+   716	    }
+   717	
+   718	    function startJob(deployment, model) {
+   719	        const controller = new AbortController();
+   720	        const current = {
+   721	            deploymentId: deployment.id,
+   722	            abort: controller,
+   723	            cancelReason: null,
+   724	            promise: null,
+   725	        };
+   726	        current.promise = runPipeline(deployment, model, controller.signal)
+   727	            .catch(async (error) => {
+   728	                const live = state.deployment;
+   729	                if (!live || live.id !== deployment.id) return;
+   730	                const aborted = controller.signal.aborted
+   731	                    || (error instanceof DownloadError && error.code === 'ABORTED');
+   732	                if (aborted) {
+   733	                    const wasTransfer = TRANSFER_PHASES.has(live.phase);
+   734	                    if (runner && runner.deploymentId === deployment.id) {
+   735	                        const stopping = runner;
+   736	                        runner = null;
+   737	                        await stopping.stop({ graceMs: runnerGraceMs() });
+   738	                    }
+   739	                    const pausing = ['cancel', 'drain'].includes(current.cancelReason) && wasTransfer;
+   740	                    const phase = pausing ? 'paused' : 'idle';
+   741	                    const reason = current.cancelReason === 'drain'
+   742	                        ? 'The agent restarted during the download; press Run to resume.'
+   743	                        : 'Download cancelled; press Run to resume.';
+   744	                    setPhase(phase, { runner: null, pausedReason: pausing ? reason : null });
+   745	                    return;
+   746	                }
+   747	                if (error instanceof DownloadError && ['PAUSED_ENOSPC', 'NETWORK'].includes(error.code)) {
+   748	                    setPhase('paused', { error: error.message, pausedReason: error.message });
+   749	                    return;
+   750	                }
+   751	                if (runner && runner.deploymentId === deployment.id) {
+   752	                    const stopping = runner;
+   753	                    runner = null;
+   754	                    await stopping.stop({ graceMs: runnerGraceMs() });
+   755	                }
+   756	                const guarded = memoryStop?.deploymentId === deployment.id ? memoryStop.message : null;
+   757	                setPhase('error', { error: guarded || error.message, runner: null });
+   758	            })
+   759	            .finally(() => {
+   760	                if (job === current) job = null;
+   761	            });
+   762	        job = current;
+   763	    }
+   764	
+   765	    async function stopEverything(reason) {
+   766	        if (job) {
+   767	            job.cancelReason = reason;
+   768	            job.abort.abort();
+   769	            await job.promise;
+   770	        }
+   771	        if (runner) {
+   772	            const stopping = runner;
+   773	            runner = null;
+   774	            if (state.deployment && ACTIVE_PHASES.has(state.deployment.phase)) setPhase('stopping');
+   775	            await stopping.stop({ graceMs: runnerGraceMs() });
+   776	        }
+   777	        if (state.deployment && ACTIVE_PHASES.has(state.deployment.phase)) {
+   778	            setPhase(reason === 'cancel' && TRANSFER_PHASES.has(state.deployment.phase) ? 'paused' : 'idle', { runner: null });
+   779	        }
+   780	    }
+   781	
+   782	    // ------------------------------------------------------------- commands
+   783	
+   784	    function run({ requestId, modelId, runnerId, params, replace = false } = {}) {
+   785	        return queue.run(async () => {
+   786	            if (typeof requestId !== 'string' || !REQUEST_ID_RE.test(requestId)) {
+   787	                throw new LocalLlmError('invalid_request', 'requestId must be 8-128 letters, digits, dash or underscore.');
+   788	            }
+   789	            // The browser client may retry a timed-out call: the same request is a no-op.
+   790	            if (state.requests[requestId]) {
+   791	                return { duplicate: true, deployment: publicDeployment() };
+   792	            }
+   793	            const model = findModel(modelId);
+   794	            const definition = getRunner(runnerId);
+   795	            const source = sourceFor(model, definition);
+   796	            if (!definition.supported) {
+   797	                const result = admit({ runner: definition, model, source, params: {}, snapshot: {} });
+   798	                throw new LocalLlmError('runner_unsupported', result.reason);
+   799	            }
+   800	            assertEnabled(definition);
+   801	            if (!source) throw new LocalLlmError('no_source', `${model.displayName} has no ${definition.displayName} source.`);
+   802	            if (installJob?.runnerId === runnerId) {
+   803	                throw new LocalLlmError('busy', `${definition.displayName} is being installed; run it once the install finishes.`);
+   804	            }
+   805	            if (installable(runnerId) && !(await installer.describe(runnerId)).installed) {
+   806	                throw new LocalLlmError('runner_not_installed', `${definition.displayName} is not installed; install it first.`);
+   807	            }
+   808	            const store = storeFor(source);
+   809	            if (!store.isPinned(source)) {
+   810	                throw new LocalLlmError('unpinned', 'The model source is not pinned to a commit; update the model entry.');
+   811	            }
+   812	            const normalized = effectiveParams(model, runnerId, params);
+   813	            const current = state.deployment;
+   814	            if (current && (ACTIVE_PHASES.has(current.phase) || job)) {
+   815	                if (!replace) {
+   816	                    throw new LocalLlmError('busy', `${current.modelId} on ${current.runnerId} is ${current.phase}; `
+   817	                        + 'stop it first or run with replace.');
+   818	                }
+   819	                await stopEverything('replace');
+   820	            }
+   821	            const disk = await weightsState(source);
+   822	            const remaining = disk?.total ? Math.max(0, disk.total - (disk.bytes || 0)) : 0;
+   823	            const admission = admit({
+   824	                runner: definition, model, source, params: normalized, snapshot: await snapshot(),
+   825	                remainingDownloadBytes: remaining,
+   826	            });
+   827	            if (admission.status !== 'ok') {
+   828	                throw new LocalLlmError(`admission_${admission.status.replace('-', '_')}`, admission.reason, { admission });
+   829	            }
+   830	            state.params[paramsKey(model.id, runnerId)] = normalized;
+   831	            const at = now().toISOString();
+   832	            // The job holds this immutable copy: later registry edits cannot redirect it.
+   833	            if (draining) {
+   834	                throw new LocalLlmError('shutting_down', 'The agent is restarting; run the model again once it is back.');
+   835	            }
+   836	            state.deployment = {
+   837	                id: crypto.randomUUID(),
+   838	                requestId,
+   839	                modelId: model.id,
+   840	                runnerId,
+   841	                params: normalized,
+   842	                artifact: structuredClone(source),
+   843	                phase: store.fetchedBy === 'runner' ? 'starting' : 'downloading',
+   844	                admission,
+   845	                download: { bytes: disk?.bytes || 0, total: disk?.total ?? null, rate: 0, etaSeconds: null, transferred: 0 },
+   846	                error: null,
+   847	                pausedReason: null,
+   848	                runner: null,
+   849	                logSeqStart: log.seq,
+   850	                createdAt: at,
+   851	                updatedAt: at,
+   852	            };
+   853	            state.requests[requestId] = { deploymentId: state.deployment.id, at };
+   854	            save();
+   855	            startJob(state.deployment, model);
+   856	            return { accepted: true, deployment: publicDeployment() };
+   857	        });
+   858	    }
+   859	
+   860	    function stop() {
+   861	        return queue.run(async () => {
+   862	            await stopEverything('stop');
+   863	            // Stop also clears a failed or paused deployment (a paused partial stays on disk).
+   864	            if (state.deployment && ['error', 'paused'].includes(state.deployment.phase)) {
+   865	                setPhase('idle', { runner: null, error: null, pausedReason: null });
+   866	            }
+   867	            return { deployment: publicDeployment() };
+   868	        });
+   869	    }
+   870	
+   871	    function cancelDownload() {
+   872	        return queue.run(async () => {
+   873	            const deployment = state.deployment;
+   874	            if (!deployment || !job || !(TRANSFER_PHASES.has(deployment.phase) || deployment.phase === 'starting')) {
+   875	                throw new LocalLlmError('not_downloading', 'No download is in progress.');
+   876	            }
+   877	            await stopEverything('cancel');
+   878	            return { deployment: publicDeployment() };
+   879	        });
+   880	    }
+   881	
+   882	    // Weights are named by format, or by a runner, which stands for the
+   883	    // format it reads: every runner of that format loses them.
+   884	    function weightsFormat({ runnerId, format }) {
+   885	        if (format !== undefined) {
+   886	            if (typeof format !== 'string' || !Object.hasOwn(WEIGHT_FORMATS, format)) {
+   887	                throw new LocalLlmError('invalid_request', `Unknown weight format: ${String(format)}`);
+   888	            }
+   889	            return format;
+   890	        }
+   891	        return getRunner(runnerId).weightFormat;
+   892	    }
+   893	
+   894	    function deleteWeights({ modelId, runnerId, format } = {}) {
+   895	        return queue.run(async () => {
+   896	            const model = findModel(modelId);
+   897	            const weightFormat = weightsFormat({ runnerId, format });
+   898	            const source = model.sources[weightFormat];
+   899	            if (!source) throw new LocalLlmError('no_source', `${model.displayName} has no ${weightFormat} weights.`);
+   900	            if (inUse(artifactKey(source))) {
+   901	                throw new LocalLlmError('in_use', 'These weights are in use; stop the model or cancel the download first.');
+   902	            }
+   903	            const freed = await storeFor(source).remove(source);
+   904	            const deployment = state.deployment;
+   905	            if (deployment && artifactKey(deployment.artifact) === artifactKey(source)
+   906	                && ['paused', 'error', 'idle'].includes(deployment.phase)) {
+   907	                deployment.phase = 'idle';
+   908	                deployment.download = { bytes: 0, total: deployment.download?.total ?? null, rate: 0, etaSeconds: null, transferred: 0 };
+   909	                save();
+   910	            }
+   911	            return { freedBytes: freed };
+   912	        });
+   913	    }
+   914	
+   915	    async function pinSources(entry) {
+   916	        const sources = { ...entry.sources };
+   917	        for (const [format, source] of Object.entries(sources)) {
+   918	            sources[format] = await storeFor(source).pin(source);
+   919	        }
+   920	        return { ...entry, sources };
+   921	    }
+   922	
+   923	    function assertNewModelId(id) {
+   924	        if (catalog().some((model) => model.id === id)) {
+   925	            throw new LocalLlmError('duplicate_model', `A model with id '${id}' already exists.`);
+   926	        }
+   927	    }
+   928	
+   929	    function userModelIndex(id) {
+   930	        const index = state.registry.findIndex((model) => model.id === id);
+   931	        if (index < 0) {
+   932	            throw new LocalLlmError(seedCatalog.some((model) => model.id === id) ? 'read_only' : 'unknown_model',
+   933	                'Only user models can be changed; seed entries are read-only.');
+   934	        }
+   935	        return index;
+   936	    }
+   937	
+   938	    function assertModelNotInUse(model) {
+   939	        for (const source of Object.values(model.sources)) {
+   940	            if (inUse(artifactKey(source))) {
+   941	                throw new LocalLlmError('in_use', 'This model is in use; stop it or cancel its download first.');
+   942	            }
+   943	        }
+   944	    }
+   945	
+   946	    // Pinning reads Hugging Face metadata only; no weights are downloaded. It
+   947	    // runs outside the command queue, so a slow metadata request never holds
+   948	    // up Stop, Cancel or Run, and every check is repeated inside the queue.
+   949	    async function addModel(entry) {
+   950	        const draft = validateModel(entry, { seed: false });
+   951	        assertNewModelId(draft.id);
+   952	        const pinned = validateModel(await pinSources(draft), { seed: false });
+   953	        return queue.run(async () => {
+   954	            assertNewModelId(pinned.id);
+   955	            state.registry.push(JSON.parse(JSON.stringify({ ...pinned, seed: undefined })));
+   956	            save();
+   957	            return { model: pinned };
+   958	        });
+   959	    }
+   960	
+   961	    // An update keeps a source's pinned identity while it is otherwise
+   962	    // unchanged; it never silently re-resolves a branch.
+   963	    function carryPins(candidate, existing) {
+   964	        const sources = { ...candidate.sources };
+   965	        for (const [format, source] of Object.entries(sources)) {
+   966	            sources[format] = storeFor(source).carryPin(source, existing.sources[format]);
+   967	        }
+   968	        return { ...candidate, sources };
+   969	    }
+   970	
+   971	    async function updateModel(entry) {
+   972	        const candidate = validateModel(entry);
+   973	        const existing = validateModel(state.registry[userModelIndex(candidate.id)]);
+   974	        const pinned = validateModel(await pinSources(carryPins(candidate, existing)), { seed: false });
+   975	        return queue.run(async () => {
+   976	            const index = userModelIndex(pinned.id);
+   977	            const current = validateModel(state.registry[index]);
+   978	            assertModelNotInUse(current);
+   979	            // A changed or removed source must not leave its downloaded weights
+   980	            // behind without a model to delete them from.
+   981	            for (const [format, source] of Object.entries(current.sources)) {
+   982	                const next = pinned.sources[format];
+   983	                if (next && artifactKey(next) === artifactKey(source)) continue;
+   984	                const disk = await weightsState(source);
+   985	                if (disk && disk.state !== 'absent' && disk.state !== 'unpinned') {
+   986	                    throw new LocalLlmError('weights_present',
+   987	                        `Delete the downloaded ${format} weights first; this change would leave them without a model.`);
+   988	                }
+   989	            }
+   990	            state.registry[index] = JSON.parse(JSON.stringify({ ...pinned, seed: undefined }));
+   991	            save();
+   992	            return { model: pinned };
+   993	        });
+   994	    }
+   995	
+   996	    function removeModel({ modelId } = {}) {
+   997	        return queue.run(async () => {
+   998	            const index = state.registry.findIndex((model) => model.id === modelId);
+   999	            if (index < 0) {
+  1000	                throw new LocalLlmError(seedCatalog.some((model) => model.id === modelId) ? 'read_only' : 'unknown_model',
+  1001	                    'Only user models can be removed; seed entries are read-only.');
+  1002	            }
+  1003	            const model = validateModel(state.registry[index]);
+  1004	            for (const [format, source] of Object.entries(model.sources)) {
+  1005	                if (inUse(artifactKey(source))) {
+  1006	                    throw new LocalLlmError('in_use', 'This model is in use; stop it or cancel its download first.');
+  1007	                }
+  1008	                const disk = await weightsState(source);
+  1009	                if (disk && disk.state !== 'absent' && disk.state !== 'unpinned') {
+  1010	                    throw new LocalLlmError('weights_present', `Delete the downloaded ${format} weights first.`);
+  1011	                }
+  1012	            }
+  1013	            state.registry.splice(index, 1);
+  1014	            save();
+  1015	            return { removed: modelId };
+  1016	        });
+  1017	    }
+  1018	
+  1019	    // ---------------------------------------------------------- installs
+  1020	
+  1021	    async function installInfo(id) {
+  1022	        const info = await installer.describe(id);
+  1023	        const record = state.runnerInstalls?.[id] || null;
+  1024	        return { ...info, state: record ? structuredClone(record) : null, installing: installJob?.runnerId === id };
+  1025	    }
+  1026	
+  1027	    function setInstall(id, fields) {
+  1028	        state.runnerInstalls ||= {};
+  1029	        state.runnerInstalls[id] = { ...(state.runnerInstalls[id] || {}), ...fields, updatedAt: now().toISOString() };
+  1030	        save();
+  1031	    }
+  1032	
+  1033	    function startInstallJob(entry) {
+  1034	        const controller = new AbortController();
+  1035	        const current = { runnerId: entry.id, abort: controller, cancelReason: null, promise: null };
+  1036	        current.promise = (async () => {
+  1037	            setInstall(entry.id, { phase: 'downloading', error: null, pausedReason: null });
+  1038	            const licence = state.runnerInstalls[entry.id]?.licence || null;
+  1039	            await installer.fetchAll(entry, {
+  1040	                signal: controller.signal,
+  1041	                licence,
+  1042	                onProgress: (progress) => setInstall(entry.id, {
+  1043	                    download: { bytes: progress.bytes, total: progress.total, rate: Math.round(progress.rate || 0), transferred: progress.transferred },
+  1044	                }),
+  1045	            });
+  1046	            setInstall(entry.id, { phase: 'installing' });
+  1047	            const built = await installer.ensureRunnable(entry.id, { signal: controller.signal });
+  1048	            // The old version's cache goes only after the new one is in place.
+  1049	            await installer.pruneOtherVersions(entry.id);
+  1050	            setInstall(entry.id, { phase: 'installed', version: entry.version, rebuild: { seconds: built.seconds, bytes: built.bytes }, installedAt: now().toISOString() });
+  1051	            log.append('controller', `installed ${entry.id} ${entry.version}; runnable copy built in ${built.seconds.toFixed(1)} s`);
+  1052	        })().catch((error) => {
+  1053	            const aborted = controller.signal.aborted || (error instanceof DownloadError && error.code === 'ABORTED');
+  1054	            if (aborted || (error instanceof DownloadError && ['PAUSED_ENOSPC', 'NETWORK'].includes(error.code))) {
+  1055	                const reason = current.cancelReason === 'drain'
+  1056	                    ? 'The agent restarted during the install; press Install to resume.'
+  1057	                    : (aborted ? 'Install stopped; press Install to resume.' : error.message);
+  1058	                setInstall(entry.id, { phase: 'paused', pausedReason: reason, error: aborted ? null : error.message });
+  1059	                return;
+  1060	            }
+  1061	            setInstall(entry.id, { phase: 'error', error: error.message });
+  1062	        }).finally(() => {
+  1063	            if (installJob === current) installJob = null;
+  1064	            redetectRunners();
+  1065	        });
+  1066	        installJob = current;
+  1067	    }
+  1068	
+  1069	    /**
+  1070	     * Install one runner from the image's lock. Only the lock's files are ever
+  1071	     * fetched; a licence that needs acceptance must be accepted, and the
+  1072	     * acceptance is recorded with who (from the verified caller) and when.
+  1073	     */
+  1074	    function installRunner({ runnerId, acceptLicence = false, acceptedBy = null, ...rest } = {}) {
+  1075	        return queue.run(async () => {
+  1076	            if (Object.keys(rest).length) {
+  1077	                throw new LocalLlmError('invalid_request', `Unexpected install fields: ${Object.keys(rest).join(', ')}`);
+  1078	            }
+  1079	            if (!installable(runnerId)) {
+  1080	                throw new LocalLlmError('not_installable', `No installable runner '${String(runnerId)}' in this image's runner lock.`);
+  1081	            }
+  1082	            assertEnabled(getRunner(runnerId));
+  1083	            if (draining) throw new LocalLlmError('shutting_down', 'The agent is restarting; install again once it is back.');
+  1084	            const entry = installer.entryFor(runnerId);
+  1085	            if (installJob) {
+  1086	                if (installJob.runnerId === runnerId) return { accepted: true, install: await installInfo(runnerId) };
+  1087	                throw new LocalLlmError('busy', `${installJob.runnerId} is being installed; wait for it to finish.`);
+  1088	            }
+  1089	            const record = state.runnerInstalls?.[runnerId];
+  1090	            const accepted = record?.licence && record.version === entry.version ? record.licence : null;
+  1091	            if (entry.licence.requiresAcceptance && !accepted && acceptLicence !== true) {
+  1092	                throw new LocalLlmError('licence_required', `Installing ${runnerId} needs its ${entry.licence.name} terms accepted.`,
+  1093	                    { licence: entry.licence });
+  1094	            }
+  1095	            if ((await installer.describe(runnerId)).installed && (await installer.describe(runnerId)).runnable) {
+  1096	                return { accepted: false, installed: true, install: await installInfo(runnerId) };
+  1097	            }
+  1098	            setInstall(runnerId, {
+  1099	                version: entry.version,
+  1100	                phase: 'downloading',
+  1101	                download: { bytes: 0, total: entry.totalBytes, rate: 0, transferred: 0 },
+  1102	                error: null,
+  1103	                pausedReason: null,
+  1104	                licence: accepted || (entry.licence.requiresAcceptance
+  1105	                    ? { name: entry.licence.name, acceptedBy: typeof acceptedBy === 'string' && acceptedBy ? acceptedBy : 'unknown admin', acceptedAt: now().toISOString() }
+  1106	                    : null),
+  1107	            });
+  1108	            startInstallJob(entry);
+  1109	            return { accepted: true, install: await installInfo(runnerId) };
+  1110	        });
+  1111	    }
+  1112	
+  1113	    function uninstallRunner({ runnerId } = {}) {
+  1114	        return queue.run(async () => {
+  1115	            if (!installable(runnerId)) {
+  1116	                throw new LocalLlmError('not_installable', `No installable runner '${String(runnerId)}' in this image's runner lock.`);
+  1117	            }
+  1118	            const deployment = state.deployment;
+  1119	            if (deployment?.runnerId === runnerId && (ACTIVE_PHASES.has(deployment.phase) || job !== null)) {
+  1120	                throw new LocalLlmError('in_use', `${runnerId} is running; stop the model first.`);
+  1121	            }
+  1122	            if (installJob?.runnerId === runnerId) {
+  1123	                installJob.cancelReason = 'uninstall';
+  1124	                installJob.abort.abort();
+  1125	                await installJob.promise;
+  1126	            }
+  1127	            const result = await installer.uninstall(runnerId);
+  1128	            if (state.runnerInstalls?.[runnerId]) {
+  1129	                delete state.runnerInstalls[runnerId];
+  1130	                save();
+  1131	            }
+  1132	            redetectRunners();
+  1133	            return result;
+  1134	        });
+  1135	    }
+  1136	
+  1137	    /**
+  1138	     * Drain for SIGTERM: stop admitting commands, checkpoint any download
+  1139	     * (the partial and its identity stay), stop the runner, persist.
+  1140	     */
+  1141	    async function drain() {
+  1142	        draining = true;
+  1143	        // Let a command that is already running finish first (a Run refuses to
+  1144	        // start a job once draining is set); bounded so it cannot block the drain.
+  1145	        const waited = new AbortController();
+  1146	        await Promise.race([queue.close(), sleep(DRAIN_QUEUE_WAIT_MS, waited.signal)]);
+  1147	        waited.abort();
+  1148	        if (job) {
+  1149	            job.cancelReason = 'drain';
+  1150	            job.abort.abort();
+  1151	            await job.promise;
+  1152	        }
+  1153	        if (installJob) {
+  1154	            installJob.cancelReason = 'drain';
+  1155	            installJob.abort.abort();
+  1156	            await installJob.promise;
+  1157	        }
+  1158	        if (runner) {
+  1159	            const stopping = runner;
+  1160	            runner = null;
+  1161	            await stopping.stop({ graceMs: runnerGraceMs() });
+  1162	        }
+  1163	        if (state.deployment) {
+  1164	            if (TRANSFER_PHASES.has(state.deployment.phase)) {
+  1165	                state.deployment.phase = 'paused';
+  1166	                state.deployment.pausedReason = 'The agent restarted during the download; press Run to resume.';
+  1167	            } else if (ACTIVE_PHASES.has(state.deployment.phase)) {
+  1168	                state.deployment.phase = 'idle';
+  1169	                state.deployment.runner = null;
+  1170	            }
+  1171	        }
+  1172	        save();
+  1173	    }
+  1174	
+  1175	    return Object.freeze({
+  1176	        overview,
+  1177	        status,
+  1178	        chatTarget,
+  1179	        recordCompletion,
+  1180	        run,
+  1181	        stop,
+  1182	        cancelDownload,
+  1183	        deleteWeights,
+  1184	        addModel,
+  1185	        updateModel,
+  1186	        removeModel,
+  1187	        installRunner,
+  1188	        uninstallRunner,
+  1189	        redetectRunners,
+  1190	        drain,
+  1191	        get state() { return state; },
+  1192	        artifactPathsFor: (source) => stores.huggingface.paths(source),
+  1193	    });
+  1194	}
