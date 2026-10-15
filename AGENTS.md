@@ -20,7 +20,8 @@ The file-parser product documentation starts at `docs/index.html`. Its contracts
 - `OnlyOfficeAgent/` — Extracted public Ploinky OnlyOffice Document Server agent (`OnlyOfficeAgent/onlyOffice`); installed by Explorer's manifest and disabled by default. See `OnlyOfficeAgent/AGENTS.md`.
 - `UmamiAgent/` — Read-only Umami analytics agent (`UmamiAgent/umamiAgent`). See its `AGENTS.md`.
 - `proxies/soul-gateway/` — Soul Gateway, the local LLM hub that runs as a Ploinky agent. No longer deployed at `soul.axiologic.dev`. See `proxies/AGENTS.md`.
-- `local-llms/` — The `local-llm` Ploinky agent (GPU/CPU open-weight runners). See `local-llms/AGENTS.md`.
+- `local-llms/` — The `local-llm` Ploinky agent's glue and hardware limits (container memory/CPU budget, MPS GPU share). The engine (controller, runners, downloader, catalog schema) lives in `Ploinky-Worker/lib/local-llm`, at the commit pinned in `local-llms/local-llm/package.json`. See `local-llms/AGENTS.md`.
+- `Ploinky-Worker/` — `AssistOS-AI/Ploinky-Worker` (GPL-3.0), the `pworker` standalone server and the local-llm engine library. See its `AGENTS.md`.
 - `container-image-builds/` — Central Docker Hub image build definitions and publishing workflows. `sources/` holds pinned build-source clones; do not edit them.
 - `copilot-agents/` — Local Copilot provider agents and AchillesCLI-owned consumer integrations. See `copilot-agents/AGENTS.md`.
 - `DocumentationSkills/` — Portable documentation skills catalog. Selected skills are copied into the workspace `.agents/skills/`, which subrepos link to from their own `.agents/skills/` and `.claude/skills`. See `DocumentationSkills/AGENTS.md`.
